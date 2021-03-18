@@ -1,6 +1,7 @@
 package org.wenhu.pojo.DO;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  * @date 2021/3/15
  */
 @Data
+@TableName(value = "report_review")
 public class ReportReviewDO {
 
     /**

@@ -1,3 +1,6 @@
 spring:
   application:
     name: people
+server:
+  port: 8000
+  
