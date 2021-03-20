@@ -2,7 +2,7 @@
   <div id="register">
     <el-row>
       <el-col :span="7">
-        <div class="grid-content"/>
+        <div class="grid-content" />
       </el-col>
       <el-col :span="10">
         <div class="grid-content">
@@ -10,9 +10,9 @@
             <el-row>
               <el-col :span="24">
                 <div class="grid-content bg-purple register_font">
-                <span class="register_font">
-                  忘记密码
-                </span>
+                  <span class="register_font">
+                    忘记密码
+                  </span>
                 </div>
               </el-col>
             </el-row>
@@ -30,8 +30,12 @@
             <el-row>
               <el-col :span="24">
                 <div class="grid-content input_margin">
-                  <el-input v-model="user_verify_code_user" class="input-with-select " maxlength="6"
-                            placeholder="请输入短信验证码">
+                  <el-input
+                    v-model="user_verify_code_user"
+                    class="input-with-select "
+                    maxlength="6"
+                    placeholder="请输入短信验证码"
+                  >
                     <el-button v-if="getCodeButtonNumber===60" slot="append" type="primary" @click="timeMinus">{{
                       getCodeButtonValue }}
                     </el-button>
@@ -57,7 +61,7 @@
         </div>
       </el-col>
       <el-col :span="7">
-        <div class="grid-content"/>
+        <div class="grid-content" />
       </el-col>
     </el-row>
 
@@ -82,7 +86,7 @@ export default {
   },
 
   methods: {
-    timeMinus: function () {
+    timeMinus: function() {
       if (this.user_phone_number === '') {
         this.$message.error('错了哦，请输入手机号')
         return
@@ -102,7 +106,7 @@ export default {
       }
     },
 
-    will_register: function () {
+    will_register: function() {
       if (this.user_name === '' || this.user_verify_code_user === '' || this.user_phone_number === '' || this.user_password === '') {
         this.$message.error('请保证信息完整哦~')
         return false
@@ -123,7 +127,7 @@ export default {
       }
       this.register_method()
     },
-    register_method: function () {
+    register_method: function() {
       // const people = require('@/api/password.js')
       const people = 'aaa'
       console.log('people.register=' + people.register)
@@ -133,12 +137,12 @@ export default {
         'phoneNumber': this.user_phone_number,
         'password': this.user_password_one
       })
-          .then(function (response) {
-            return response.data
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+        .then(function(response) {
+          return response.data
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
       console.log('register_json=' + register_json)
       console.log('register_json=' + JSON.stringify(register_json))
       // eslint-disable-next-line no-unused-vars,no-empty

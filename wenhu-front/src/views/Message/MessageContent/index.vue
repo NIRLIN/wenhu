@@ -3,32 +3,32 @@
     <el-row>
       <el-col :span="24">
         <div class="grid-content bg-purple messageContent_sender_name">
-        <span class="messageContent_sender_name">
-          {{ sender_name }}
-        </span>
+          <span class="messageContent_sender_name">
+            {{ sender_name }}
+          </span>
         </div>
       </el-col>
 
     </el-row>
-    <el-divider/>
+    <el-divider />
 
     <el-row>
       <el-col :span="24">
         <div class="grid-content bg-purple">
           <div class="messageContent_main">
-            <MessageItem/>
-            <MessageItem/>
+            <MessageItem />
+            <MessageItem />
           </div>
         </div>
       </el-col>
     </el-row>
-    <el-divider/>
+    <el-divider />
 
     <el-row>
       <el-col :span="24">
         <div class="grid-content bg-purple">
           <label>
-            <textarea class="message_input_text" placeholder=""/>
+            <textarea class="message_input_text" placeholder="" />
           </label>
         </div>
       </el-col>
@@ -51,7 +51,7 @@ import MessageItem from './MessageItem'
 
 export default {
   name: 'MessageContent',
-  components: {MessageItem},
+  components: { MessageItem },
   data() {
     return {
       sender_name: '用户姓名',

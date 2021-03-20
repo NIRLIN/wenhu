@@ -30,72 +30,72 @@ Vue.use(Router)
  * all roles can be accessed
  */
 export const constantRoutes = [
-    {
-        path: '/',
-        component: app,
-        redirect: 'hot'
-    },
-    {
-        path: '/hot',
-        component: () => import('@/views/Home/Hot')
-    },
-    {
-        path: '/follow',
-        component: () => import('@/views/Home/Follow')
-    },
-    {
-        path: '/recommend',
-        component: () => import('@/views/Home/Recommend')
-    },
-    {
-        path: '/question/:id',
-        component: () => import('@/views/QuestionAnswer')
-    },
-    {
-        path: '/login',
-        component: () => import('@/views/Password/Login')
-    },
-    {
-        path: '/register',
-        component: () => import('@/views/Password/Register')
-    },
-    {
-        path: '/people/:id',
-        component: () => import('@/views/People')
-    },
-    {
-        path: '/message',
-        component: () => import('@/views/Message')
-    },
-    {
-        path: '/setting',
-        component: () => import('@/views/Setting')
-    },
-    {
-        path: '/forgetPassword',
-        component: () => import('@/views/Password/ForgetPassword')
-    },
-    {
-        path: '/test',
-        component: () => import('@/views/Message/MessageContent/MessageItem')
-    },
+  {
+    path: '/',
+    component: app,
+    redirect: 'hot'
+  },
+  {
+    path: '/hot',
+    component: () => import('@/views/Home/Hot')
+  },
+  {
+    path: '/follow',
+    component: () => import('@/views/Home/Follow')
+  },
+  {
+    path: '/recommend',
+    component: () => import('@/views/Home/Recommend')
+  },
+  {
+    path: '/question/:id',
+    component: () => import('@/views/QuestionAnswer')
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/Password/Login')
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/Password/Register')
+  },
+  {
+    path: '/people/:id',
+    component: () => import('@/views/People')
+  },
+  {
+    path: '/message',
+    component: () => import('@/views/Message')
+  },
+  {
+    path: '/setting',
+    component: () => import('@/views/Setting')
+  },
+  {
+    path: '/forgetPassword',
+    component: () => import('@/views/Password/ForgetPassword')
+  },
+  {
+    path: '/test',
+    component: () => import('@/views/Message/MessageContent/MessageItem')
+  },
 
-    // 404 page must be placed at the end !!!
-    {path: '*', component: () => import('@/views/NotFound')}
+  // 404 page must be placed at the end !!!
+  { path: '*', component: () => import('@/views/NotFound') }
 ]
 
 const createRouter = () => new Router({
-    // mode: 'history', // require service support
-    scrollBehavior: () => ({y: 0}),
-    routes: constantRoutes
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
 })
 
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-    const newRouter = createRouter()
-    router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
 }
 
 export default router

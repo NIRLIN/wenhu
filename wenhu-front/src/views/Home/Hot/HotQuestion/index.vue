@@ -27,7 +27,7 @@
     </el-row>
     <el-row>
       <el-col :span="1">
-        <div class="grid-content bg-purple"/>
+        <div class="grid-content bg-purple" />
       </el-col>
       <el-col :span="23">
         <div class="grid-content bg-purple-light">
@@ -41,13 +41,13 @@
     </el-row>
     <el-row>
       <el-col :span="1">
-        <div class="grid-content bg-purple"/>
+        <div class="grid-content bg-purple" />
       </el-col>
       <el-col :span="4">
         <div class="grid-content bg-purple">
           <div id="footer_hot">
             <span>
-              <i class="el-icon-data-line"/> {{ hot_question.question_hot }}万热度
+              <i class="el-icon-data-line" /> {{ hot_question.question_hot }}万热度
             </span>
           </div>
         </div>
@@ -56,13 +56,13 @@
         <div class="grid-content bg-purple">
           <div id="footer_share">
             <span @click="copy_link">
-              <i class="el-icon-s-promotion"/>分享
+              <i class="el-icon-s-promotion" />分享
             </span>
           </div>
         </div>
       </el-col>
       <el-col :span="16">
-        <div class="grid-content bg-purple"/>
+        <div class="grid-content bg-purple" />
       </el-col>
 
     </el-row>
@@ -87,7 +87,7 @@ export default {
     this.hot_question_url = '#/question/' + this.hot_question.question_id
   },
   methods: {
-    copy_link: function () {
+    copy_link: function() {
       alert(window.location.href)
     }
   }

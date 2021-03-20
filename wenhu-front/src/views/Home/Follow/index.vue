@@ -2,7 +2,7 @@
   <div id="Follow">
     <el-row class="margin_nav_size">
       <el-col :span="4">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
       <el-col :span="16">
         <div class="grid-content ">
@@ -20,7 +20,7 @@
             </el-row>
             <el-row>
               <el-col :span="24">
-                <div class="grid-content bg-purple"/>
+                <div class="grid-content bg-purple" />
               </el-col>
             </el-row>
             <el-row>
@@ -42,7 +42,7 @@
         </div>
       </el-col>
       <el-col :span="4">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
     </el-row>
   </div>
@@ -54,7 +54,7 @@ import Answer from '@/components/Answer'
 
 export default {
   name: 'Follow',
-  components: {Answer},
+  components: { Answer },
   data() {
     return {
       items: ['a', 'b', 'c']

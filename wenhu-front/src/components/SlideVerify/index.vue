@@ -1,9 +1,14 @@
 <template>
   <div ref="dragDiv" class="drag">
-    <div class="drag_bg"/>
+    <div class="drag_bg" />
     <div class="drag_text">{{ confirmWords }}</div>
-    <div ref="moveDiv" :class="{'handler_ok_bg':confirmSuccess}" class="handler handler_bg"
-         style="position: absolute;top: 0px;left: 0px;" @mousedown="mousedownFn($event)"/>
+    <div
+      ref="moveDiv"
+      :class="{'handler_ok_bg':confirmSuccess}"
+      class="handler handler_bg"
+      style="position: absolute;top: 0px;left: 0px;"
+      @mousedown="mousedownFn($event)"
+    />
   </div>
 </template>
 
@@ -19,7 +24,7 @@ export default {
     }
   },
   watch: {
-    confirmSuccess: function () {
+    confirmSuccess: function() {
       this.childToFather()
     }
   },
@@ -32,7 +37,7 @@ export default {
     childToFather() {
       this.$emit('childByValue', this.confirmSuccess)
     },
-    mousedownFn: function (e) {
+    mousedownFn: function(e) {
       if (!this.confirmSuccess) {
         e.preventDefault && e.preventDefault() // 阻止文字选中等 浏览器默认事件
         this.mouseMoveStata = true

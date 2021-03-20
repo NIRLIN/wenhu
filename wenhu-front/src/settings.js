@@ -1,16 +1,17 @@
 module.exports = {
 
-    title: '闻乎',
+  title: '闻乎',
 
-    /**
+  /**
      * @type {boolean} true | false
      * @description Whether fix the header
      */
-    fixedHeader: false,
+  fixedHeader: false,
 
-    /**
+  /**
      * @type {boolean} true | false
      * @description Whether show the logo in sidebar
      */
-    sidebarLogo: false
+  sidebarLogo: false
 }
+

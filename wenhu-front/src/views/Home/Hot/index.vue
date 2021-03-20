@@ -2,7 +2,7 @@
   <div id="Hot">
     <el-row class="margin_nav_size">
       <el-col :span="4">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
       <el-col :span="16">
         <div class="grid-content ">
@@ -20,7 +20,7 @@
             </el-row>
             <el-row>
               <el-col :span="24">
-                <div class="grid-content bg-purple"/>
+                <div class="grid-content bg-purple" />
               </el-col>
             </el-row>
             <el-row>
@@ -29,7 +29,7 @@
                   <div id="hotList">
                     <div v-for="(hot,index) in hotList" :key="index" class="hot_question_background ">
                       <div>
-                        <HotQuestion :hot_number_no="index+1" :hot_question="hot"/>
+                        <HotQuestion :hot_number_no="index+1" :hot_question="hot" />
                       </div>
                     </div>
                   </div>
@@ -41,7 +41,7 @@
         </div>
       </el-col>
       <el-col :span="4">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
     </el-row>
   </div>
@@ -51,12 +51,12 @@
 <script>
 
 import HotQuestion from '@/views/Home/Hot/HotQuestion'
-import {getHotList} from '@/api/home'
-import {Message} from 'element-ui'
+/* import { getHotList } from '@/api/home'
+import { Message } from 'element-ui'*/
 
 export default {
   name: 'Hot',
-  components: {HotQuestion},
+  components: { HotQuestion },
   data() {
     return {
       items: ['a', 'b', 'c'],

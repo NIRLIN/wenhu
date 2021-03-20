@@ -2,18 +2,18 @@
   <div id="notFound">
     <el-row>
       <el-col :span="8">
-        <div class="grid-content"/>
+        <div class="grid-content" />
       </el-col>
       <el-col :span="8">
         <div class="grid-content">
-        <span class="notFoundNumber">
-          404
-        </span>
+          <span class="notFoundNumber">
+            404
+          </span>
           <br>
           <br>
           <span class="notFoundFont">
-          你似乎来到了没有知识存在的荒原
-        </span>
+            你似乎来到了没有知识存在的荒原
+          </span>
           <br>
           <br>
           <el-link :underline="false" href="#/hot">
@@ -21,7 +21,7 @@
           </el-link>
           <br>
           <br>
-          <el-button class="goBeforePage" type="text" @click="prev">或者 返回上页 <i class="el-icon-arrow-right"/></el-button>
+          <el-button class="goBeforePage" type="text" @click="prev">或者 返回上页 <i class="el-icon-arrow-right" /></el-button>
         </div>
       </el-col>
       <el-col :span="8">

@@ -2,7 +2,7 @@
   <div id="login">
     <el-row class="login_min_width">
       <el-col :span="7">
-        <div class="grid-content"/>
+        <div class="grid-content" />
       </el-col>
       <el-col :span="10">
         <div class="grid-content">
@@ -21,16 +21,20 @@
                 <el-row>
                   <el-col :span="24">
                     <div v-if="!user_is_human" class="grid-content input_margin">
-                      <SlideVerify @childByValue="childByValue"/>
+                      <SlideVerify @childByValue="childByValue" />
                     </div>
                     <div v-if="user_is_human" class="grid-content input_margin">
-                      <el-input v-model="user_verify_code_user" class="input-with-select " maxlength="6"
-                                placeholder="请输入短信验证码">
+                      <el-input
+                        v-model="user_verify_code_user"
+                        class="input-with-select "
+                        maxlength="6"
+                        placeholder="请输入短信验证码"
+                      >
                         <el-button v-if="getCodeButtonNumber===60" slot="append" type="primary" @click="timeMinus">{{
                           getCodeButtonValue }}
                         </el-button>
                         <el-button v-if="getCodeButtonNumber!==60" slot="append" :disabled="true">{{ getCodeButtonValue
-                          }}
+                        }}
                         </el-button>
                       </el-input>
                     </div>
@@ -45,7 +49,7 @@
                     </div>
                   </el-col>
                 </el-row>
-                <el-row/>
+                <el-row />
               </el-tab-pane>
               <el-tab-pane label="密码登录" name="second">
                 <el-row>
@@ -60,16 +64,16 @@
                 <el-row>
                   <el-col :span="24">
                     <div class="grid-content input_margin">
-                      <el-input v-model="user_password" :show-password="true" placeholder="请输入密码" type="password"/>
+                      <el-input v-model="user_password" :show-password="true" placeholder="请输入密码" type="password" />
                     </div>
                   </el-col>
                 </el-row>
                 <el-row>
                   <el-col :span="8">
-                    <div class="grid-content "/>
+                    <div class="grid-content " />
                   </el-col>
                   <el-col :span="8">
-                    <div class="grid-content "/>
+                    <div class="grid-content " />
                   </el-col>
                   <el-col :span="8">
                     <div class="grid-content ">
@@ -85,7 +89,7 @@
                     </div>
                   </el-col>
                 </el-row>
-                <el-row/>
+                <el-row />
               </el-tab-pane>
             </el-tabs>
 
@@ -94,7 +98,7 @@
         </div>
       </el-col>
       <el-col :span="7">
-        <div class="grid-content"/>
+        <div class="grid-content" />
       </el-col>
     </el-row>
 
@@ -103,13 +107,13 @@
 </template>
 
 <script>
-import {Message} from 'element-ui'
-import {loginByPassword, loginByVerify, userRegister} from '@/api/password'
+import { Message } from 'element-ui'
+import { loginByPassword, loginByVerify } from '@/api/password'
 import SlideVerify from '@/components/SlideVerify'
 
 export default {
   name: 'Login',
-  components: {SlideVerify},
+  components: { SlideVerify },
   data() {
     return {
       activeName: 'first',
@@ -125,14 +129,14 @@ export default {
     }
   },
   methods: {
-    childByValue: function (childValue) {
+    childByValue: function(childValue) {
       // childValue就是子组件传过来的值
       this.user_is_human = childValue
     },
     handleClick(tab, event) {
       console.log(tab, event)
     },
-    timeMinus: function () {
+    timeMinus: function() {
       if (this.user_phone_number === '') {
         this.$message.error('错了哦，请输入手机号')
         return
@@ -169,13 +173,13 @@ export default {
       formData.append('email', 'this.loginForm.email')
       formData.append('password', 'this.loginForm.password')
 
-      loginByVerify(formData).then(function (response) {
+      loginByVerify(formData).then(function(response) {
         Message.success(response.data)
         return response.data
       })
-          .catch(function (error) {
-            console.log(error)
-          })
+        .catch(function(error) {
+          console.log(error)
+        })
     },
     passwordLogin() {
       if (this.user_phone_number === '' || this.user_password === '') {
@@ -192,7 +196,7 @@ export default {
         this.$message.error('错了哦，密码是6-16位字母的组合，区分大小写')
         return
       }
-      const userData = {'phoneNumber': this.user_phone_number, 'password': this.user_password}
+      const userData = { 'phoneNumber': this.user_phone_number, 'password': this.user_password }
       console.log(userData)
       loginByPassword(userData).then((response) => {
         console.log(response.data)

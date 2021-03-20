@@ -1,7 +1,7 @@
 <template>
   <div id="Message">
     <h1>这里是message</h1>
-    <MessageContent/>
+    <MessageContent />
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import MessageContent from './MessageContent'
 
 export default {
   name: 'Message',
-  components: {MessageContent}
+  components: { MessageContent }
 }
 </script>
 

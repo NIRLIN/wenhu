@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 39.100.232.173:8848
+        username: nacos
+        password: nacos
+        file-extension: yaml
+        extension-configs:
+          - data-id: wenhu-config.yaml
+            refresh: true
+        group: wenhu
+      discovery:
+        server-addr: 39.100.232.173:8848
+        username: nacos
+        password: nacos
+        group: wenhu

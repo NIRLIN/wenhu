@@ -2,7 +2,7 @@
   <div id="question">
     <el-row>
       <el-col :span="4">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
       <el-col :span="14">
         <div class="grid-content ">
@@ -14,19 +14,19 @@
         </div>
       </el-col>
       <el-col :span="2">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
       <el-col :span="1">
         <div class="grid-content ">
           <div class=" follow_browsing">
             <el-link :underline="false">
-            <span class="follow_number_font">
-              关注者
-            </span>
+              <span class="follow_number_font">
+                关注者
+              </span>
               <br>
               <span class="follow_number_count">
-              {{ question_follow_number }}
-            </span>
+                {{ question_follow_number }}
+              </span>
             </el-link>
           </div>
         </div>
@@ -35,24 +35,24 @@
         <div class="grid-content ">
           <div class=" div_divider_left follow_browsing">
             <el-link :underline="false" style="margin-left: 20px;">
-            <span class="follow_number_font">
-              浏览数
-            </span>
+              <span class="follow_number_font">
+                浏览数
+              </span>
               <br>
               <span class="follow_number_count">
-              {{ question_browse_number }}
-            </span>
+                {{ question_browse_number }}
+              </span>
             </el-link>
           </div>
         </div>
       </el-col>
       <el-col :span="4">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="4">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
       <el-col :span="10">
         <div class="grid-content ">
@@ -63,13 +63,13 @@
         </div>
       </el-col>
       <el-col :span="10">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
     </el-row>
     <el-row class="question_function">
 
       <el-col :span="4">
-        <div class="grid-content "/>
+        <div class="grid-content " />
       </el-col>
       <el-col :span="12">
         <div class="grid-content ">
@@ -78,7 +78,7 @@
           <el-button class="no_border_outline" icon="el-icon-s-comment " plain>评论</el-button>
           <el-button class="no_border_outline" icon="el-icon-s-promotion " plain>分享</el-button>
           <el-button class="no_border_outline" plain>
-            <i class="el-icon-more question_more "/>
+            <i class="el-icon-more question_more " />
           </el-button>
         </div>
       </el-col>

@@ -4,9 +4,9 @@
       <el-col :span="24">
         <div class="grid-content bg-purple">
           <div class="messageItem_time">
-          <span>
-            {{ send_time }}
-          </span>
+            <span>
+              {{ send_time }}
+            </span>
           </div>
         </div>
       </el-col>
@@ -14,20 +14,20 @@
     <el-row>
       <el-col :span="1">
         <div class="grid-content bg-purple">
-          <el-avatar :src="sender_image_url"/>
+          <el-avatar :src="sender_image_url" />
         </div>
       </el-col>
       <el-col :span="20">
         <div class="grid-content bg-purple">
           <div>
-            <el-tree :data="data" @node-contextmenu="getCheckedNodes"/>
+            <el-tree :data="data" @node-contextmenu="getCheckedNodes" />
 
             <div class="bubble">
-            <span class="messageItem_content_font">
-              <div class="messageItem_content_font">
-                {{ send_message_content }}
-              </div>
-            </span>
+              <span class="messageItem_content_font">
+                <div class="messageItem_content_font">
+                  {{ send_message_content }}
+                </div>
+              </span>
             </div>
 
           </div>
@@ -37,7 +37,7 @@
     </el-row>
     <el-row>
       <el-col :span="24">
-        <div class="grid-content bg-purple"/>
+        <div class="grid-content bg-purple" />
       </el-col>
     </el-row>
   </div>
@@ -53,8 +53,8 @@ export default {
       send_time: '2017',
       send_message_content: '升级后的专栏支持收录更多形式的内容，如回答、视频等；升级后的专栏支持收录更多形式的内容，如回答、视频等；升级后的专栏支持收录更多形式的内容，如回答、视频等；升级后的专栏支持收录更多形式的内容，如回答、视频等；被收录的新内容会自带专栏入口，增加专栏的曝光度；新专栏可以快速创建，审核周期大大缩短，管理专栏的体验也做了升级优化。也欢迎你创建新专栏，体验新功能。',
       data: [
-        {label: 'a'},
-        {label: 'b'}
+        { label: 'a' },
+        { label: 'b' }
       ]
 
     }

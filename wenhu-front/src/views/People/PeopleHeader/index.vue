@@ -5,9 +5,9 @@
         <div class="grid-content ">
           <div id="peopleHeader_image">
             <el-image
-                :src="peopleHeader_image_url"
-                fit="fill"
-                style="width: 150px; height: 150px"
+              :src="peopleHeader_image_url"
+              fit="fill"
+              style="width: 150px; height: 150px"
             />
           </div>
         </div>

@@ -5,7 +5,7 @@
         <div class="grid-content">
           <div>
             <el-link :underline="false">
-              <el-avatar :size="40" :src="answer_head_image" shape="square"/>
+              <el-avatar :size="40" :src="answer_head_image" shape="square" />
             </el-link>
           </div>
         </div>
@@ -25,16 +25,16 @@
         </div>
       </el-col>
       <el-col :span="22">
-        <div class="grid-content"/>
+        <div class="grid-content" />
       </el-col>
     </el-row>
     <el-row class="answer_margin">
       <el-col :span="24">
         <div class="grid-content">
           <div>
-          <span class="answer_content_font">
-            {{ answer_content }}
-          </span>
+            <span class="answer_content_font">
+              {{ answer_content }}
+            </span>
           </div>
         </div>
       </el-col>
@@ -55,7 +55,7 @@
       <el-col :span="24">
         <div class="grid-content ">
           <el-button plain size="small" type="primary">赞同</el-button>
-          <el-button plain size="small" type="primary"><i class="un-down el-icon-caret-bottom"/></el-button>
+          <el-button plain size="small" type="primary"><i class="un-down el-icon-caret-bottom" /></el-button>
           <el-button class="no_border_outline" icon="el-icon-chat-round" plain size="small">评论</el-button>
           <el-button class="no_border_outline" icon="el-icon-s-promotion" plain size="small">分享</el-button>
           <el-button class="no_border_outline" icon="el-icon-star-on" plain size="small">收藏</el-button>

@@ -1,5 +1,6 @@
 package org.wenhu.util;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,20 +26,20 @@ public class Result<T> implements Serializable {
         return succeed(ResultCode.SUCCESS.getCode(), message, null);
     }
 
+    public static <T> Result<T> succeed(String code, String message) {
+        return new Result<>(code, message, null);
+    }
+
     public static <T> Result<T> succeed(String message, T data) {
         return succeed(ResultCode.SUCCESS.getCode(), message, data);
     }
 
     public static <T> Result<T> succeed(T data) {
-        return succeed(ResultCode.SUCCESS.getCode(), "success", data);
+        return succeed(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
     }
 
     public static <T> Result<T> succeed(String code, String message, T data) {
         return new Result<>(code, message, data);
-    }
-
-    public static <T> Result<T> succeed(String code, String message) {
-        return new Result<>(code, message, null);
     }
 
     public static <T> Result<T> failed(String message) {

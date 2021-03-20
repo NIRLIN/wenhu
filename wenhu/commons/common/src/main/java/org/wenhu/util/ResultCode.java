@@ -3,8 +3,9 @@ package org.wenhu.util;
 import lombok.Getter;
 
 /**
- * @author 田旭东
- * @date 2020/9/18 17:40
+ * @author NIRLIN
+ * @version 1.0
+ * @date 2021/3/18
  */
 
 @Getter
@@ -74,8 +75,8 @@ public enum ResultCode {
     USER_ERROR_A0152("A0152", "地址格式校验失败"),
     // 邮箱格式校验失败
     USER_ERROR_A0153("A0153", "邮箱格式校验失败"),
-    // 手机已绑定
-    USER_ERROR_A0154("A0151", "手机已绑定"),
+    // 手机号已绑定
+    USER_ERROR_A0154("A0154", "手机号已绑定"),
     // 用户登录异常
     USER_ERROR_A0200("A0200", "用户登录异常"),
     // 用户账户不存在

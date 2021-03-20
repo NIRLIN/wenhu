@@ -1,5 +1,5 @@
 <template>
-  <div id="Navbar" class="navbar_class_css">
+  <div id="Navbar">
     <el-menu :default-active="activeIndex" class="el-menu-demo " mode="horizontal" @select="handleSelect">
       <el-menu-item v-show="false" index="100">
         <el-link :underline="false" href="#/hot">隐藏item</el-link>
@@ -20,11 +20,11 @@
       <el-menu-item index="3">更多</el-menu-item>
       <el-menu-item class="input_width">
         <el-input
-            v-model="header_search_value"
-            class="header_search_input"
-            placeholder="请输入内容"
-            size="medium"
-            suffix-icon="el-icon-search"
+          v-model="header_search_value"
+          class="header_search_input"
+          placeholder="请输入内容"
+          size="medium"
+          suffix-icon="el-icon-search"
         />
       </el-menu-item>
       <el-menu-item v-if="is_login">
@@ -37,7 +37,7 @@
           <el-link :underline="false" href="#/message">
             <el-button class="header_message" type="text">
               <el-badge :value="1" class="item" type="primary">
-                <i class="el-icon-message header_message_size"/>
+                <i class="el-icon-message header_message_size" />
               </el-badge>
             </el-button>
           </el-link>
@@ -102,7 +102,8 @@
 </template>
 
 <script>
-import {getCookie, setCookie, removeCookie} from '@/utils/login-status'
+// eslint-disable-next-line no-unused-vars
+import { getCookie, setCookie, removeCookie } from '@/utils/login-status'
 
 export default {
   name: 'Navbar',
@@ -123,7 +124,7 @@ export default {
     }
   },
   watch: {
-    home_no: function () {
+    home_no: function() {
       if (this.home_no === 0) {
         this.activeIndex = '100'
       } else {
@@ -132,10 +133,10 @@ export default {
     }
   },
 
-  created: function () {
+  created: function() {
     this.getUrlIndex()
 
-    setCookie(this.user_id)
+    // setCookie(this.user_id)
     const cookie = getCookie()
     // console.log(typeof cookie)
     // console.log(cookie)
@@ -166,7 +167,7 @@ export default {
         this.activeIndex = '' + tmp
       }
     },
-    logout: function () {
+    logout: function() {
       alert(this.$store.state.name)
       removeCookie()
     }
@@ -177,10 +178,6 @@ export default {
 <style scoped>
 .header_search_input {
   width: 100%;
-}
-
-.navbar_class_css {
-  min-width: calc(140vh);
 }
 
 .header_message {
