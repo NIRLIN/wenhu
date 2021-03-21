@@ -155,7 +155,7 @@ export default {
       verify_code_system_create_time: '',
       user_password: '',
       content: '发送验证码',
-      totalTime: 10,
+      totalTime: 120,
       canClick: true, // 添加canClick
       user_is_human: 0,
       active: 0,
@@ -250,9 +250,9 @@ export default {
       if (!this.verifyPhoneNumber()) {
         return
       }
-      this.checkPhoneExistAndSendSms()
       if (!this.canClick) return // 改动的是这两行代码
       this.canClick = false
+      this.checkPhoneExistAndSendSms()
       this.content = this.totalTime + 's后重试'
       const clock = window.setInterval(() => {
         this.totalTime--

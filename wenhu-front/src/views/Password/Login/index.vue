@@ -12,29 +12,28 @@
                 <el-row>
                   <el-col :span="24">
                     <div class="grid-content  input_margin">
-                      <el-input class="input-with-select " placeholder="请输入手机号">
+                      <el-input v-model="user_phone_number" class="input-with-select " placeholder="请输入手机号">
                         <template slot="prepend">中国大陆</template>
                       </el-input>
                     </div>
                   </el-col>
                 </el-row>
                 <el-row>
-                  <el-col :span="24">
-                    <div v-if="!user_is_human" class="grid-content input_margin">
+                  <el-col v-if="!user_is_human" :span="24">
+                    <div class="grid-content input_margin">
                       <SlideVerify @childByValue="childByValue" />
                     </div>
-                    <div v-if="user_is_human" class="grid-content input_margin">
+                  </el-col>
+                  <el-col v-if="user_is_human" :span="24">
+                    <div class="grid-content input_margin">
                       <el-input
                         v-model="user_verify_code_user"
                         class="input-with-select "
                         maxlength="6"
                         placeholder="请输入短信验证码"
                       >
-                        <el-button v-if="getCodeButtonNumber===60" slot="append" type="primary" @click="timeMinus">{{
-                          getCodeButtonValue }}
-                        </el-button>
-                        <el-button v-if="getCodeButtonNumber!==60" slot="append" :disabled="true">{{ getCodeButtonValue
-                        }}
+                        <el-button slot="append" class="button" @click="getVerifyCodeTime">
+                          {{ content }}
                         </el-button>
                       </el-input>
                     </div>
@@ -44,7 +43,7 @@
                 <el-row>
                   <el-col :span="24">
                     <div class="grid-content input_margin">
-                      <el-button class="enroll_button " type="primary">登录</el-button>
+                      <el-button class="enroll_button " type="primary" @click="byVerifyLogin">登录</el-button>
 
                     </div>
                   </el-col>
@@ -84,7 +83,7 @@
                 <el-row>
                   <el-col :span="24">
                     <div class="grid-content ">
-                      <el-button class="enroll_button " type="primary" @click="passwordLogin">登录</el-button>
+                      <el-button class="enroll_button " type="primary" @click="byPasswordLogin">登录</el-button>
 
                     </div>
                   </el-col>
@@ -108,8 +107,10 @@
 
 <script>
 import { Message } from 'element-ui'
-import { loginByPassword, loginByVerify } from '@/api/password'
+import { userLoginByPassword, userLoginByPhoneVerify } from '@/api/password'
 import SlideVerify from '@/components/SlideVerify'
+// eslint-disable-next-line no-unused-vars
+import { getCookie, setCookie, removeCookie } from '@/utils/login-status'
 
 export default {
   name: 'Login',
@@ -120,12 +121,20 @@ export default {
       user_phone_number: '',
       user_phone_code: '',
       user_password: '',
-      getCodeButtonNumber: 60,
-      getCodeButtonValue: '点击获取',
       user_verify_code_system: '',
       user_verify_code_user: '',
-      user_is_human: 0
-
+      verify_code_system_create_time: '',
+      user_is_human: 0,
+      content: '发送验证码',
+      totalTime: 120,
+      canClick: true,
+      user_id: { },
+      user_id_verify: { }
+    }
+  },
+  watch: {
+    user_id() {
+      setCookie(this.user_id.id)
     }
   },
   methods: {
@@ -133,59 +142,79 @@ export default {
       // childValue就是子组件传过来的值
       this.user_is_human = childValue
     },
-    handleClick(tab, event) {
-      console.log(tab, event)
-    },
-    timeMinus: function() {
+    verifyPhoneNumber() {
       if (this.user_phone_number === '') {
         this.$message.error('错了哦，请输入手机号')
-        return
-      }
-      if (this.getCodeButtonNumber === 60 && this.startTime === 0) {
-        this.startTime = Date.now()
-      }
-      const nowTime = Date.now()
-      this.getCodeButtonNumber = 60 - Math.round((nowTime - this.startTime) / 1000)
-      this.getCodeButtonValue = this.getCodeButtonNumber + '秒后重试'
-
-      if (Math.round((nowTime - this.startTime) / 1000) >= 60) {
-        this.getCodeButtonValue = '点击获取'
-        this.getCodeButtonNumber = 60
-      } else {
-        setTimeout(this.timeMinus, 1000)
-      }
-    },
-    verifyLogin() {
-      if (this.user_phone_number === '' || this.user_password === '') {
-        this.$message.error('请保证信息完整哦~')
-        return
+        return false
       }
       const FloatRegexPhone = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
       if (!FloatRegexPhone.test(this.user_phone_number)) {
         this.$message.error('错了哦，手机号错误~')
-        return
+        return false
       }
-      if (this.user_verify_code_system !== this.user_verify_code_user) {
-        this.$message.error('错了哦，验证码不对哦~')
-        return
-      }
-      const formData = new FormData()
-      formData.append('email', 'this.loginForm.email')
-      formData.append('password', 'this.loginForm.password')
-
-      loginByVerify(formData).then(function(response) {
-        Message.success(response.data)
-        return response.data
-      })
-        .catch(function(error) {
-          console.log(error)
-        })
+      return true
     },
-    passwordLogin() {
-      if (this.user_phone_number === '' || this.user_password === '') {
-        this.$message.error('请保证信息完整哦~')
+    getVerifyCodeTime() {
+      if (!this.verifyPhoneNumber()) {
         return
       }
+      if (!this.canClick) return // 改动的是这两行代码
+      this.canClick = false
+      this.getLoginCode()
+      this.content = this.totalTime + 's后重试'
+      const clock = window.setInterval(() => {
+        this.totalTime--
+        this.content = this.totalTime + 's后重试'
+        if (this.totalTime < 0) {
+          window.clearInterval(clock)
+          this.content = '重新发送'
+          this.totalTime = 10
+          this.canClick = true // 这里重新开启
+        }
+      }, 1000)
+    },
+    getLoginCode() {
+      if (!this.verifyPhoneNumber()) {
+        return
+      }
+      this.createVerifyCode()
+      const submitData = { 'phoneNumber': this.user_phone_number, 'verifyCode': this.user_verify_code_system }
+
+      userLoginByPhoneVerify(submitData).then((response) => {
+        // Message.success('成功，正在跳转')
+        this.user_id_verify = JSON.parse(response.data)
+        console.log(response.data)
+        // this.$router.push('hot')
+      })
+    },
+    handleClick(tab, event) {
+      console.log(tab, event)
+    },
+    createVerifyCode() {
+      let code = ''
+      for (let i = 0; i < 6; i++) {
+        const random = Math.floor(Math.random() * 10)
+        code += random
+      }
+      this.user_verify_code_system = code
+      this.verify_code_system_create_time = Date.now() / 1000
+      console.log(this.user_verify_code_system)
+    },
+    byVerifyLogin() {
+      if (this.user_verify_code_user === this.user_verify_code_system) {
+        if (((Date.now() / 1000) - this.verify_code_system_create_time) > 60 * 15) {
+          this.$message.error({
+            message: '验证码时间过了哦',
+            center: true
+          })
+          return
+        }
+        Message.success('成功，正在跳转')
+        this.$router.push('hot')
+        setCookie(this.user_id_verify.id)
+      }
+    },
+    byPasswordLogin() {
       const FloatRegexPhone = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
       if (!FloatRegexPhone.test(this.user_phone_number)) {
         this.$message.error('错了哦，手机号错误~')
@@ -196,16 +225,12 @@ export default {
         this.$message.error('错了哦，密码是6-16位字母的组合，区分大小写')
         return
       }
-      const userData = { 'phoneNumber': this.user_phone_number, 'password': this.user_password }
-      console.log(userData)
-      loginByPassword(userData).then((response) => {
-        console.log(response.data)
+      const submitData = { 'phoneNumber': this.user_phone_number, 'password': this.user_password }
+
+      userLoginByPassword(submitData).then((response) => {
         Message.success('成功，正在跳转')
-        document.cookie = 'user_id=123456789'
-        this.$router.push({
-          path: '/hot',
-          component: () => import('@/views/Home/Hot')
-        })
+        this.user_id = JSON.parse(response.data)
+        this.$router.push('hot')
       })
     }
   }

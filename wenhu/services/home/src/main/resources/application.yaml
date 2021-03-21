@@ -1,3 +1,5 @@
 spring:
   application:
     name: home
+server:
+  port: 8020

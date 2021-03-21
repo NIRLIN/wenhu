@@ -1,6 +1,5 @@
 package org.wenhu.user.controller;
 
-import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +8,6 @@ import org.wenhu.user.service.UserServiceImpl;
 import org.wenhu.util.Result;
 import org.wenhu.util.ResultCode;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,49 +32,66 @@ public class UserController {
     @RequestMapping(name = "userRegister", value = "userRegister", method = RequestMethod.POST)
     Result<String> userRegister(@RequestBody UserDTO userDTO) {
         Result<String> register = userService.userRegister(userDTO);
-        System.out.println("userDTO"+userDTO);
-        System.out.println("register"+register);
+        System.out.println("userDTO" + userDTO);
+        System.out.println("register" + register);
         return register;
     }
 
     @PostMapping(name = "checkPhoneExistAndSendSms", value = "checkPhoneExistAndSendSms")
-    Result<String> checkPhoneExistAndSendSms(@RequestBody Map<String,Object> checkAndSend) {
-        String phoneNumber= (String) checkAndSend.get("phoneNumber");
-        String verifyCode= (String) checkAndSend.get("verifyCode");
+    Result<String> checkPhoneExistAndSendSms(@RequestBody Map<String, Object> checkAndSend) {
+        String phoneNumber = (String) checkAndSend.get("phoneNumber");
+        String verifyCode = (String) checkAndSend.get("verifyCode");
         Result<String> stringResult = userService.checkPhoneExist(phoneNumber);
-        String succeedCode= ResultCode.SUCCESS.getCode();
-        if (succeedCode.equals(stringResult.getCode())){
+        String succeedCode = ResultCode.SUCCESS.getCode();
+        if (succeedCode.equals(stringResult.getCode())) {
             String code = getPhoneVerifyCode(phoneNumber, verifyCode);
-            if (code.equals(succeedCode)){
+            if (code.equals(succeedCode)) {
                 return Result.succeed("获取验证码成功");
-            }else {
+            } else {
                 return Result.failed("获取验证码失败");
             }
         }
         return stringResult;
     }
 
-    String getPhoneVerifyCode(String phoneNumber,String verifyCode) {
+    @PostMapping(name = "sendVerifyCode", value = "sendVerifyCode")
+    String sendVerifyCode(String phoneNumber, String verifyCode) {
         return userService.getPhoneVerifyCode(phoneNumber, verifyCode);
     }
 
-    String loginByPassword() {
-        return "";
+    String getPhoneVerifyCode(String phoneNumber, String verifyCode) {
+        return userService.getPhoneVerifyCode(phoneNumber, verifyCode);
     }
 
-    String loginByVerifyCode() {
-        return "";
+    @PostMapping(name = "userLoginByPassword", value = "userLoginByPassword")
+    Result<String> userLoginByPassword(@RequestBody Map<String, Object> objectMap) {
+        String phoneNumber = (String) objectMap.get("phoneNumber");
+        String password = (String) objectMap.get("password");
+        UserDTO userDTO = new UserDTO();
+        userDTO.setPhoneNumber(phoneNumber);
+        userDTO.setPassword(password);
+        return userService.userLoginByPassword(userDTO);
     }
 
-    String changePassword() {
-        return "";
+    @PostMapping(name = "userLoginByPhoneVerify", value = "userLoginByPhoneVerify")
+    Result<String> userLoginByPhoneVerify(@RequestBody Map<String, Object> objectMap) {
+        String phoneNumber = (String) objectMap.get("phoneNumber");
+        String verifyCode = (String) objectMap.get("verifyCode");
+        UserDTO userDTO = new UserDTO();
+        userDTO.setPhoneNumber(phoneNumber);
+        System.out.println(phoneNumber + verifyCode);
+        return userService.userLoginByPhoneVerify(userDTO, verifyCode);
     }
 
-    String getUserHomepage() {
-        return "";
+    Result<String> changePassword() {
+        return null;
     }
 
-    String getUserInfo() {
-        return "";
+    Result<String> getUserHomepage() {
+        return null;
+    }
+
+    Result<String> getUserInfo() {
+        return null;
     }
 }

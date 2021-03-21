@@ -1,16 +1,16 @@
 import request from '@/utils/request'
 
-export function loginByPassword(data) {
+export function userLoginByPassword(data) {
   return request({
-    url: '/people/user/loginByPassword',
+    url: '/people/user/userLoginByPassword',
     method: 'post',
     data
   })
 }
 
-export function loginByVerify(data) {
+export function userLoginByPhoneVerify(data) {
   return request({
-    url: '/people/user/loginByVerify',
+    url: '/people/user/userLoginByPhoneVerify',
     method: 'post',
     data
   })

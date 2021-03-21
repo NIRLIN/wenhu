@@ -27,13 +27,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result<String> userRegister(UserDTO userDTO) {
         String message = null;
-        String code = null;
+        String code;
         Result<String> stringResult = checkPhoneExist(userDTO.getPhoneNumber());
-        if (stringResult.getCode().equals(ResultCode.USER_ERROR_A0154.getCode())){
-            message=ResultCode.USER_ERROR_A0100.getMessage();
-            code=ResultCode.USER_ERROR_A0100.getCode();
+        //判断手机号是否已绑定，已绑定时不可注册
+        if (stringResult.getCode().equals(ResultCode.USER_ERROR_A0154.getCode())) {
+            message = ResultCode.USER_ERROR_A0100.getMessage();
+            code = ResultCode.USER_ERROR_A0100.getCode();
             return Result.succeed(code, message);
         }
+        //数据补全
         UserDO userDO = new UserDO();
         userDO.setId(String.valueOf(SnowflakeUtils.genId()));
         userDO.setUsername(userDTO.getUsername());
@@ -48,10 +50,11 @@ public class UserServiceImpl implements UserService {
         userDO.setUpdateTime(LocalDateTime.now());
         userDO.setIsDeleted(0);
         int insert = userDao.insert(userDO);
+        //插入成功返回成功
         if (insert == 1) {
             code = ResultCode.SUCCESS.getCode();
             message = ResultCode.SUCCESS.getMessage();
-        }else if (insert == 0) {
+        } else if (insert == 0) {
             code = ResultCode.USER_ERROR_A0100.getCode();
             message = ResultCode.USER_ERROR_A0100.getMessage();
         } else {
@@ -65,9 +68,11 @@ public class UserServiceImpl implements UserService {
     public Result<String> checkPhoneExist(String phoneNumber) {
         String message = null;
         String code = null;
+        //条件构造器
         HashMap<String, Object> stringHashMap = new HashMap<>(1);
         stringHashMap.put("phone_number", phoneNumber);
         List<UserDO> userDO = userDao.selectByMap(stringHashMap);
+        //返回结果-手机号已绑定、成功
         if (userDO.size() >= 1) {
             message = ResultCode.USER_ERROR_A0154.getMessage();
             code = ResultCode.USER_ERROR_A0154.getCode();
@@ -80,19 +85,82 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getPhoneVerifyCode(String phoneNumber,String verifyCode) {
+    public String getPhoneVerifyCode(String phoneNumber, String verifyCode) {
+        //发送短信
         String s = TencentSendSms.sendSmsUtil(phoneNumber, verifyCode);
         return ResultCode.SUCCESS.getCode();
     }
 
     @Override
-    public Result<String> loginByPassword(UserDTO userDTO) {
-        return null;
+    public Result<String> userLoginByPassword(UserDTO userDTO) {
+        Result<String> stringResult = checkPhoneExist(userDTO.getPhoneNumber());
+        String code = null;
+        String message = null;
+        String data = null;
+        System.out.println("userDTO" + userDTO);
+        System.out.println("stringResult" + stringResult);
+        //判断手机号是否已绑定，未绑定时不可验证登录
+        if (ResultCode.USER_ERROR_A0154.getCode().equals(stringResult.getCode())) {
+            HashMap<String, Object> stringHashMap = new HashMap<>(1);
+            stringHashMap.put("phone_number", userDTO.getPhoneNumber());
+            List<UserDO> userDO = userDao.selectByMap(stringHashMap);
+            System.out.println("userDO" + userDO);
+            if (userDO.size() >= 1) {
+                for (UserDO aDo : userDO) {
+                    //循环取出数据，验证账号密码
+                    if (aDo.getPhoneNumber().equals(userDTO.getPhoneNumber()) && aDo.getPassword().equals(userDTO.getPassword())) {
+                        code = ResultCode.SUCCESS.getCode();
+                        message = ResultCode.SUCCESS.getMessage();
+                        //构造id数据进行返回
+                        data = "{\"id\":\"" + aDo.getId() + "\"}";
+                        //避免数据错误
+                        break;
+                    }
+                    if (!aDo.getPassword().equals(userDTO.getPassword())) {
+                        code = ResultCode.USER_ERROR_A0210.getCode();
+                        message = ResultCode.USER_ERROR_A0210.getMessage();
+                    }
+                }
+            } else {
+                //避免验证不存在数据库中的手机号
+                code = ResultCode.USER_ERROR_A0201.getCode();
+                message = ResultCode.USER_ERROR_A0201.getMessage();
+            }
+        } else {
+            code = ResultCode.USER_ERROR_A0201.getCode();
+            message = ResultCode.USER_ERROR_A0201.getMessage();
+        }
+        // System.out.println(Result.succeed(code, message, data));
+        return Result.succeed(code, message, data);
     }
 
     @Override
-    public Result<String> loginByVerifyCode(UserDTO userDTO) {
-        return null;
+    public Result<String> userLoginByPhoneVerify(UserDTO userDTO, String verifyCode) {
+        Result<String> stringResult = checkPhoneExist(userDTO.getPhoneNumber());
+        String code = null;
+        String message = null;
+        String data = null;
+        //判断手机号是否存在
+        if (ResultCode.USER_ERROR_A0154.getCode().equals(stringResult.getCode())) {
+            HashMap<String, Object> stringHashMap = new HashMap<>(1);
+            stringHashMap.put("phone_number", userDTO.getPhoneNumber());
+            List<UserDO> userDO = userDao.selectByMap(stringHashMap);
+            if (userDO != null) {
+                code = ResultCode.SUCCESS.getCode();
+                message = ResultCode.SUCCESS.getMessage();
+                for (UserDO aDo : userDO) {
+                    if (aDo != null) {
+                        getPhoneVerifyCode(userDTO.getPhoneNumber(), verifyCode);
+                        data = "{\"id\":\"" + aDo.getId() + "\"}";
+                    }
+                }
+            }
+        } else {
+            code = ResultCode.USER_ERROR_A0201.getCode();
+            message = ResultCode.USER_ERROR_A0201.getMessage();
+
+        }
+        return Result.succeed(code, message, data);
     }
 
     @Override

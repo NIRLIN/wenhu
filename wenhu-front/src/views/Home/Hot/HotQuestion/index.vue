@@ -33,7 +33,7 @@
         <div class="grid-content bg-purple-light">
           <div id="title_description">
             <el-link id="el_link_content" :href="hot_question_url" :underline="false">
-              <span>{{ hot_question.question_content }}</span>
+              <span>{{ hot_question.question_description }}</span>
             </el-link>
           </div>
         </div>
@@ -47,7 +47,7 @@
         <div class="grid-content bg-purple">
           <div id="footer_hot">
             <span>
-              <i class="el-icon-data-line" /> {{ hot_question.question_hot }}万热度
+              <i class="el-icon-data-line" /> {{ hot_question.question_heat }}万热度
             </span>
           </div>
         </div>

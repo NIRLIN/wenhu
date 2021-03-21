@@ -51,8 +51,8 @@
 <script>
 
 import HotQuestion from '@/views/Home/Hot/HotQuestion'
-/* import { getHotList } from '@/api/home'
-import { Message } from 'element-ui'*/
+import { getHotList } from '@/api/home'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Hot',
@@ -64,18 +64,12 @@ export default {
     }
   },
   created() {
-    // getHotList().then((response) => {
-    //   // this.hotList = response.data
-    //   for (let i = 0; i < response.data.length; i++) {
-    //     // eslint-disable-next-line no-eval
-    //     // console.log(response.data[i])
-    //     // console.log(typeof response.data[i])
-    //     this.hotList.push(JSON.parse(response.data[i]))
-    //   }
-    //   // console.log(this.hotList)
-    // }).catch(function(error) {
-    //   console.log(error)
-    // })
+    getHotList().then((response) => {
+      for (let i = 0; i < response.data.length; i++) {
+        this.hotList.push(JSON.parse(response.data[i]))
+      }
+      console.log(this.hotList)
+    })
   },
   mounted() {
     if (this.hotList === null) {

@@ -14,7 +14,7 @@ import com.tencentcloudapi.sms.v20190711.models.SendSmsResponse;
  * @date 2021/3/18
  */
 public class TencentSendSms {
-    public static String sendSmsUtil(String phoneNumber,String verifyCode) {
+    public static String sendSmsUtil(String phoneNumber, String verifyCode) {
         try {
 
             Credential cred = new Credential("AKIDdLxOgjuDermSs8dveARpz0oPlodDsByY", "VlqhQBhxykMgnfWpslP4kBNhv1B8rOfB");
@@ -28,7 +28,7 @@ public class TencentSendSms {
             SmsClient client = new SmsClient(cred, "", clientProfile);
 
             SendSmsRequest req = new SendSmsRequest();
-            String[] phoneNumberSet1 = {"+86"+phoneNumber+""};
+            String[] phoneNumberSet1 = {"+86" + phoneNumber + ""};
             req.setPhoneNumberSet(phoneNumberSet1);
 
             req.setTemplateID("896631");
@@ -51,6 +51,6 @@ public class TencentSendSms {
     }
 
     public static void main(String[] args) {
-        TencentSendSms.sendSmsUtil("18798189064","123446");
+        TencentSendSms.sendSmsUtil("18798189064", "123446");
     }
 }

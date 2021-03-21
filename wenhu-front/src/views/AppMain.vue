@@ -78,7 +78,7 @@ export default {
 }
 
 .main_min_width {
-  min-width: calc(140vh);
+  min-width: calc(180vh);
 }
 
 .nav_margin_bottom {

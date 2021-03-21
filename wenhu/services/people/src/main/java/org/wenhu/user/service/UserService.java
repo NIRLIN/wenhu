@@ -13,11 +13,11 @@ public interface UserService {
 
     Result<String> checkPhoneExist(String phoneNumber);
 
-    String getPhoneVerifyCode(String phoneNumber,String verifyCode);
+    String getPhoneVerifyCode(String phoneNumber, String verifyCode);
 
-    Result<String> loginByPassword(UserDTO userDTO);
+    Result<String> userLoginByPassword(UserDTO userDTO);
 
-    Result<String> loginByVerifyCode(UserDTO userDTO);
+    Result<String> userLoginByPhoneVerify(UserDTO userDTO, String verifyCode);
 
     Result<String> changePassword(UserDTO userDTO);
 
