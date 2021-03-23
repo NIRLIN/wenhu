@@ -1,6 +1,5 @@
 package org.wenhu.creation.question.service;
 
-import org.springframework.web.bind.annotation.RequestBody;
 import org.wenhu.pojo.DTO.QuestionDTO;
 import org.wenhu.util.Result;
 
@@ -11,5 +10,5 @@ import org.wenhu.util.Result;
  */
 
 public interface QuestionService {
-    Result<String> saveQuestion( QuestionDTO questionDTO);
+    Result<String> saveQuestion(QuestionDTO questionDTO, String menderId);
 }

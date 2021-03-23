@@ -1,10 +1,7 @@
-package org.wenhu.report;
+package org.wenhu;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.wenhu.dao.QuestionDao;
-import org.wenhu.dao.UserDao;
 
 /**
  * @author NIRLIN

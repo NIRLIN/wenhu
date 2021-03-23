@@ -1,12 +1,9 @@
 package org.wenhu.hot;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.wenhu.dao.QuestionDao;
-import org.wenhu.dao.UserDao;
 
 /**
  * @author NIRLIN
@@ -17,6 +14,6 @@ import org.wenhu.dao.UserDao;
 @EnableDiscoveryClient
 public class HotApplication {
     public static void main(String[] args) {
-        SpringApplication.run(HotApplication.class,args);
+        SpringApplication.run(HotApplication.class, args);
     }
 }

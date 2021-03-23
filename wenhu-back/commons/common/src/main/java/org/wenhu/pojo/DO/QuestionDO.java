@@ -24,7 +24,7 @@ public class QuestionDO {
     /**
      * 题目
      */
-    private String topic;
+    private String title;
 
     /**
      * 描述

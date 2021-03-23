@@ -175,23 +175,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result<UserDTO> getUserInfo(UserDTO userDTO) {
-        String code=null;
-        String message=null;
-        if (userDTO.getId()==null|| "".equals(userDTO.getId())){
-            code=ResultCode.USER_ERROR_A0201.getCode();
-            message=ResultCode.USER_ERROR_A0201.getMessage();
+        String code = null;
+        String message = null;
+        if (userDTO.getId() == null || "".equals(userDTO.getId())) {
+            code = ResultCode.USER_ERROR_A0201.getCode();
+            message = ResultCode.USER_ERROR_A0201.getMessage();
         }
         UserDO userDO = userDao.selectById(userDTO.getId());
-        if (userDO==null){
-            code=ResultCode.USER_ERROR_A0201.getCode();
-            message=ResultCode.USER_ERROR_A0201.getMessage();
-        }else {
+        if (userDO == null) {
+            code = ResultCode.USER_ERROR_A0201.getCode();
+            message = ResultCode.USER_ERROR_A0201.getMessage();
+        } else {
             userDTO.setUsername(userDO.getUsername());
             userDTO.setResume(userDO.getResume());
             userDTO.setHeadImage(userDO.getHeadImage());
-            code=ResultCode.SUCCESS.getCode();
-            message=ResultCode.SUCCESS.getMessage();
+            code = ResultCode.SUCCESS.getCode();
+            message = ResultCode.SUCCESS.getMessage();
         }
-        return Result.succeed(code,message,userDTO);
+        return Result.succeed(code, message, userDTO);
     }
 }

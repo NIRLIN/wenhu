@@ -26,7 +26,7 @@ public enum ResultCode {
     // 操作成功
     OPERATION_SUCCESS_D0001("D0001", "操作成功"),
     // 操作失败
-    OPERATION_FAIL_D0002("D0002", "操作失败"),
+    OPERATION_FAIL_D0001("D0001", "操作失败"),
     // 用户端错误
     USER_ERROR_0001("A0001", "用户端错误"),
     // 用户注册错误

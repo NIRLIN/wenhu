@@ -1,10 +1,7 @@
 package org.wenhu.pojo.DTO;
 
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 /**
  * @author NIRLIN
@@ -23,7 +20,7 @@ public class QuestionDTO {
     /**
      * 题目
      */
-    private String topic;
+    private String title;
 
     /**
      * 描述

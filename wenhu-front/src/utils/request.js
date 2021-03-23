@@ -60,7 +60,8 @@ service.interceptors.response.use(
         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
           confirmButtonText: 'Re-Login',
           cancelButtonText: 'Cancel',
-          type: 'warning'
+          type: 'warning',
+          center: true
         }).then(() => {
           store.dispatch('user/resetToken').then(() => {
             location.reload()
@@ -77,6 +78,7 @@ service.interceptors.response.use(
     Message({
       message: error.message,
       type: 'error',
+      center: true,
       duration: 5 * 1000
     })
     return Promise.reject(error)

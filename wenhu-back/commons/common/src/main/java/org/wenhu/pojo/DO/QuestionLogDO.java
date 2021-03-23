@@ -31,6 +31,13 @@ public class QuestionLogDO {
      */
     private String questionId;
 
+
+    /**
+     * 题目或描述0为题目
+     */
+    private String isTitle;
+
+
     /**
      * 修改前内容
      */

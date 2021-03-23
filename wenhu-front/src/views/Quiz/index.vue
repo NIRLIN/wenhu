@@ -4,7 +4,7 @@
       <el-row>
         <el-col :span="24"><div class="grid-content">
           <el-input
-            v-model="question_topic"
+            v-model="question_title"
             placeholder="请输入问题"
             clearable
           />
@@ -27,6 +27,8 @@
 <script>
 import MavonEditor from '@/components/Markdown'
 import { saveQuestion } from '@/api/quiz'
+import { getCookie } from '@/utils/login-status'
+import { Message } from 'element-ui'
 export default {
   name: 'Quiz',
   components: {
@@ -34,8 +36,15 @@ export default {
   },
   data: function() {
     return {
-      question_topic: '',
+      question_id: '',
+      question_title: '',
       question_description: ''
+    }
+  },
+  watch: {
+    question_id() {
+      console.log(this.question_id)
+      this.$router.push('question/' + this.question_id)
     }
   },
   methods: {
@@ -45,14 +54,18 @@ export default {
       console.log(this.question_description)
     },
     sendQuiz() {
-      if (this.question_topic === '' || this.question_description === '') {
+      if (this.question_title === '' || this.question_description === '') {
         this.$message.error('错了哦，填写信息不完整')
         return
       }
-      const submitData = { 'topic': this.question_topic, 'description': this.question_description }
+      const submitData = { 'title': this.question_title, 'description': this.question_description, 'mender_id': getCookie() }
       console.log(submitData)
       saveQuestion(submitData).then((response) => {
-        console.log(response.data)
+        Message.success({
+          message: '成功，正在跳转',
+          center: true
+        })
+        this.question_id = JSON.parse(response.data).id
       }).catch(() => {
       })
     }

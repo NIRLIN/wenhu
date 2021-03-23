@@ -3,8 +3,8 @@ package org.wenhu.people.user.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.wenhu.pojo.DTO.UserDTO;
 import org.wenhu.people.user.service.UserServiceImpl;
+import org.wenhu.pojo.DTO.UserDTO;
 import org.wenhu.util.Result;
 import org.wenhu.util.ResultCode;
 
@@ -82,7 +82,6 @@ public class UserController {
         System.out.println(phoneNumber + verifyCode);
         return userService.userLoginByPhoneVerify(userDTO, verifyCode);
     }
-
 
 
     @PostMapping(name = "getUserInfo", value = "getUserInfo")
