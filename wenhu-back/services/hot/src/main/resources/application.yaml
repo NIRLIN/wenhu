@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: hot
+server:
+  port: 8020

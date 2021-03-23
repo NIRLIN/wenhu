@@ -52,6 +52,10 @@ export const constantRoutes = [
     component: () => import('@/views/QuestionAnswer')
   },
   {
+    path: '/quiz',
+    component: () => import('@/views/Quiz')
+  },
+  {
     path: '/login',
     component: () => import('@/views/Password/Login')
   },
@@ -74,10 +78,6 @@ export const constantRoutes = [
   {
     path: '/forgetPassword',
     component: () => import('@/views/Password/ForgetPassword')
-  },
-  {
-    path: '/test',
-    component: () => import('@/views/Message/MessageContent/MessageItem')
   },
 
   // 404 page must be placed at the end !!!

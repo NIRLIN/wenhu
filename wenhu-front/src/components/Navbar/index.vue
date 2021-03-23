@@ -95,7 +95,6 @@
         </el-row>
 
       </el-menu-item>
-
     </el-menu>
 
   </div>
@@ -104,6 +103,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { getCookie, setCookie, removeCookie } from '@/utils/login-status'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Navbar',
@@ -120,7 +120,7 @@ export default {
       head_image_url: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       is_login: 0,
       user_id: '123456',
-      people_url: '#/people/123456'
+      people_url: '#/people/' + this.user_id
     }
   },
   watch: {
@@ -142,6 +142,8 @@ export default {
     // console.log(cookie)
     if (cookie) {
       this.is_login = 1
+      this.user_id = getCookie()
+      this.people_url = '#/people/' + this.user_id
     }
     if (!cookie) {
       this.is_login = 0
@@ -168,8 +170,14 @@ export default {
       }
     },
     logout: function() {
-      alert(this.$store.state.name)
       removeCookie()
+      Message.success('退出成功')
+      setTimeout(() => {
+        this.$router.go(0)
+      }, 1010)
+      setTimeout(() => {
+        this.$router.push('hot')
+      }, 1000)
     }
   }
 }

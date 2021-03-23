@@ -1,6 +1,6 @@
 <template>
   <div id="peopleHeader">
-    <el-row>
+    <el-row v-loading.fullscreen.lock="fullscreenLoading">
       <el-col :span="4">
         <div class="grid-content ">
           <div id="peopleHeader_image">
@@ -26,7 +26,7 @@
       </el-col>
       <el-col :span="6">
         <div class="grid-content ">
-          <div id="follow_message">
+          <div v-if="user_id!==user_id_cookie" id="follow_message">
             <br>
             <br>
             <br>
@@ -45,16 +45,37 @@
 </template>
 
 <script>
+import { getUserInfo } from '@/api/people'
+import { getCookie } from '@/utils/login-status'
 export default {
   name: 'PeopleHeader',
   data() {
     return {
       peopleHeader_image_url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      peopleHeader_user_name: 'NIRLIN',
-      peopleHeader_user_resume: '人生达命岂暇愁，且饮美酒登高楼。',
-      activeName: 'second'
+      peopleHeader_user_name: '用户名',
+      peopleHeader_user_resume: '个性签名',
+      activeName: 'second',
+      user_id: this.$route.params.id,
+      user_id_cookie: '',
+      fullscreenLoading: false
     }
+  },
+  created() {
+    this.fullscreenLoading = true
+    this.user_id_cookie = getCookie()
+    console.log(this.user_id)
+    const submitData = { 'id': this.user_id }
+    getUserInfo(submitData).then((response) => {
+      console.log(response.data)
+      this.peopleHeader_user_name = response.data.username
+      this.peopleHeader_user_resume = response.data.resume
+      this.peopleHeader_image_url = response.data.headImage
+      this.fullscreenLoading = false
+    }).catch(() => {
+      this.fullscreenLoading = true
+    })
   }
+
 }
 </script>
 

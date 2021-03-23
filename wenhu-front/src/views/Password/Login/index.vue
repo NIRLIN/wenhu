@@ -118,9 +118,9 @@ export default {
   data() {
     return {
       activeName: 'first',
-      user_phone_number: '',
+      user_phone_number: '18798189064',
       user_phone_code: '',
-      user_password: '',
+      user_password: '123456',
       user_verify_code_system: '',
       user_verify_code_user: '',
       verify_code_system_create_time: '',
@@ -210,8 +210,13 @@ export default {
           return
         }
         Message.success('成功，正在跳转')
-        this.$router.push('hot')
         setCookie(this.user_id_verify.id)
+        setTimeout(() => {
+          this.$router.go(0)
+        }, 1010)
+        setTimeout(() => {
+          this.$router.push('hot')
+        }, 1000)
       }
     },
     byPasswordLogin() {
@@ -230,7 +235,14 @@ export default {
       userLoginByPassword(submitData).then((response) => {
         Message.success('成功，正在跳转')
         this.user_id = JSON.parse(response.data)
-        this.$router.push('hot')
+        setCookie(this.user_id)
+        setCookie(this.user_id_verify.id)
+        setTimeout(() => {
+          this.$router.go(0)
+        }, 1010)
+        setTimeout(() => {
+          this.$router.push('hot')
+        }, 1000)
       })
     }
   }

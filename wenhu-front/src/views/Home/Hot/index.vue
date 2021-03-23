@@ -51,7 +51,8 @@
 <script>
 
 import HotQuestion from '@/views/Home/Hot/HotQuestion'
-import { getHotList } from '@/api/home'
+import { getHotList } from '@/api/hot'
+// eslint-disable-next-line no-unused-vars
 import { Message } from 'element-ui'
 
 export default {
@@ -68,12 +69,12 @@ export default {
       for (let i = 0; i < response.data.length; i++) {
         this.hotList.push(JSON.parse(response.data[i]))
       }
-      console.log(this.hotList)
+      // console.log(this.hotList)
     })
   },
   mounted() {
     if (this.hotList === null) {
-      alert('aaa')
+      // alert('aaa')
     }
   }
 }

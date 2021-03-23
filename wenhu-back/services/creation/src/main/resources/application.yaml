@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: creation
+server:
+  port: 8030

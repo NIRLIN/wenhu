@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://39.100.232.173:3306/wenhu?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 39.100.232.173
+    port: 6379
+    database: 0
+    password: 123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.100.232.173:8848
+        group: wenhu
+      config:
+        server-addr: 39.100.232.173:8848 # 作为配置中心，必须优先加载
+        group: wenhu
+        file-extension: yaml
+        prefix: wenhu-config

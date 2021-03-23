@@ -5,9 +5,9 @@
       <el-col :span="24">
         <div class="grid-content">
           <div class="people_content">
-            <people-header />
+            <PeopleHeader />
             <br>
-            <people-content />
+            <PeopleContent />
           </div>
         </div>
       </el-col>
@@ -24,8 +24,11 @@ export default {
   components: { PeopleContent, PeopleHeader },
   data() {
     return {
-      a: this.$route.params.id
+      user_id: this.$route.params.id
     }
+  },
+  created() {
+    // console.log(this.user_id)
   }
 }
 </script>
