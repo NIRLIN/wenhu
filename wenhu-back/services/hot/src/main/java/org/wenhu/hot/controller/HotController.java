@@ -3,8 +3,8 @@ package org.wenhu.hot.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.wenhu.common.util.Result;
 import org.wenhu.hot.service.impl.HotServiceImpl;
-import org.wenhu.util.Result;
 
 import java.util.Set;
 

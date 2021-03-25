@@ -5,10 +5,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.wenhu.common.pojo.DO.QuestionDO;
+import org.wenhu.common.pojo.DTO.QuestionDTO;
+import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.util.Result;
 import org.wenhu.creation.question.service.impl.QuestionServiceImpl;
-import org.wenhu.pojo.DTO.QuestionDTO;
-import org.wenhu.util.Result;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,4 +38,16 @@ public class QuestionController {
         System.out.println(stringResult);
         return stringResult;
     }
+
+    @PostMapping(name = "getQuestionById", value = "getQuestionById")
+    public Result<QuestionDTO> getQuestionById(@RequestBody Map<String, Object> objectMap) {
+        String id = (String) objectMap.get("id");
+        return questionService.getQuestionById(id);
+    }
+
+    @PostMapping(name = "listQuestionByUserId", value = "listQuestionByUserId")
+    public List<QuestionDO> listQuestionByUserId(@RequestBody UserDTO userDTO) {
+        return questionService.listQuestionByUserId(userDTO);
+    }
+
 }

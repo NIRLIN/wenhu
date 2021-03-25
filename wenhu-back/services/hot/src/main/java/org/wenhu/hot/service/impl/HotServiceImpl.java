@@ -4,9 +4,9 @@ package org.wenhu.hot.service.impl;
 import cn.hutool.json.JSONObject;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.wenhu.common.pojo.DO.HotDO;
+import org.wenhu.common.util.SnowflakeUtils;
 import org.wenhu.hot.service.HotService;
-import org.wenhu.pojo.DO.HotDO;
-import org.wenhu.util.SnowflakeUtils;
 
 import java.time.LocalDateTime;
 import java.util.Random;

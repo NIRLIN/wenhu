@@ -1,18 +1,23 @@
 package org.wenhu.creation.question.service.impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.wenhu.common.pojo.DO.QuestionDO;
+import org.wenhu.common.pojo.DO.QuestionLogDO;
+import org.wenhu.common.pojo.DTO.QuestionDTO;
+import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.util.Result;
+import org.wenhu.common.util.ResultCode;
+import org.wenhu.common.util.SnowflakeUtils;
 import org.wenhu.creation.question.service.QuestionService;
-import org.wenhu.dao.QuestionDao;
-import org.wenhu.dao.QuestionLogDao;
-import org.wenhu.pojo.DO.QuestionDO;
-import org.wenhu.pojo.DO.QuestionLogDO;
-import org.wenhu.pojo.DTO.QuestionDTO;
-import org.wenhu.util.Result;
-import org.wenhu.util.ResultCode;
-import org.wenhu.util.SnowflakeUtils;
+import org.wenhu.database.dao.QuestionDao;
+import org.wenhu.database.dao.QuestionLogDao;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author NIRLIN
@@ -24,7 +29,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private QuestionDao questionDao;
     @Autowired
-    private QuestionLogDao QuestionLogDao;
+    private QuestionLogDao questionLogDao;
 
     @Override
     public Result<String> saveQuestion(QuestionDTO questionDTO, String menderId) {
@@ -34,6 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
         //插入问题
         QuestionDO questionDO = new QuestionDO();
         questionDO.setId(String.valueOf(SnowflakeUtils.genId()));
+        questionDO.setUserId(menderId);
         questionDO.setTitle(questionDTO.getTitle());
         questionDO.setDescription(questionDTO.getDescription());
         questionDO.setFollowNumber("0");
@@ -55,7 +61,7 @@ public class QuestionServiceImpl implements QuestionService {
         questionLogDO.setCreateTime(LocalDateTime.now());
         questionLogDO.setUpdateTime(LocalDateTime.now());
         questionLogDO.setIsDeleted(0);
-        int insertQuestionLogDO = QuestionLogDao.insert(questionLogDO);
+        int insertQuestionLogDO = questionLogDao.insert(questionLogDO);
         if (insertQuestionDO == 1 && insertQuestionLogDO == 1) {
             code = ResultCode.SUCCESS.getCode();
             message = ResultCode.SUCCESS.getMessage();
@@ -67,4 +73,34 @@ public class QuestionServiceImpl implements QuestionService {
         return Result.succeed(code, message, data);
     }
 
+    @Override
+    public Result<QuestionDTO> getQuestionById(String id) {
+        String code = null;
+        String message = null;
+        QuestionDTO data = null;
+        QuestionDO questionDO = questionDao.selectById(id);
+        if (questionDO != null) {
+            QuestionDTO questionDTO = new QuestionDTO();
+            questionDTO.setId(questionDO.getId());
+            questionDTO.setUserId(questionDO.getUserId());
+            questionDTO.setTitle(questionDO.getTitle());
+            questionDTO.setDescription(questionDO.getDescription());
+            questionDTO.setBrowseNumber(questionDO.getBrowseNumber());
+            questionDTO.setFollowNumber(questionDO.getFollowNumber());
+            code = ResultCode.SUCCESS.getCode();
+            message = ResultCode.SUCCESS.getMessage();
+            data = questionDTO;
+        } else {
+            code = ResultCode.NO_FOUND_DATA.getCode();
+            message = ResultCode.NO_FOUND_DATA.getMessage();
+        }
+        return Result.succeed(code, message, data);
+    }
+
+    @Override
+    public List<QuestionDO> listQuestionByUserId(@RequestBody UserDTO userDTO) {
+        HashMap<String, Object> hashMap = new HashMap<>(1);
+        hashMap.put("user_id", userDTO.getId());
+        return questionDao.selectByMap(hashMap);
+    }
 }

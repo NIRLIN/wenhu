@@ -1,10 +1,10 @@
 <template>
   <div id="question">
     <el-row>
-      <el-col :span="4">
+      <el-col :span="1">
         <div class="grid-content " />
       </el-col>
-      <el-col :span="14">
+      <el-col :span="18">
         <div class="grid-content ">
           <div>
             <br>
@@ -13,7 +13,7 @@
 
         </div>
       </el-col>
-      <el-col :span="2">
+      <el-col :span="1">
         <div class="grid-content " />
       </el-col>
       <el-col :span="1">
@@ -46,15 +46,12 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="4">
-        <div class="grid-content " />
-      </el-col>
     </el-row>
     <el-row>
-      <el-col :span="4">
+      <el-col :span="1">
         <div class="grid-content " />
       </el-col>
-      <el-col :span="10">
+      <el-col :span="18">
         <div class="grid-content ">
           <br>
           <div>
@@ -62,23 +59,28 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="10">
-        <div class="grid-content " />
-      </el-col>
     </el-row>
     <el-row class="question_function">
 
-      <el-col :span="4">
+      <el-col :span="1">
         <div class="grid-content " />
       </el-col>
-      <el-col :span="12">
-        <div class="grid-content ">
-          <el-button class="button_height" type="primary">关注问题</el-button>
-          <el-button icon="el-icon-edit" plain type="primary">写回答</el-button>
-          <el-button class="no_border_outline" icon="el-icon-s-comment " plain>评论</el-button>
-          <el-button class="no_border_outline" icon="el-icon-s-promotion " plain>分享</el-button>
-          <el-button class="no_border_outline" plain>
-            <i class="el-icon-more question_more " />
+      <el-col :span="18">
+        <div class="grid-content  ">
+          <el-button size="small" type="primary">关注问题</el-button>
+          <el-button size="small" icon="el-icon-edit" plain type="primary">写回答</el-button>
+          <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-comment ">评论</el-button>
+          <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-promotion ">分享</el-button>
+          <el-button class="no_border_outline button_color button_margin_left" type="text">
+            <el-dropdown trigger="click" :placement="'bottom'">
+              <span class="el-dropdown-link">
+                <i class="el-icon-more question_more button_color " />
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>问题日志</el-dropdown-item>
+                <el-dropdown-item>举报问题</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </el-button>
         </div>
       </el-col>
@@ -110,7 +112,6 @@ export default {
 .grid-content {
   border-radius: 10px;
   min-height: 36px;
-  /*background: #ee9e9e;*/
 }
 
 .question_title {
@@ -125,10 +126,6 @@ export default {
 .follow_number_font {
   font-size: 14px;
   color: #8590a6;
-}
-
-.button_height {
-
 }
 
 .follow_number_count {
@@ -146,11 +143,12 @@ export default {
   height: 50px;
 }
 
-.question_more {
-  font-size: 15px;
-  font-weight: bold;
+.button_margin_left{
+  margin-left: 30px;
 }
-
+.button_color{
+  color: #8590a6;
+}
 .no_border_outline {
   outline: none;
   border: none;

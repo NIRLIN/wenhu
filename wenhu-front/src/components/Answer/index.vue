@@ -1,18 +1,14 @@
 <template>
   <div id="answer" class="class_margin">
     <el-row>
-      <el-col :span="2">
+      <el-col :span="22">
         <div class="grid-content">
-          <div>
+          <div style="width: 50px; float:left">
             <el-link :underline="false">
               <el-avatar :size="40" :src="answer_head_image" shape="square" />
             </el-link>
           </div>
-        </div>
-      </el-col>
-      <el-col :span="22">
-        <div class="grid-content">
-          <div class="">
+          <div style="float: left;">
             <div>
               <el-link :underline="false">
                 <span class="answer_font_name">{{ answer_name }}</span>
@@ -24,9 +20,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="22">
-        <div class="grid-content" />
-      </el-col>
+
     </el-row>
     <el-row class="answer_margin">
       <el-col :span="24">
@@ -54,12 +48,21 @@
 
       <el-col :span="24">
         <div class="grid-content ">
-          <el-button plain size="small" type="primary">赞同</el-button>
-          <el-button plain size="small" type="primary"><i class="un-down el-icon-caret-bottom" /></el-button>
-          <el-button class="no_border_outline" icon="el-icon-chat-round" plain size="small">评论</el-button>
-          <el-button class="no_border_outline" icon="el-icon-s-promotion" plain size="small">分享</el-button>
-          <el-button class="no_border_outline" icon="el-icon-star-on" plain size="small">收藏</el-button>
-          <el-button class="no_border_outline" icon="el-icon-warning" plain size="small">举报</el-button>
+          <el-button plain size="small" type="primary"><i class=" el-icon-caret-top icon_size" />赞同</el-button>
+          <el-button plain size="small" type="primary"><i class=" el-icon-caret-bottom icon_size" /></el-button>
+          <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-chat-round icon_size" />评论</el-button>
+          <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-s-promotion icon_size" />分享</el-button>
+          <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-star-off icon_size" />收藏</el-button>
+          <el-button class="no_border_outline button_margin_left button_color" type="text">
+            <el-dropdown trigger="click" :placement="'bottom'">
+              <span class="el-dropdown-link">
+                <i class="el-icon-more question_more button_color " />
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>举报</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-button>
         </div>
       </el-col>
 
@@ -94,7 +97,7 @@ export default {
 
 .grid-content {
   border-radius: 10px;
-  min-height: 10px;
+  min-height: 20px;
 }
 
 .answer_font_name {
@@ -122,8 +125,16 @@ export default {
   outline: none;
   border: none;
 }
-
+.button_color{
+  color: #8590a6;
+}
 .answer_margin {
-  margin-top: 10px;
+  margin-top: 5px;
+}
+.button_margin_left{
+  margin-left: 30px;
+}
+.icon_size{
+  font-size: 15px;
 }
 </style>

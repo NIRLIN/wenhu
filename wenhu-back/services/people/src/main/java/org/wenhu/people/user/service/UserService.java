@@ -1,7 +1,9 @@
 package org.wenhu.people.user.service;
 
-import org.wenhu.pojo.DTO.UserDTO;
-import org.wenhu.util.Result;
+
+import org.wenhu.common.pojo.DTO.HomepageDTO;
+import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.util.Result;
 
 /**
  * @author NIRLIN
@@ -24,4 +26,10 @@ public interface UserService {
     Result<String> getUserHomepage(UserDTO userDTO);
 
     Result<UserDTO> getUserInfo(UserDTO userDTO);
+
+    Result<HomepageDTO> getHomepageByUserId(UserDTO userDTO);
+
+    Result<String> getUserHomepageDataByUserId(UserDTO userDTO);
+
+
 }

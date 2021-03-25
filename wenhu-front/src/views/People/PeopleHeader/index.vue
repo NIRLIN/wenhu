@@ -66,7 +66,7 @@ export default {
     console.log(this.user_id)
     const submitData = { 'id': this.user_id }
     getUserInfo(submitData).then((response) => {
-      console.log(response.data)
+      // console.log(response.data)
       this.peopleHeader_user_name = response.data.username
       this.peopleHeader_user_resume = response.data.resume
       this.peopleHeader_image_url = response.data.headImage

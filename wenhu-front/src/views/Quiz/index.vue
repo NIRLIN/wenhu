@@ -26,7 +26,7 @@
 
 <script>
 import MavonEditor from '@/components/Markdown'
-import { saveQuestion } from '@/api/quiz'
+import { saveQuestion } from '@/api/question'
 import { getCookie } from '@/utils/login-status'
 import { Message } from 'element-ui'
 export default {
@@ -59,7 +59,7 @@ export default {
         return
       }
       const submitData = { 'title': this.question_title, 'description': this.question_description, 'mender_id': getCookie() }
-      console.log(submitData)
+      // console.log(submitData)
       saveQuestion(submitData).then((response) => {
         Message.success({
           message: '成功，正在跳转',

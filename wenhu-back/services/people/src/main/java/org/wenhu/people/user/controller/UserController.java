@@ -3,10 +3,11 @@ package org.wenhu.people.user.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.wenhu.people.user.service.UserServiceImpl;
-import org.wenhu.pojo.DTO.UserDTO;
-import org.wenhu.util.Result;
-import org.wenhu.util.ResultCode;
+import org.wenhu.common.pojo.DTO.HomepageDTO;
+import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.util.Result;
+import org.wenhu.common.util.ResultCode;
+import org.wenhu.people.user.service.impl.UserServiceImpl;
 
 import java.util.Map;
 
@@ -98,7 +99,20 @@ public class UserController {
         return null;
     }
 
-    Result<String> getUserHomepage() {
+    @PostMapping(name = "getHomepageByUserId", value = "getHomepageByUserId")
+    Result<HomepageDTO> getHomepageByUserId(@RequestBody Map<String, Object> objectMap) {
+        String id = (String) objectMap.get("id");
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(id);
+        return userService.getHomepageByUserId(userDTO);
+    }
+
+    @PostMapping(name = "getUserHomepageDataByUserId", value = "getUserHomepageDataByUserId")
+    public String getUserHomepageDataByUserId(@RequestBody Map<String, Object> objectMap) {
+        String id = (String) objectMap.get("id");
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(id);
+        System.out.println(userService.getUserHomepageDataByUserId(userDTO));
         return null;
     }
 }
