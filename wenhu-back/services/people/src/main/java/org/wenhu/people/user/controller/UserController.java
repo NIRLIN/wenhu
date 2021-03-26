@@ -1,5 +1,6 @@
 package org.wenhu.people.user.controller;
 
+import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -108,11 +109,10 @@ public class UserController {
     }
 
     @PostMapping(name = "getUserHomepageDataByUserId", value = "getUserHomepageDataByUserId")
-    public String getUserHomepageDataByUserId(@RequestBody Map<String, Object> objectMap) {
+    public Result<JSONObject> getUserHomepageDataByUserId(@RequestBody Map<String, Object> objectMap) {
         String id = (String) objectMap.get("id");
         UserDTO userDTO = new UserDTO();
         userDTO.setId(id);
-        System.out.println(userService.getUserHomepageDataByUserId(userDTO));
-        return null;
+        return userService.getUserHomepageDataByUserId(userDTO);
     }
 }

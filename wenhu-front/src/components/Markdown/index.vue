@@ -1,6 +1,6 @@
 <template>
   <div id="markdown">
-    <mavonEditor v-model="content" :toolbars="toolbars" :box-shadow-style="'0 2px 12px 0 rgba(1, 0, 0, 0.1)'" :box-shadow="false" :default-open="'edit'" @change="change" />
+    <mavon-editor ref="md" v-model="content" :toolbars="toolbars" :box-shadow-style="'0 2px 12px 0 rgba(1, 0, 0, 0.1)'" :box-shadow="false" :default-open="'edit'" @imgAdd="$imgAdd" @change="change" />
   </div>
 
 </template>
@@ -8,6 +8,8 @@
 <script>
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import { imageUpload } from '@/api/util'
+import { getCookie } from '@/utils/login-status.js'
 
 export default {
   name: 'Markdown',
@@ -57,9 +59,18 @@ export default {
   },
   methods: {
     change(value, html) {
-      // console.log(value, html)
-      // console.log(html)
       this.$emit('listenToChildEvent', html)
+    },
+    // 绑定@imgAdd event
+    $imgAdd(pos, $file) {
+      // 第一步.将图片上传到服务器.
+      const formData = new FormData()
+      formData.append('image', $file)
+      formData.append('id', getCookie())
+      imageUpload(formData).then((response) => {
+        // console.log(response.data)
+        this.$refs.md.$img2Url(pos, response.data)
+      })
     }
   }
 }

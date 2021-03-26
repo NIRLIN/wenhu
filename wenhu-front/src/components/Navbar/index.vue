@@ -29,7 +29,9 @@
       </el-menu-item>
       <el-menu-item v-if="is_login">
         <div class="grid-content bg-purple">
-          <el-button round size="medium" type="primary">提问</el-button>
+          <el-link :underline="false" href="#/quiz">
+            <el-button round size="medium" type="primary">提问</el-button>
+          </el-link>
         </div>
       </el-menu-item>
       <el-menu-item v-if="is_login" class="message_margin_left">

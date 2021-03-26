@@ -2,6 +2,7 @@ package org.wenhu.creation.answer.service;
 
 import org.wenhu.common.pojo.DO.AnswerDO;
 import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.util.Result;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ import java.util.List;
  */
 public interface AnswerService {
     List<AnswerDO> listAnswerByUserId(UserDTO userDTO);
+
+    Result<Integer> countAnswerByQuestionId(String questionId);
 }

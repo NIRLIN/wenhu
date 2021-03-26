@@ -1,6 +1,7 @@
 package org.wenhu.people.user.service;
 
 
+import cn.hutool.json.JSONObject;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.util.Result;
@@ -29,7 +30,7 @@ public interface UserService {
 
     Result<HomepageDTO> getHomepageByUserId(UserDTO userDTO);
 
-    Result<String> getUserHomepageDataByUserId(UserDTO userDTO);
+    Result<JSONObject> getUserHomepageDataByUserId(UserDTO userDTO);
 
 
 }

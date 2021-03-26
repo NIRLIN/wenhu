@@ -1,11 +1,11 @@
 <template>
-  <div class="question_margin">
+  <div v-if="question_item" class="question_margin">
     <el-row>
       <el-col :span="24">
         <div class="grid-content ">
-          <el-link :href="'#/question/'+question_id" :underline="false">
+          <el-link :href="'#/question/'+question_item.id" :underline="false">
             <span class="title_font">
-              {{ question_title }}
+              {{ question_item.title }}
             </span>
           </el-link>
         </div>
@@ -16,7 +16,7 @@
         <div class="grid-content ">
           <div class="title_fun_div">
             <span class="title_fun_font">
-              {{ question_create_time }}
+              {{ question_item.createTime | formatTimer }}
             </span>
           </div>
           <div class="title_fun_margin">
@@ -24,7 +24,7 @@
           </div>
           <div class="title_fun_div">
             <span class="title_fun_font">
-              {{ question_answer_number }} 个回答
+              {{ question_item.followNumber }} 个关注
             </span>
           </div>
           <div class="title_fun_margin">
@@ -32,7 +32,7 @@
           </div>
           <div class="title_fun_div">
             <span class="title_fun_font">
-              {{ question_follow_number }} 个关注
+              {{ question_item.browseNumber }} 个浏览
             </span>
           </div>
         </div>
@@ -50,6 +50,21 @@
 <script>
 export default {
   name: 'QuestionTitle',
+  filters: {
+    formatTimer: function(value) {
+      const date = new Date(value)
+      const y = date.getFullYear()
+      let MM = date.getMonth() + 1
+      MM = MM < 10 ? '0' + MM : MM
+      let d = date.getDate()
+      d = d < 10 ? '0' + d : d
+      return y + '-' + MM + '-' + d
+    }
+  },
+  props: {
+    // eslint-disable-next-line vue/require-default-prop,vue/prop-name-casing
+    question_item: Object
+  },
   data() {
     return {
       question_title: '题目',
@@ -59,6 +74,7 @@ export default {
       question_follow_number: 99
     }
   }
+
 }
 </script>
 

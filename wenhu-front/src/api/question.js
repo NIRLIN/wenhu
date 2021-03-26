@@ -8,17 +8,24 @@ export function saveQuestion(data) {
   })
 }
 
-export function getListAnswerByTime(data) {
+export function listAnswerByTime(data) {
   return request({
-    url: '/creation/question/saveQuestion',
+    url: '/creation/question/listAnswerByTime',
     method: 'post',
     data
   })
 }
 
+export function getQuestionById(data) {
+  return request({
+    url: '/creation/question/getQuestionById',
+    method: 'post',
+    data
+  })
+}
 export function getAnswerListByQuestionId(data) {
   return request({
-    url: '/creation/question/getUserQuestionListById',
+    url: '/creation/question/getQuestionAndAnswerListByQuestionId',
     method: 'post',
     data
   })

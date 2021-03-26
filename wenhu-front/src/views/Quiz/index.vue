@@ -51,7 +51,7 @@ export default {
     getMsgFromChild: function(listenToChildEvent) {
       // listenToChildEvent就是子组件传过来的值
       this.question_description = listenToChildEvent
-      console.log(this.question_description)
+      // console.log(this.question_description)
     },
     sendQuiz() {
       if (this.question_title === '' || this.question_description === '') {

@@ -1,5 +1,6 @@
 package org.wenhu.people.user.service.impl;
 
+import cn.hutool.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.common.pojo.DO.HomepageDO;
@@ -240,15 +241,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result<String> getUserHomepageDataByUserId(UserDTO userDTO) {
-        System.out.println("listAnswerByUserId()====>" + creationFeignClient.listAnswerByUserId(userDTO));
-        System.out.println("listArticleByUserId()====>" + creationFeignClient.listArticleByUserId(userDTO));
-        System.out.println("listQuestionByUserId()====>" + creationFeignClient.listQuestionByUserId(userDTO));
-        System.out.println("listFavoriteByUserId()====>" + peopleFeignClient.listFavoriteByUserId(userDTO));
-        System.out.println("listUserFollowByUserId()====>" + peopleFeignClient.listUserFollowByUserId(userDTO));
-        System.out.println("listUserFansByUserId()====>" + peopleFeignClient.listUserFansByUserId(userDTO));
-
-        return null;
+    public Result<JSONObject> getUserHomepageDataByUserId(UserDTO userDTO) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.putOpt("answer",creationFeignClient.listAnswerByUserId(userDTO));
+        jsonObject.putOpt("article",creationFeignClient.listArticleByUserId(userDTO));
+        jsonObject.putOpt("question",creationFeignClient.listQuestionByUserId(userDTO));
+        jsonObject.putOpt("favorite",peopleFeignClient.listFavoriteByUserId(userDTO));
+        jsonObject.putOpt("userFollow",peopleFeignClient.listUserFollowByUserId(userDTO));
+        jsonObject.putOpt("userFans",peopleFeignClient.listUserFansByUserId(userDTO));
+        System.out.println("jsonObject"+jsonObject);
+        return Result.succeed(jsonObject);
     }
 
 }

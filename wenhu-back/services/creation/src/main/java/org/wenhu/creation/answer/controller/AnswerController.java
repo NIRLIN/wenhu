@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.wenhu.common.pojo.DO.AnswerDO;
 import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.util.Result;
 import org.wenhu.creation.answer.service.impl.AnswerServiceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author NIRLIN
@@ -23,8 +25,21 @@ public class AnswerController {
     @Autowired
     private AnswerServiceImpl answerService;
 
+    @PostMapping(name = "countAnswerByQuestionId", value = "countAnswerByQuestionId")
+    Result<Integer> countAnswerByQuestionId(@RequestBody Map<String, Object> objectMap) {
+        String questionId= (String) objectMap.get("id");
+        return answerService.countAnswerByQuestionId(questionId);
+    }
     @PostMapping(name = "listAnswerByUserId", value = "listAnswerByUserId")
     List<AnswerDO> listAnswerByUserId(@RequestBody UserDTO userDTO) {
         return answerService.listAnswerByUserId(userDTO);
     }
+
+    @PostMapping(name = "listAnswerByHeat", value = "listAnswerByHeat")
+    List<AnswerDO> listAnswerByHeat(@RequestBody Map<String, Object> objectMap) {
+        String page= (String) objectMap.get("page");
+        return null;
+    }
+
+
 }

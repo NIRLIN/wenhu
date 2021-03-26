@@ -54,15 +54,12 @@
               </el-col>
             </el-row>
             <el-row class="">
-              <el-col :span="1">
-                <div class="grid-content " />
-              </el-col>
-              <el-col :span="22">
+              <el-col :span="22" :offset="1">
                 <div class="grid-content ">
                   <div class="">
-                    <div v-for="item in items" :key="item" class="people_content_list ">
+                    <div v-for="(item,index) in homeData.question" :key="index" class="people_content_list ">
                       <div class="answer_item">
-                        <QuestionTitle>{{ item }}</QuestionTitle>
+                        <QuestionTitle :question_item="item" />
                       </div>
                     </div>
                   </div>
@@ -179,6 +176,9 @@ export default {
         article: 1,
         collect: 1,
         follow: 1
+      },
+      homeData: {
+
       }
 
     }
@@ -193,7 +193,8 @@ export default {
       this.homepage.follow = response.data.follow
     })
     getUserHomepageDataByUserId(submitData).then((response) => {
-      console.log(response)
+      this.homeData = response.data
+      console.log(this.homeData)
     })
   },
   methods: {

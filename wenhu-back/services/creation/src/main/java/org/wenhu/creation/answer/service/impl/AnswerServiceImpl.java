@@ -1,9 +1,12 @@
 package org.wenhu.creation.answer.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.common.pojo.DO.AnswerDO;
 import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.util.Result;
 import org.wenhu.creation.answer.service.AnswerService;
 import org.wenhu.database.dao.AnswerDao;
 
@@ -27,5 +30,13 @@ public class AnswerServiceImpl implements AnswerService {
         HashMap<String, Object> hashMap = new HashMap<>(1);
         hashMap.put("user_id", userDTO.getId());
         return answerDao.selectByMap(hashMap);
+    }
+
+    @Override
+    public Result<Integer> countAnswerByQuestionId(String questionId) {
+        QueryWrapper<AnswerDO> queryWrapper =new QueryWrapper<>();
+        queryWrapper.eq("id",questionId);
+        Integer integer = answerDao.selectCount(queryWrapper);
+        return Result.succeed(integer);
     }
 }

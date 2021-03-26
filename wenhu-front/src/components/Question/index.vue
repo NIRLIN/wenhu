@@ -7,8 +7,7 @@
       <el-col :span="18">
         <div class="grid-content ">
           <div>
-            <br>
-            <span class="question_title"> {{ question_name }} </span>
+            <h1 class="question_title"> {{ question_item.title }} </h1>
           </div>
 
         </div>
@@ -25,7 +24,7 @@
               </span>
               <br>
               <span class="follow_number_count">
-                {{ question_follow_number }}
+                {{ question_item.followNumber }}
               </span>
             </el-link>
           </div>
@@ -40,7 +39,7 @@
               </span>
               <br>
               <span class="follow_number_count">
-                {{ question_browse_number }}
+                {{ question_item.browseNumber }}
               </span>
             </el-link>
           </div>
@@ -53,9 +52,8 @@
       </el-col>
       <el-col :span="18">
         <div class="grid-content ">
-          <br>
           <div>
-            <span class="question_description"> {{ question_description }} </span>
+            <span class="question_description" v-html="question_item.description">jj </span>
           </div>
         </div>
       </el-col>
@@ -92,6 +90,10 @@
 <script>
 export default {
   name: 'Question',
+  props: {
+    // eslint-disable-next-line vue/prop-name-casing,vue/require-default-prop
+    question_item: Object
+  },
   data() {
     return {
       question_name: '这里是问题',
@@ -111,16 +113,11 @@ export default {
 
 .grid-content {
   border-radius: 10px;
-  min-height: 36px;
+  min-height: 16px;
 }
 
 .question_title {
-  font-weight: bold;
-  font-size: 25px;
-}
-
-.question_description {
-  font-size: 15px;
+  margin-bottom: 0;
 }
 
 .follow_number_font {
@@ -142,7 +139,9 @@ export default {
   margin-top: 1%;
   height: 50px;
 }
-
+.question_description{
+  margin-top: 0;
+}
 .button_margin_left{
   margin-left: 30px;
 }
