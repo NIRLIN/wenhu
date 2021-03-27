@@ -54,6 +54,13 @@ export default {
       // console.log(this.question_description)
     },
     sendQuiz() {
+      if (getCookie() === undefined) {
+        Message.error({
+          message: '未登录，请登录重试',
+          center: true
+        })
+        return
+      }
       if (this.question_title === '' || this.question_description === '') {
         this.$message.error('错了哦，填写信息不完整')
         return
@@ -66,7 +73,6 @@ export default {
           center: true
         })
         this.question_id = JSON.parse(response.data).id
-      }).catch(() => {
       })
     }
   }

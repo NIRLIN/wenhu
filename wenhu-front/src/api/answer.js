@@ -23,3 +23,11 @@ export function listAnswerByTime(data) {
     data
   })
 }
+
+export function saveAnswer(data) {
+  return request({
+    url: '/creation/answer/saveAnswer',
+    method: 'post',
+    data
+  })
+}

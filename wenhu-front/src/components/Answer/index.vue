@@ -1,21 +1,21 @@
 <template>
-  <div id="answer" class="class_margin">
+  <div v-if="answer_item" id="answer" class="class_margin">
     <el-row>
       <el-col :span="22">
         <div class="grid-content">
           <div style="width: 50px; float:left">
             <el-link :underline="false">
-              <el-avatar :size="40" :src="answer_head_image" shape="square" />
+              <el-avatar :size="40" :src="answer_item.headImage" shape="square" />
             </el-link>
           </div>
           <div style="float: left;">
             <div>
               <el-link :underline="false">
-                <span class="answer_font_name">{{ answer_name }}</span>
+                <span class="answer_font_name">{{ answer_item.username }}</span>
               </el-link>
             </div>
             <div>
-              <span class="answer_font_resume">{{ answer_resume }}</span>
+              <span class="answer_font_resume">{{ answer_item.resume }}</span>
             </div>
           </div>
         </div>
@@ -26,9 +26,7 @@
       <el-col :span="24">
         <div class="grid-content">
           <div>
-            <span class="answer_content_font">
-              {{ answer_content }}
-            </span>
+            <span class="answer_content_font" v-html="answer_item.content" />
           </div>
         </div>
       </el-col>
@@ -37,8 +35,8 @@
       <el-col :span="24">
         <div class="grid-content">
           <div class="answer_edit_time">
-            <el-tooltip class="item" content="Top Center 提示文字" effect="dark" placement="top">
-              <span>发布于 01-28</span>
+            <el-tooltip class="item" :content="answer_item.updateTime | formatTimer(true)" effect="dark" placement="top">
+              <span>发布于 {{ answer_item.updateTime | formatTimer }}</span>
             </el-tooltip>
           </div>
         </div>
@@ -48,7 +46,7 @@
 
       <el-col :span="24">
         <div class="grid-content ">
-          <el-button plain size="small" type="primary"><i class=" el-icon-caret-top icon_size" />赞同</el-button>
+          <el-button plain size="small" type="primary"><i class=" el-icon-caret-top icon_size" />赞同 {{ answer_item.approvalNumber }}</el-button>
           <el-button plain size="small" type="primary"><i class=" el-icon-caret-bottom icon_size" /></el-button>
           <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-chat-round icon_size" />评论</el-button>
           <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-s-promotion icon_size" />分享</el-button>
@@ -73,6 +71,30 @@
 <script>
 export default {
   name: 'Answer',
+  filters: {
+    formatTimer: function(value, hours) {
+      const date = new Date(value)
+      const y = date.getFullYear()
+      let M = date.getMonth() + 1
+      M = M < 10 ? '0' + M : M
+      let d = date.getDate()
+      d = d < 10 ? '0' + d : d
+      var h = date.getHours()
+      var m = date.getMinutes()
+      d = d >= 10 ? d : '0' + d
+      h = h >= 10 ? h : '0' + h
+      m = m >= 10 ? m : '0' + m
+      if (hours) {
+        return y + '-' + M + '-' + d + ' ' + h + ':' + m
+      } else {
+        return y + '-' + M + '-' + d
+      }
+    }
+  },
+  props: {
+    // eslint-disable-next-line vue/prop-name-casing,vue/require-default-prop
+    answer_item: Object
+  },
   data() {
     return {
       answer_head_image: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',

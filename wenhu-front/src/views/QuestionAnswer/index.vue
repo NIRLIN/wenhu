@@ -3,9 +3,17 @@
     <el-row class="">
       <el-col :span="24">
         <div class="grid-content margin_nav_size">
-          <Question :question_item="question_item" />
+          <Question :question_item="question_item" @listenToChildEvent="childSendEditAnswerStatus" />
         </div>
       </el-col>
+    </el-row>
+    <el-row v-if="is_edit_answer" class="question_margin_answer">
+      <el-col :span="24"><div class="grid-content">
+        <MavonEditor @listenToChildEvent="getMsgFromChild" />
+      </div></el-col>
+      <el-col :span="2" :offset="22"><div class="grid-content button_margin_edit">
+        <el-button size="small" type="primary" @click="submitAnswer">提交回答</el-button>
+      </div></el-col>
     </el-row>
     <el-row class="question_margin_answer">
       <el-col :span="1">
@@ -44,9 +52,9 @@
       <el-col v-if="answer_number" :span="22">
         <div class="grid-content ">
           <div class="">
-            <div v-for="item in items" :key="item" class="answer_list ">
-              <div class="answer_item">
-                <Answer>{{ item }}</Answer>
+            <div v-for="(item,index) in answer_list" :key="index" class="answer_list ">
+              <div class="answer_item_div">
+                <Answer :answer_item="item" />
               </div>
             </div>
           </div>
@@ -72,6 +80,19 @@
         <div class="grid-content " />
       </el-col>
     </el-row>
+    <el-row class="answer_list_background">
+      <el-col :offset="10">
+        <div class="grid-content ">
+          <el-pagination
+            layout="prev, pager, next"
+            :total="answer_number"
+            :page-size="10"
+            :hide-on-single-page="true"
+            @current-change="current_change"
+          />
+        </div>
+      </el-col>
+    </el-row>
     <el-backtop />
   </div>
 </template>
@@ -79,19 +100,24 @@
 <script>
 import Question from '@/components/Question'
 import Answer from '@/components/Answer'
+import MavonEditor from '@/components/Markdown'
+import { getCookie } from '@/utils/login-status'
+
 import { getQuestionById } from '@/api/question'
-import { listAnswerByHeat, countAnswerByQuestionId } from '@/api/answer'
+import { listAnswerByHeat, listAnswerByTime, countAnswerByQuestionId, saveAnswer } from '@/api/answer'
 // eslint-disable-next-line no-unused-vars
 import { Message } from 'element-ui'
 
 export default {
   name: 'QuestionAnswer',
-  components: { Answer, Question },
+  components: { Answer, Question, MavonEditor },
   data() {
     return {
       answer_number: 0,
       sort_button_value: '默认排序',
       items: ['a', 'b', 'c'],
+      is_edit_answer: 0,
+      edit_answer_item: '',
       question_item: {
         browseNumber: '',
         description: '',
@@ -99,7 +125,14 @@ export default {
         id: '',
         title: '',
         userId: ''
-      }
+      },
+      answer_list: '',
+      sortByHeat: 1
+    }
+  },
+  watch: {
+    sortByHeat() {
+      this.current_change(1)
     }
   },
   created() {
@@ -111,19 +144,74 @@ export default {
     countAnswerByQuestionId(submitData).then((response) => {
       this.answer_number = response.data
     })
-    listAnswerByHeat(submitData).then((response) => {
-      console.log(response.data)
-    })
+    this.methodListAnswerByHeat(1)
   },
   methods: {
+    methodListAnswerByHeat(page) {
+      const submitData = { 'questionId': this.$route.params.id, 'page': page }
+      listAnswerByHeat(submitData).then((response) => {
+        this.answer_list = response.data
+      })
+    },
+    methodListAnswerByTime(page) {
+      const submitData = { 'questionId': this.$route.params.id, 'page': page }
+      listAnswerByTime(submitData).then((response) => {
+        this.answer_list = response.data
+      })
+    },
+    childSendEditAnswerStatus: function(listenToChildEvent) {
+      // listenToChildEvent就是子组件传过来的值
+      this.is_edit_answer = listenToChildEvent
+    },
+    getMsgFromChild: function(listenToChildEvent) {
+      // listenToChildEvent就是子组件传过来的值
+      this.edit_answer_item = listenToChildEvent
+    },
     setSortMethod() {
       if (this.sort_button_value === '默认排序') {
         this.sort_button_value = '时间排序'
+        this.sortByHeat = 0
         return
       }
       if (this.sort_button_value === '时间排序') {
         this.sort_button_value = '默认排序'
+        this.sortByHeat = 1
+      }
+    },
+    submitAnswer() {
+      if (getCookie() === undefined) {
+        Message.error({
+          message: '未登录，请登录重试',
+          center: true
+        })
         return
+      }
+      if (this.edit_answer_item === '') {
+        Message.error({
+          message: '错了哦，还没有编写回答',
+          center: true
+        })
+        return
+      }
+      const submitData = { 'userId': getCookie(), 'questionId': this.$route.params.id, 'content': this.edit_answer_item }
+      // console.log(submitData)
+      saveAnswer(submitData).then((response) => {
+        Message.success({
+          message: '发布成功',
+          center: true
+        })
+        setTimeout(() => {
+          this.$router.go(0)
+        }, 100)
+      })
+    },
+    current_change(page) {
+      console.log(this.sortByHeat)
+      if (this.sortByHeat === 1) {
+        this.methodListAnswerByHeat(page)
+      }
+      if (this.sortByHeat === 0) {
+        this.methodListAnswerByTime(page)
       }
     }
   }
@@ -131,16 +219,18 @@ export default {
 </script>
 
 <style scoped>
-
 .grid-content {
   border-radius: 8px;
   min-height: 36px;
 }
-.answer_item {
+.answer_item_div {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
+.button_margin_edit{
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
 .answer_number {
   font-size: 15px;
   font-weight: bold;
@@ -151,7 +241,7 @@ export default {
 }
 .no_question_div{
   border-top: 1px solid rgb(231, 231, 231);
-  min-height: 350px;
+  min-height: 35px;
 }
 .no_question_span{
   color: rgb(133,144,166);
@@ -164,7 +254,7 @@ export default {
   color: #121212;
 }
 .question_margin_answer{
-  margin-top: 5px;
+  margin-top: 8px;
   background-color: #ffffff;
 }
 </style>

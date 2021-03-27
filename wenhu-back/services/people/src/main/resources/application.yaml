@@ -3,7 +3,3 @@ spring:
     name: people
 server:
   port: 8010
-
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

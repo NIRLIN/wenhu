@@ -66,7 +66,7 @@
       <el-col :span="18">
         <div class="grid-content  ">
           <el-button size="small" type="primary">关注问题</el-button>
-          <el-button size="small" icon="el-icon-edit" plain type="primary">写回答</el-button>
+          <el-button size="small" icon="el-icon-edit" plain type="primary" @click="childSendEditAnswerStatus">写回答</el-button>
           <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-comment ">评论</el-button>
           <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-promotion ">分享</el-button>
           <el-button class="no_border_outline button_color button_margin_left" type="text">
@@ -99,7 +99,14 @@ export default {
       question_name: '这里是问题',
       question_description: '这里是描述；这里是描述；这里是描述；这里是描述；这里是描述；这里是描述；这里是描述；',
       question_follow_number: 666,
-      question_browse_number: 6666
+      question_browse_number: 6666,
+      childSendEditAnswerStatusNumber: 0
+    }
+  },
+  methods: {
+    childSendEditAnswerStatus() {
+      this.childSendEditAnswerStatusNumber = !this.childSendEditAnswerStatusNumber
+      this.$emit('listenToChildEvent', this.childSendEditAnswerStatusNumber)
     }
   }
 

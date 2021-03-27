@@ -173,7 +173,10 @@ export default {
     },
     logout: function() {
       removeCookie()
-      Message.success('退出成功')
+      Message.success({
+        message: '退出成功',
+        center: true
+      })
       setTimeout(() => {
         this.$router.go(0)
       }, 1010)

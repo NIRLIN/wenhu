@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.wenhu.common.pojo.DO.AnswerDO;
 import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.Result;
 import org.wenhu.creation.answer.service.impl.AnswerServiceImpl;
 
@@ -36,9 +37,23 @@ public class AnswerController {
     }
 
     @PostMapping(name = "listAnswerByHeat", value = "listAnswerByHeat")
-    List<AnswerDO> listAnswerByHeat(@RequestBody Map<String, Object> objectMap) {
-        String page= (String) objectMap.get("page");
-        return null;
+    Result<List<AnswerVO>> listAnswerByHeat(@RequestBody Map<String, Object> objectMap) {
+        String questionId= (String) objectMap.get("questionId");
+        Integer page = (Integer) objectMap.get("page");
+        return answerService.listAnswerByHeat(questionId, String.valueOf(page));
+    }
+    @PostMapping(name = "listAnswerByTime", value = "listAnswerByTime")
+    Result<List<AnswerVO>> listAnswerByTime(@RequestBody Map<String, Object> objectMap) {
+        String questionId= (String) objectMap.get("questionId");
+        Integer page = (Integer) objectMap.get("page");
+        return answerService.listAnswerByTime(questionId, String.valueOf(page));
+    }
+    @PostMapping(name = "saveAnswer", value = "saveAnswer")
+    Result<String> saveAnswer(@RequestBody Map<String, Object> objectMap) {
+        String userId= (String) objectMap.get("userId");
+        String questionId= (String) objectMap.get("questionId");
+        String content= (String) objectMap.get("content");
+        return answerService.saveAnswer(userId, questionId, content);
     }
 
 
