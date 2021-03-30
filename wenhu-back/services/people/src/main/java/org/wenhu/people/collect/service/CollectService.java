@@ -1,9 +1,10 @@
 package org.wenhu.people.collect.service;
 
 import org.springframework.web.bind.annotation.RequestBody;
-import org.wenhu.common.pojo.DO.CollectDO;
 import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.util.Result;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -12,5 +13,6 @@ import java.util.List;
  * @date 2021/3/25
  */
 public interface CollectService {
-    List<CollectDO> listFavoriteByUserId(@RequestBody UserDTO userDTO);
+
+    Result<HashMap<String, Object>> collectService(String userId);
 }

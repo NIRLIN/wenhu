@@ -14,7 +14,6 @@ import java.util.List;
  * @date 2021/3/25
  */
 public interface AnswerService {
-    List<AnswerDO> listAnswerByUserId(UserDTO userDTO);
 
     Result<Integer> countAnswerByQuestionId(String questionId);
 
@@ -24,6 +23,8 @@ public interface AnswerService {
 
     Result<List<AnswerVO>> listAnswerByTime(String questionId, String page);
 
-    public Result<List<AnswerVO>> listAnswer(String page, QueryWrapper<AnswerDO> queryWrapper);
+    Result<List<AnswerVO>> listAnswer(String page, QueryWrapper<AnswerDO> queryWrapper);
 
+
+    Result<List<AnswerVO>> listAnswerByUserId(String userId, String type);
 }

@@ -1,7 +1,8 @@
 package org.wenhu.creation.article.service;
 
-import org.wenhu.common.pojo.DO.ArticleDO;
 import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.pojo.VO.ArticleVO;
+import org.wenhu.common.util.Result;
 
 import java.util.List;
 
@@ -11,5 +12,6 @@ import java.util.List;
  * @date 2021/3/25
  */
 public interface ArticleService {
-    List<ArticleDO> listArticleByUserId(UserDTO userDTO);
+
+    Result<List<ArticleVO>> listAnswerByUserId(String userId, String type);
 }

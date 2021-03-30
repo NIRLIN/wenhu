@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class AgreeDO {
 
     /**
-     * 热榜id
+     * 赞同id
      */
 
     private String id;

@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.wenhu.common.pojo.DO.CollectDO;
+import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.util.Result;
 import org.wenhu.people.collect.service.impl.CollectServiceImpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,9 +24,7 @@ public class CollectController {
     @Autowired
     private CollectServiceImpl collectService;
 
-    @PostMapping(name = "listFavoriteByUserId", value = "listFavoriteByUserId")
-    List<CollectDO> listFavoriteByUserId(@RequestBody UserDTO userDTO) {
-        return collectService.listFavoriteByUserId(userDTO);
+    public Result<HashMap<String, Object>>  listCollectByUserId(String userId) {
+        return collectService.collectService(userId);
     }
-
 }

@@ -1,12 +1,13 @@
 package org.wenhu.people.user.service.impl;
 
-import cn.hutool.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.common.pojo.DO.HomepageDO;
+import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.Result;
 import org.wenhu.common.util.ResultCode;
 import org.wenhu.common.util.SnowflakeUtils;
@@ -14,7 +15,8 @@ import org.wenhu.common.util.TencentSendSms;
 import org.wenhu.database.dao.HomepageDao;
 import org.wenhu.database.dao.UserDao;
 import org.wenhu.feign.feign.CreationFeignClient;
-import org.wenhu.feign.feign.PeopleFeignClient;
+import org.wenhu.people.collect.controller.CollectController;
+import org.wenhu.people.follow.controller.FollowController;
 import org.wenhu.people.user.service.UserService;
 
 import java.time.LocalDateTime;
@@ -34,12 +36,16 @@ public class UserServiceImpl implements UserService {
     private HomepageDao homepageDao;
     @Autowired
     private CreationFeignClient creationFeignClient;
+
     @Autowired
-    private PeopleFeignClient peopleFeignClient;
+    private CollectController collectController;
+    @Autowired
+    private FollowController followController;
+
 
     @Override
     public Result<String> userRegister(UserDTO userDTO) {
-        String message = null;
+        String message  ;
         String code;
         Result<String> stringResult = checkPhoneExist(userDTO.getPhoneNumber());
         //判断手机号是否已绑定，已绑定时不可注册
@@ -100,7 +106,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getPhoneVerifyCode(String phoneNumber, String verifyCode) {
         //发送短信
-        String s = TencentSendSms.sendSmsUtil(phoneNumber, verifyCode);
+        TencentSendSms.sendSmsUtil(phoneNumber, verifyCode);
         return ResultCode.SUCCESS.getCode();
     }
 
@@ -143,7 +149,6 @@ public class UserServiceImpl implements UserService {
             code = ResultCode.USER_ERROR_A0201.getCode();
             message = ResultCode.USER_ERROR_A0201.getMessage();
         }
-        // System.out.println(Result.succeed(code, message, data));
         return Result.succeed(code, message, data);
     }
 
@@ -181,19 +186,11 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public Result<String> getUserHomepage(UserDTO userDTO) {
-        return null;
-    }
 
     @Override
     public Result<UserDTO> getUserInfo(UserDTO userDTO) {
-        String code = null;
-        String message = null;
-        if (userDTO.getId() == null || "".equals(userDTO.getId())) {
-            code = ResultCode.USER_ERROR_A0201.getCode();
-            message = ResultCode.USER_ERROR_A0201.getMessage();
-        }
+        String code ;
+        String message ;
         UserDO userDO = userDao.selectById(userDTO.getId());
         if (userDO == null) {
             code = ResultCode.USER_ERROR_A0201.getCode();
@@ -210,8 +207,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result<HomepageDTO> getHomepageByUserId(UserDTO userDTO) {
-        String code = null;
-        String message = null;
+        String code;
+        String message;
         HomepageDTO data = null;
         //数据不存在时默认homepage全部展示
         if (userDTO.getId() == null || "".equals(userDTO.getId())) {
@@ -237,20 +234,35 @@ public class UserServiceImpl implements UserService {
             }
 
         }
-        return Result.succeed(data);
+        return Result.succeed(code,message,data);
+    }
+
+
+    @Override
+    public Result<List<AnswerVO>> listAnswerByUserId(String userId, String type) {
+        return creationFeignClient.listAnswerByUserId(userId,type);
+    }
+
+
+    @Override
+    public Result<List<AnswerVO>> listArticleByUserId(String userId, String type) {
+        return creationFeignClient.listArticleByUserId(userId, type);
     }
 
     @Override
-    public Result<JSONObject> getUserHomepageDataByUserId(UserDTO userDTO) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.putOpt("answer",creationFeignClient.listAnswerByUserId(userDTO));
-        jsonObject.putOpt("article",creationFeignClient.listArticleByUserId(userDTO));
-        jsonObject.putOpt("question",creationFeignClient.listQuestionByUserId(userDTO));
-        jsonObject.putOpt("favorite",peopleFeignClient.listFavoriteByUserId(userDTO));
-        jsonObject.putOpt("userFollow",peopleFeignClient.listUserFollowByUserId(userDTO));
-        jsonObject.putOpt("userFans",peopleFeignClient.listUserFansByUserId(userDTO));
-        System.out.println("jsonObject"+jsonObject);
-        return Result.succeed(jsonObject);
+    public Result<List<QuestionDO>> listQuestionByUserId(String userId) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(userId);
+        return creationFeignClient.listQuestionByUserId(userDTO);
     }
 
+    @Override
+    public Result<HashMap<String, Object>> listCollectByUserId(String userId) {
+        return collectController.listCollectByUserId(userId);
+    }
+
+    @Override
+    public Result<HashMap<String, Object>> listFollowByUserId(String userId) {
+        return followController.listFollowByUserId(userId);
+    }
 }

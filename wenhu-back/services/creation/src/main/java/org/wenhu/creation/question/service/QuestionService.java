@@ -19,5 +19,5 @@ public interface QuestionService {
 
     Result<QuestionDTO> getQuestionById(String id);
 
-    List<QuestionDO> listQuestionByUserId(@RequestBody UserDTO userDTO);
+    Result<List<QuestionDO>> listQuestionByUserId(@RequestBody UserDTO userDTO);
 }

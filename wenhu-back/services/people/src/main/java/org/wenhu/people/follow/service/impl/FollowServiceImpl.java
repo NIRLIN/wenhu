@@ -1,5 +1,6 @@
 package org.wenhu.people.follow.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.common.pojo.DO.FollowUserDO;
@@ -21,19 +22,22 @@ public class FollowServiceImpl implements FollowService {
     @Autowired
     private FollowUserDao followUserDao;
 
-    @Override
-    public List<FollowUserDO> listUserFollowByUserId(UserDTO userDTO) {
-        //查询用户关注的人
-        HashMap<String, Object> hashMap = new HashMap<>(1);
-        hashMap.put("follower_id", userDTO.getId());
-        return followUserDao.selectByMap(hashMap);
-    }
+
 
     @Override
-    public List<FollowUserDO> listUserFansByUserId(UserDTO userDTO) {
+    public HashMap<String, Object> listFollowByUserId(String userId) {
         //查询用户关注的人
-        HashMap<String, Object> hashMap = new HashMap<>(1);
-        hashMap.put("by_follower_id", userDTO.getId());
-        return followUserDao.selectByMap(hashMap);
+        QueryWrapper<FollowUserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(userId!=null,"follower_id",userId);
+        List<FollowUserDO> followUserDoS = followUserDao.selectList(queryWrapper);
+
+        //查询关注用户的人
+        QueryWrapper<FollowUserDO> queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.eq(userId != null, "by_follower_id", userId);
+        List<FollowUserDO> followUserDoS1 = followUserDao.selectList(queryWrapper1);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("followerId",followUserDoS);
+        hashMap.put("byFollowerId",followUserDoS1);
+        return hashMap;
     }
 }

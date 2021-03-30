@@ -1,6 +1,5 @@
 package org.wenhu.common.pojo.DO;
 
-
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -9,27 +8,26 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/3/25
  */
 @Data
-@TableName(value = "oppose")
-public class OpposeDO {
-
+@TableName(value = "collect_answer")
+public class CollectAnswerDO {
     /**
-     * 反对id
+     * 回答收藏id
      */
 
     private String id;
 
     /**
-     * 回答OR文章id
-     */
-    private String parentId;
-
-    /**
      * 用户id
      */
     private String userId;
+
+    /**
+     * 回答id
+     */
+    private String answerId;
 
     /**
      * 创建时间
@@ -45,6 +43,4 @@ public class OpposeDO {
      * 是否删除
      */
     private Integer isDeleted;
-
-
 }

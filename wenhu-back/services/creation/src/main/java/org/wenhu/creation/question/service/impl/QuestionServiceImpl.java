@@ -98,9 +98,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDO> listQuestionByUserId(@RequestBody UserDTO userDTO) {
+    public Result<List<QuestionDO>> listQuestionByUserId(@RequestBody UserDTO userDTO) {
         HashMap<String, Object> hashMap = new HashMap<>(1);
         hashMap.put("user_id", userDTO.getId());
-        return questionDao.selectByMap(hashMap);
+        return Result.succeed(questionDao.selectByMap(hashMap));
     }
 }

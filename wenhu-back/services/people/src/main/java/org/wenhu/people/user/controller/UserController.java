@@ -4,12 +4,16 @@ import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
+import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.Result;
 import org.wenhu.common.util.ResultCode;
 import org.wenhu.people.user.service.impl.UserServiceImpl;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -108,11 +112,46 @@ public class UserController {
         return userService.getHomepageByUserId(userDTO);
     }
 
-    @PostMapping(name = "getUserHomepageDataByUserId", value = "getUserHomepageDataByUserId")
-    public Result<JSONObject> getUserHomepageDataByUserId(@RequestBody Map<String, Object> objectMap) {
-        String id = (String) objectMap.get("id");
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(id);
-        return userService.getUserHomepageDataByUserId(userDTO);
+
+
+    @PostMapping(name = "listAnswerByUserId", value = "listAnswerByUserId")
+    public Result<List<AnswerVO>> listAnswerByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("id");
+        //获取方式
+        String type = (String) objectMap.get("type");
+        return userService.listAnswerByUserId(userId,type);
     }
+
+
+
+    @PostMapping(name = "listArticleByUserId", value = "listArticleByUserId")
+    public Result<List<AnswerVO>> listArticleByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("id");
+        //获取方式
+        String type = (String) objectMap.get("type");
+        return userService.listArticleByUserId(userId,type);
+    }
+
+    @PostMapping(name = "listQuestionByUserId", value = "listQuestionByUserId")
+    public Result<List<QuestionDO>>  listQuestionByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("id");
+        return userService.listQuestionByUserId(userId);
+    }
+
+    @PostMapping(name = "listCollectByUserId", value = "listCollectByUserId")
+    public Result<HashMap<String, Object>>  listCollectByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("id");
+        return userService.listCollectByUserId(userId);
+    }
+    @PostMapping(name = "listFollowByUserId", value = "listFollowByUserId")
+    public Result<HashMap<String, Object>>  listFollowByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("id");
+        return userService.listFollowByUserId(userId);
+    }
+
 }

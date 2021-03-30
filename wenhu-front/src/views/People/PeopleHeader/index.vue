@@ -63,7 +63,7 @@ export default {
   created() {
     this.fullscreenLoading = true
     this.user_id_cookie = getCookie()
-    console.log(this.user_id)
+    // console.log(this.user_id)
     const submitData = { 'id': this.user_id }
     getUserInfo(submitData).then((response) => {
       // console.log(response.data)

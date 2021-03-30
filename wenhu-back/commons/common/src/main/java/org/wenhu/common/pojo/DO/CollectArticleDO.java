@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
  * @date 2021/3/25
  */
 @Data
-@TableName(value = "collect")
-public class CollectDO {
+@TableName(value = "collect_article")
+public class CollectArticleDO {
     /**
-     * 收藏id
+     * 文章收藏id
      */
 
     private String id;
@@ -24,15 +24,11 @@ public class CollectDO {
      */
     private String userId;
 
-    /**
-     * 收藏夹id
-     */
-    private String favoriteId;
 
     /**
-     * 内容id
+     * 文章id
      */
-    private String contentId;
+    private String articleId;
 
     /**
      * 创建时间

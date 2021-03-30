@@ -1,19 +1,16 @@
 package org.wenhu.creation.question.controller;
 
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DTO.QuestionDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
-import org.wenhu.common.util.AliyunOss;
 import org.wenhu.common.util.Result;
 import org.wenhu.creation.question.service.impl.QuestionServiceImpl;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +25,6 @@ import java.util.Map;
 public class QuestionController {
     @Autowired
     private QuestionServiceImpl questionService;
-
 
 
     @PostMapping(name = "saveQuestion", value = "saveQuestion")
@@ -51,7 +47,7 @@ public class QuestionController {
     }
 
     @PostMapping(name = "listQuestionByUserId", value = "listQuestionByUserId")
-    public List<QuestionDO> listQuestionByUserId(@RequestBody UserDTO userDTO) {
+    public Result<List<QuestionDO>> listQuestionByUserId(@RequestBody UserDTO userDTO) {
         return questionService.listQuestionByUserId(userDTO);
     }
 

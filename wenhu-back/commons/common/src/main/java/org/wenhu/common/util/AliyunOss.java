@@ -2,14 +2,10 @@ package org.wenhu.common.util;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.model.OSSObjectSummary;
-import com.aliyun.oss.model.ObjectListing;
-import com.aliyun.oss.model.PutObjectResult;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author NIRLIN

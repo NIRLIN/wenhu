@@ -27,9 +27,9 @@ public class BrowsingDO {
     private String userId;
 
     /**
-     * 回答OR文章id
+     * 浏览id
      */
-    private String answerArticleId;
+    private String browseId;
 
     /**
      * 创建时间

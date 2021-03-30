@@ -1,5 +1,5 @@
 <template>
-  <div v-if="answer_item" id="answer" class="class_margin">
+  <div v-if="answer_item" class="class_margin">
     <el-row>
       <el-col :span="22">
         <div class="grid-content">
@@ -79,8 +79,8 @@ export default {
       M = M < 10 ? '0' + M : M
       let d = date.getDate()
       d = d < 10 ? '0' + d : d
-      var h = date.getHours()
-      var m = date.getMinutes()
+      let h = date.getHours()
+      let m = date.getMinutes()
       d = d >= 10 ? d : '0' + d
       h = h >= 10 ? h : '0' + h
       m = m >= 10 ? m : '0' + m

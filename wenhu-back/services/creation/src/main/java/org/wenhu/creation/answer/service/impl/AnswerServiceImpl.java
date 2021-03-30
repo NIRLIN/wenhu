@@ -17,7 +17,6 @@ import org.wenhu.database.dao.UserDao;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,19 +32,13 @@ public class AnswerServiceImpl implements AnswerService {
     @Autowired
     private UserDao userDao;
 
-    @Override
-    public List<AnswerDO> listAnswerByUserId(UserDTO userDTO) {
-        //获取回答
-        HashMap<String, Object> hashMap = new HashMap<>(1);
-        hashMap.put("user_id", userDTO.getId());
-        return answerDao.selectByMap(hashMap);
-    }
 
     @Override
     public Result<Integer> countAnswerByQuestionId(String questionId) {
         QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("id");
-        queryWrapper.eq("question_id", questionId);
+        queryWrapper
+                .select("id")
+                .eq(questionId != null,"question_id", questionId);
         Integer integer = answerDao.selectCount(queryWrapper);
         return Result.succeed(integer);
     }
@@ -83,22 +76,25 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Result<List<AnswerVO>> listAnswerByHeat(String questionId, String page) {
         QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
-        //查询对应问题id的回答
-        queryWrapper.eq("question_id", questionId);
-        //根据赞同数排序--降序
-        queryWrapper.orderByDesc("approval_number");
+        //查询对应问题id的回答、根据赞同数排序--降序
+        queryWrapper
+                .eq(questionId != null,"question_id", questionId)
+                .orderByDesc("approval_number");
+        //不传入userId
+
         return listAnswer(page, queryWrapper);
     }
-
 
     @Override
     public Result<List<AnswerVO>> listAnswerByTime(String questionId, String page) {
         QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
-        //查询对应问题id的回答
-        queryWrapper.eq("question_id", questionId);
-        //根据时间排序--降序
-        queryWrapper.orderByDesc("update_time");
+        //查询对应问题id的回答、根据时间排序--降序
+        queryWrapper
+                .eq("question_id", questionId)
+                .orderByDesc("update_time");
+        //不传入userId
         return listAnswer(page, queryWrapper);
+
     }
 
     @Override
@@ -114,25 +110,88 @@ public class AnswerServiceImpl implements AnswerService {
             return Result.succeed(code, message);
         }
         List<AnswerVO> answerVOList = new ArrayList<>();
+
         //数据遍历
         for (AnswerDO answerDO : selectPage.getRecords()) {
             AnswerVO answerVO = new AnswerVO();
             answerVO.setAnswerId(answerDO.getId());
             answerVO.setQuestionId(answerDO.getQuestionId());
             answerVO.setUserId(answerDO.getUserId());
-
-            //查出回答对应用户信息
-            UserDO userDO = userDao.selectById(answerDO.getUserId());
-            answerVO.setUsername(userDO.getUsername());
-            answerVO.setResume(userDO.getResume());
-            answerVO.setHeadImage(userDO.getHeadImage());
-
             answerVO.setContent(answerDO.getContent());
             answerVO.setApprovalNumber(answerDO.getApprovalNumber());
             answerVO.setOpposeNumber(answerDO.getOpposeNumber());
             answerVO.setUpdateTime(answerDO.getUpdateTime());
+            //查出回答对应用户信息
+            UserDO userDO = userDao.selectById(answerDO.getUserId());
+            if (userDO != null) {
+                answerVO.setUsername(userDO.getUsername());
+                answerVO.setResume(userDO.getResume());
+                answerVO.setHeadImage(userDO.getHeadImage());
+            }
             answerVOList.add(answerVO);
         }
         return Result.succeed(answerVOList);
     }
+
+    @Override
+    public Result<List<AnswerVO>> listAnswerByUserId(String userId, String type) {
+        //查询最近发布回答
+        String queryByTime="time";
+        //查询热度最高回答
+        String queryByHeat="heat";
+        QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
+        if (type==null){
+            //查询对应用户id的回答、根据时间排序--降序
+            queryWrapper
+                    .eq(userId != null, "user_id", userId)
+                    .orderByDesc("update_time");
+        }
+        if (queryByTime.equals(type)){
+            //查询对应用户id的回答、根据时间排序--降序
+            queryWrapper
+                    .eq(userId != null, "user_id", userId)
+                    .orderByDesc("update_time");
+        }
+        if (queryByHeat.equals(type)){
+            //查询对应用户id的回答、根据时间排序--降序
+            queryWrapper
+                    .eq(userId != null, "user_id", userId)
+                    .orderByDesc("approval_number");
+        }
+        String code;
+        String message;
+        List<AnswerDO> answerDOList = answerDao.selectList(queryWrapper);
+        if (answerDOList == null) {
+            //没有查询到回答时返回
+            code = ResultCode.NO_FOUND_DATA.getCode();
+            message = ResultCode.NO_FOUND_DATA.getMessage();
+            return Result.succeed(code, message);
+        }
+        List<AnswerVO> answerVOList = new ArrayList<>();
+
+        //查出回答对应用户信息
+        UserDO userDO = userDao.selectById(userId);
+
+        //数据遍历
+        for (AnswerDO answerDO : answerDOList) {
+            AnswerVO answerVO = new AnswerVO();
+            answerVO.setAnswerId(answerDO.getId());
+            answerVO.setQuestionId(answerDO.getQuestionId());
+            answerVO.setUserId(answerDO.getUserId());
+            answerVO.setContent(answerDO.getContent());
+            answerVO.setApprovalNumber(answerDO.getApprovalNumber());
+            answerVO.setOpposeNumber(answerDO.getOpposeNumber());
+            answerVO.setUpdateTime(answerDO.getUpdateTime());
+            //查出回答对应用户信息
+            if (userDO != null) {
+                answerVO.setUsername(userDO.getUsername());
+                answerVO.setResume(userDO.getResume());
+                answerVO.setHeadImage(userDO.getHeadImage());
+            }
+            answerVOList.add(answerVO);
+        }
+        return Result.succeed(answerVOList);
+    }
+
+
 }

@@ -18,38 +18,39 @@ import java.io.IOException;
  */
 
 @RestController
-@RequestMapping(name = "fileUpload",value = "fileUpload")
+@RequestMapping(name = "fileUpload", value = "fileUpload")
 public class FileUpload {
     @PostMapping("imageUpload")
-    public Result<String> imageUpload(@RequestParam MultipartFile image,@RequestParam String id) {
+    public Result<String> imageUpload(@RequestParam MultipartFile image, @RequestParam String id) {
         String data = null;
         String code = null;
-        String message=null;
+        String message = null;
         try {
-            data = AliyunOss.ossFileUpload("images/" +id+ image.getOriginalFilename(), image.getInputStream());
-            message= ResultCode.SUCCESS.getMessage();
-            code= ResultCode.SUCCESS.getCode();
+            data = AliyunOss.ossFileUpload("images/" + id + image.getOriginalFilename(), image.getInputStream());
+            message = ResultCode.SUCCESS.getMessage();
+            code = ResultCode.SUCCESS.getCode();
         } catch (IOException e) {
             e.printStackTrace();
-            message= ResultCode.OPERATION_FAIL_D0001.getMessage();
-            code= ResultCode.OPERATION_FAIL_D0001.getCode();
+            message = ResultCode.OPERATION_FAIL_D0001.getMessage();
+            code = ResultCode.OPERATION_FAIL_D0001.getCode();
         }
-        return Result.succeed(code,message,data);
+        return Result.succeed(code, message, data);
     }
+
     @PostMapping("videoUpload")
-    public Result<String> videoUpload(@RequestParam MultipartFile image,@RequestParam String id)  {
+    public Result<String> videoUpload(@RequestParam MultipartFile image, @RequestParam String id) {
         String data = null;
         String code = null;
-        String message=null;
+        String message = null;
         try {
-            data = AliyunOss.ossFileUpload("video/" +id+ image.getOriginalFilename(), image.getInputStream());
-            message= ResultCode.SUCCESS.getMessage();
-            code= ResultCode.SUCCESS.getCode();
+            data = AliyunOss.ossFileUpload("video/" + id + image.getOriginalFilename(), image.getInputStream());
+            message = ResultCode.SUCCESS.getMessage();
+            code = ResultCode.SUCCESS.getCode();
         } catch (IOException e) {
             e.printStackTrace();
-            message= ResultCode.OPERATION_FAIL_D0001.getMessage();
-            code= ResultCode.OPERATION_FAIL_D0001.getCode();
+            message = ResultCode.OPERATION_FAIL_D0001.getMessage();
+            code = ResultCode.OPERATION_FAIL_D0001.getCode();
         }
-        return Result.succeed(code,message,data);
+        return Result.succeed(code, message, data);
     }
 }
