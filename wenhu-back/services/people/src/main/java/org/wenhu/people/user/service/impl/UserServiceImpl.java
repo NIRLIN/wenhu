@@ -1,24 +1,27 @@
 package org.wenhu.people.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.wenhu.common.pojo.DO.HomepageDO;
+import org.wenhu.common.pojo.DO.LoginLogDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.pojo.VO.AnswerVO;
-import org.wenhu.common.util.Result;
-import org.wenhu.common.util.ResultCode;
-import org.wenhu.common.util.SnowflakeUtils;
-import org.wenhu.common.util.TencentSendSms;
+import org.wenhu.common.util.*;
 import org.wenhu.database.dao.HomepageDao;
+import org.wenhu.database.dao.LoginLogDao;
 import org.wenhu.database.dao.UserDao;
 import org.wenhu.feign.feign.CreationFeignClient;
 import org.wenhu.people.collect.controller.CollectController;
 import org.wenhu.people.follow.controller.FollowController;
 import org.wenhu.people.user.service.UserService;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +36,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     @Autowired
+    private LoginLogDao loginLogDao;
+    @Autowired
     private HomepageDao homepageDao;
     @Autowired
     private CreationFeignClient creationFeignClient;
@@ -45,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result<String> userRegister(UserDTO userDTO) {
-        String message  ;
+        String message;
         String code;
         Result<String> stringResult = checkPhoneExist(userDTO.getPhoneNumber());
         //判断手机号是否已绑定，已绑定时不可注册
@@ -182,15 +187,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result<String> changePassword(UserDTO userDTO) {
-        return null;
+    public Result<String> changePassword(String userId, String oldPassword, String newPassword) {
+        String code;
+        String message;
+        String data = null;
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(userId != null, "id", userId);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO == null) {
+            code = ResultCode.USER_ERROR_A0201.getCode();
+            message = ResultCode.USER_ERROR_A0201.getMessage();
+        } else {
+            if (userDO.getPassword().equals(oldPassword)) {
+                userDO.setPassword(newPassword);
+                userDO.setUpdateTime(LocalDateTime.now());
+
+                int i = userDao.updateById(userDO);
+                if (i == 1) {
+                    code = ResultCode.SUCCESS.getCode();
+                    message = ResultCode.SUCCESS.getMessage();
+                } else {
+                    code = ResultCode.OPERATION_FAIL_D0001.getCode();
+                    message = ResultCode.OPERATION_FAIL_D0001.getMessage();
+                }
+            } else {
+                code = ResultCode.USER_ERROR_A0210.getCode();
+                message = ResultCode.USER_ERROR_A0210.getMessage();
+            }
+        }
+        return Result.succeed(code, message, data);
     }
 
 
     @Override
     public Result<UserDTO> getUserInfo(UserDTO userDTO) {
-        String code ;
-        String message ;
+        String code;
+        String message;
         UserDO userDO = userDao.selectById(userDTO.getId());
         if (userDO == null) {
             code = ResultCode.USER_ERROR_A0201.getCode();
@@ -234,13 +266,13 @@ public class UserServiceImpl implements UserService {
             }
 
         }
-        return Result.succeed(code,message,data);
+        return Result.succeed(code, message, data);
     }
 
 
     @Override
     public Result<List<AnswerVO>> listAnswerByUserId(String userId, String type) {
-        return creationFeignClient.listAnswerByUserId(userId,type);
+        return creationFeignClient.listAnswerByUserId(userId, type);
     }
 
 
@@ -264,5 +296,146 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result<HashMap<String, Object>> listFollowByUserId(String userId) {
         return followController.listFollowByUserId(userId);
+    }
+
+    @Override
+    public Result<UserDO> checkOldPhoneNumber(String userId, String code, String phoneNumber) {
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq(userId != null, "id", userId)
+                .eq(phoneNumber != null, "phone_number", phoneNumber);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO == null) {
+            return Result.succeed(ResultCode.USER_ERROR_A0201.getCode(), ResultCode.USER_ERROR_A0201.getMessage());
+        }
+        TencentSendSms.sendSmsUtil(phoneNumber, code);
+        return Result.succeed(null);
+    }
+
+    @Override
+    public Result<UserDO> checkNewPhoneNumber(String userId, String code, String phoneNumber) {
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq(phoneNumber != null, "phone_number", phoneNumber);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO != null) {
+            return Result.succeed(ResultCode.USER_ERROR_A0154.getCode(), ResultCode.USER_ERROR_A0154.getMessage());
+        } else {
+            TencentSendSms.sendSmsUtil(phoneNumber, code);
+        }
+        return Result.succeed(null);
+    }
+
+    @Override
+    public Result<UserDO> changeNewPhoneNumber(String userId, String phoneNumber) {
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq(userId != null, "id", userId);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO == null) {
+            return Result.succeed(ResultCode.USER_ERROR_A0201.getCode(), ResultCode.USER_ERROR_A0201.getMessage());
+        }
+        userDO.setPhoneNumber(phoneNumber);
+        int i = userDao.updateById(userDO);
+        if (i == 1) {
+            return Result.succeed(null);
+        } else {
+            return Result.succeed(ResultCode.OPERATION_FAIL_D0001.getCode(), ResultCode.OPERATION_FAIL_D0001.getMessage());
+        }
+    }
+
+    @Override
+    public Result<HomepageDTO> saveChangeHomepage(HomepageDTO homepageDTO) {
+        QueryWrapper<HomepageDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(homepageDTO.getId() != null, "id", homepageDTO.getId());
+        HomepageDO homepageDoDao = homepageDao.selectOne(queryWrapper);
+        HomepageDO homepageDO = new HomepageDO();
+        BeanUtils.copyProperties(homepageDTO, homepageDO);
+        homepageDO.setUpdateTime(LocalDateTime.now());
+        if (homepageDoDao == null) {
+            homepageDO.setCreateTime(LocalDateTime.now());
+            homepageDao.insert(homepageDO);
+        }
+        if (homepageDoDao != null) {
+            homepageDao.updateById(homepageDO);
+        }
+        BeanUtils.copyProperties(homepageDao.selectOne(queryWrapper), homepageDTO);
+        return Result.succeed(homepageDTO);
+    }
+
+
+    @Override
+    public Result<String> getResumeByUserId(String userId) {
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", userId);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO != null) {
+            return Result.succeed(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), userDO.getResume());
+        } else {
+            return Result.succeed(ResultCode.NO_FOUND_DATA.getCode(), ResultCode.NO_FOUND_DATA.getMessage());
+        }
+    }
+
+    @Override
+    public Result<String> saveResumeByUserId(String userId, String resume) {
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(userId != null, "id", userId);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO != null) {
+            userDO.setResume(resume);
+            userDO.setUpdateTime(LocalDateTime.now());
+            int i = userDao.updateById(userDO);
+            if (i == 1) {
+                return Result.succeed(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), userDO.getResume());
+            } else {
+                return Result.succeed(ResultCode.NO_FOUND_DATA.getCode(), ResultCode.NO_FOUND_DATA.getMessage());
+            }
+        } else {
+            return Result.succeed(ResultCode.NO_FOUND_DATA.getCode(), ResultCode.NO_FOUND_DATA.getMessage());
+        }
+    }
+
+
+    @Override
+    public Result<List<LoginLogDO>> getLoginLogByUserId(String userId) {
+        QueryWrapper<LoginLogDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(userId != null, "id", userId);
+        List<LoginLogDO> loginLogDOS = loginLogDao.selectList(queryWrapper);
+        return Result.succeed(loginLogDOS);
+    }
+
+    @Override
+    public Result<String> getHeadImageByUserId(String userId) {
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", userId);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO != null) {
+            return Result.succeed(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), userDO.getHeadImage());
+        }
+        return Result.succeed(ResultCode.NO_FOUND_DATA.getCode(), ResultCode.NO_FOUND_DATA.getMessage());
+    }
+
+    @Override
+    public Result<String> saveHeadImageByUserId(MultipartFile image, String userId) {
+        String data = null;
+        String code = null;
+        String message = null;
+        try {
+            //上传阿里oss
+            data = AliyunOss.ossFileUpload("images/" + userId + image.getOriginalFilename(), image.getInputStream());
+            QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("id", userId);
+            UserDO userDO = userDao.selectOne(queryWrapper);
+            userDO.setUpdateTime(LocalDateTime.now());
+            userDO.setHeadImage(data);
+            userDao.updateById(userDO);
+            message = ResultCode.SUCCESS.getMessage();
+            code = ResultCode.SUCCESS.getCode();
+        } catch (IOException e) {
+//            e.printStackTrace();
+            message = ResultCode.OPERATION_FAIL_D0001.getMessage();
+            code = ResultCode.OPERATION_FAIL_D0001.getCode();
+        }
+        return Result.succeed(code, message, data);
     }
 }

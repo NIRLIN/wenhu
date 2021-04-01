@@ -1,6 +1,5 @@
 package org.wenhu.creation.article.service;
 
-import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.pojo.VO.ArticleVO;
 import org.wenhu.common.util.Result;
 

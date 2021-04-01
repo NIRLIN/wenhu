@@ -47,3 +47,11 @@ export function resetPassword(data) {
     data
   })
 }
+
+export function changePassword(data) {
+  return request({
+    url: '/people/user/changePassword',
+    method: 'post',
+    data
+  })
+}

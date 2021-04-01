@@ -34,8 +34,8 @@ public interface CreationFeignClient {
 
 
     @PostMapping(name = "answer/listAnswerByUserId", value = "answer/listAnswerByUserId")
-    Result<List<AnswerVO>> listAnswerByUserId(@RequestParam("userId") String userId,@RequestParam("type") String type);
+    Result<List<AnswerVO>> listAnswerByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type);
 
     @PostMapping(name = "article/listArticleByUserId", value = "article/listArticleByUserId")
-    Result<List<AnswerVO>> listArticleByUserId(@RequestParam("userId") String userId,@RequestParam("type") String type);
+    Result<List<AnswerVO>> listArticleByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type);
 }

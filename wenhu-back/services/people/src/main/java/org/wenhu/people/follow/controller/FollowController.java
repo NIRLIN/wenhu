@@ -1,18 +1,12 @@
 package org.wenhu.people.follow.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.wenhu.common.pojo.DO.FollowUserDO;
-import org.wenhu.common.pojo.DO.QuestionDO;
-import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.util.Result;
 import org.wenhu.people.follow.service.impl.FollowServiceImpl;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author NIRLIN

@@ -1,8 +1,10 @@
 package org.wenhu.creation.article.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.wenhu.common.pojo.DTO.UserDTO;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.wenhu.common.pojo.VO.ArticleVO;
 import org.wenhu.common.util.Result;
 import org.wenhu.creation.article.service.impl.ArticleServiceImpl;
@@ -24,6 +26,6 @@ public class ArticleController {
 
     @PostMapping(name = "listArticleByUserId", value = "listArticleByUserId")
     Result<List<ArticleVO>> listArticleByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type) {
-        return articleService.listAnswerByUserId(userId,  type);
+        return articleService.listAnswerByUserId(userId, type);
     }
 }

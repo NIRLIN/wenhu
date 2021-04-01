@@ -1,10 +1,12 @@
 package org.wenhu.people.user.controller;
 
-import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.wenhu.common.pojo.DO.LoginLogDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
+import org.wenhu.common.pojo.DO.UserDO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.pojo.VO.AnswerVO;
@@ -113,16 +115,14 @@ public class UserController {
     }
 
 
-
     @PostMapping(name = "listAnswerByUserId", value = "listAnswerByUserId")
     public Result<List<AnswerVO>> listAnswerByUserId(@RequestBody Map<String, Object> objectMap) {
         //用户id
         String userId = (String) objectMap.get("id");
         //获取方式
         String type = (String) objectMap.get("type");
-        return userService.listAnswerByUserId(userId,type);
+        return userService.listAnswerByUserId(userId, type);
     }
-
 
 
     @PostMapping(name = "listArticleByUserId", value = "listArticleByUserId")
@@ -131,27 +131,107 @@ public class UserController {
         String userId = (String) objectMap.get("id");
         //获取方式
         String type = (String) objectMap.get("type");
-        return userService.listArticleByUserId(userId,type);
+        return userService.listArticleByUserId(userId, type);
     }
 
     @PostMapping(name = "listQuestionByUserId", value = "listQuestionByUserId")
-    public Result<List<QuestionDO>>  listQuestionByUserId(@RequestBody Map<String, Object> objectMap) {
+    public Result<List<QuestionDO>> listQuestionByUserId(@RequestBody Map<String, Object> objectMap) {
         //用户id
         String userId = (String) objectMap.get("id");
         return userService.listQuestionByUserId(userId);
     }
 
     @PostMapping(name = "listCollectByUserId", value = "listCollectByUserId")
-    public Result<HashMap<String, Object>>  listCollectByUserId(@RequestBody Map<String, Object> objectMap) {
+    public Result<HashMap<String, Object>> listCollectByUserId(@RequestBody Map<String, Object> objectMap) {
         //用户id
         String userId = (String) objectMap.get("id");
         return userService.listCollectByUserId(userId);
     }
+
     @PostMapping(name = "listFollowByUserId", value = "listFollowByUserId")
-    public Result<HashMap<String, Object>>  listFollowByUserId(@RequestBody Map<String, Object> objectMap) {
+    public Result<HashMap<String, Object>> listFollowByUserId(@RequestBody Map<String, Object> objectMap) {
         //用户id
         String userId = (String) objectMap.get("id");
         return userService.listFollowByUserId(userId);
+    }
+
+    @PostMapping(name = "checkOldPhoneNumber", value = "checkOldPhoneNumber")
+    public Result<UserDO> checkOldPhoneNumber(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("id");
+        String code = (String) objectMap.get("code");
+        String phoneNumber = (String) objectMap.get("phoneNumber");
+        System.out.println(objectMap);
+        return userService.checkOldPhoneNumber(userId, code, phoneNumber);
+    }
+
+    @PostMapping(name = "checkNewPhoneNumber", value = "checkNewPhoneNumber")
+    public Result<UserDO> checkNewPhoneNumber(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("id");
+        String code = (String) objectMap.get("code");
+        String phoneNumber = (String) objectMap.get("phoneNumber");
+
+        return userService.checkNewPhoneNumber(userId, code, phoneNumber);
+    }
+
+    @PostMapping(name = "changeNewPhoneNumber", value = "changeNewPhoneNumber")
+    public Result<UserDO> changeNewPhoneNumber(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("id");
+        String phoneNumber = (String) objectMap.get("phoneNumber");
+
+        return userService.changeNewPhoneNumber(userId, phoneNumber);
+    }
+
+    @PostMapping(name = "changePassword", value = "changePassword")
+    public Result<String> changePassword(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("userId");
+        String oldPassword = (String) objectMap.get("oldPassword");
+        String newPassword = (String) objectMap.get("newPassword");
+        return userService.changePassword(userId, oldPassword, newPassword);
+    }
+
+    @PostMapping(name = "saveChangeHomepage", value = "saveChangeHomepage")
+    public Result<HomepageDTO> saveChangeHomepage(@RequestBody HomepageDTO homepageDTO) {
+        return userService.saveChangeHomepage(homepageDTO);
+    }
+
+    @PostMapping(name = "getResumeByUserId", value = "getResumeByUserId")
+    public Result<String> getResumeByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("userId");
+        return userService.getResumeByUserId(userId);
+    }
+
+    @PostMapping(name = "saveResumeByUserId", value = "saveResumeByUserId")
+    public Result<String> saveResumeByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("userId");
+        //个人简介
+        String resume = (String) objectMap.get("resume");
+        return userService.saveResumeByUserId(userId, resume);
+    }
+
+    @PostMapping(name = "getLoginLogByUserId", value = "getLoginLogByUserId")
+    public Result<List<LoginLogDO>> getLoginLogByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("userId");
+        return userService.getLoginLogByUserId(userId);
+    }
+
+
+    @PostMapping(name = "getHeadImageByUserId", value = "getHeadImageByUserId")
+    public Result<String> getHeadImageByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("userId");
+        return userService.getHeadImageByUserId(userId);
+    }
+
+    @PostMapping(name = "saveHeadImageByUserId", value = "saveHeadImageByUserId")
+    public Result<String> saveHeadImageByUserId(@RequestParam("image") MultipartFile image, @RequestParam String userId) {
+        return userService.saveHeadImageByUserId(image, userId);
     }
 
 }

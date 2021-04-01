@@ -260,7 +260,7 @@ export default {
         if (this.totalTime < 0) {
           window.clearInterval(clock)
           this.content = '重新发送'
-          this.totalTime = 10
+          this.totalTime = 120
           this.canClick = true // 这里重新开启
         }
       }, 1000)

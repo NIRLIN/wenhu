@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.common.pojo.DO.AnswerDO;
 import org.wenhu.common.pojo.DO.UserDO;
-import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.Result;
 import org.wenhu.common.util.ResultCode;
@@ -38,7 +37,7 @@ public class AnswerServiceImpl implements AnswerService {
         QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .select("id")
-                .eq(questionId != null,"question_id", questionId);
+                .eq(questionId != null, "question_id", questionId);
         Integer integer = answerDao.selectCount(queryWrapper);
         return Result.succeed(integer);
     }
@@ -78,7 +77,7 @@ public class AnswerServiceImpl implements AnswerService {
         QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
         //查询对应问题id的回答、根据赞同数排序--降序
         queryWrapper
-                .eq(questionId != null,"question_id", questionId)
+                .eq(questionId != null, "question_id", questionId)
                 .orderByDesc("approval_number");
         //不传入userId
 
@@ -136,23 +135,23 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Result<List<AnswerVO>> listAnswerByUserId(String userId, String type) {
         //查询最近发布回答
-        String queryByTime="time";
+        String queryByTime = "time";
         //查询热度最高回答
-        String queryByHeat="heat";
+        String queryByHeat = "heat";
         QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
-        if (type==null){
+        if (type == null) {
             //查询对应用户id的回答、根据时间排序--降序
             queryWrapper
                     .eq(userId != null, "user_id", userId)
                     .orderByDesc("update_time");
         }
-        if (queryByTime.equals(type)){
+        if (queryByTime.equals(type)) {
             //查询对应用户id的回答、根据时间排序--降序
             queryWrapper
                     .eq(userId != null, "user_id", userId)
                     .orderByDesc("update_time");
         }
-        if (queryByHeat.equals(type)){
+        if (queryByHeat.equals(type)) {
             //查询对应用户id的回答、根据时间排序--降序
             queryWrapper
                     .eq(userId != null, "user_id", userId)

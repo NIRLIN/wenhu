@@ -2,7 +2,6 @@ package org.wenhu.creation.answer.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.wenhu.common.pojo.DO.AnswerDO;
-import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.Result;
 

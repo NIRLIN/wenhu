@@ -1,8 +1,10 @@
 package org.wenhu.people.user.service;
 
 
-import cn.hutool.json.JSONObject;
+import org.springframework.web.multipart.MultipartFile;
+import org.wenhu.common.pojo.DO.LoginLogDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
+import org.wenhu.common.pojo.DO.UserDO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.pojo.VO.AnswerVO;
@@ -27,7 +29,7 @@ public interface UserService {
 
     Result<String> userLoginByPhoneVerify(UserDTO userDTO, String verifyCode);
 
-    Result<String> changePassword(UserDTO userDTO);
+    Result<String> changePassword(String userId, String oldPassword, String newPassword);
 
 
     Result<UserDTO> getUserInfo(UserDTO userDTO);
@@ -38,9 +40,27 @@ public interface UserService {
 
     Result<List<AnswerVO>> listArticleByUserId(String userId, String type);
 
-    Result<List<QuestionDO>>  listQuestionByUserId(String userId);
+    Result<List<QuestionDO>> listQuestionByUserId(String userId);
 
     Result<HashMap<String, Object>> listCollectByUserId(String userId);
 
     Result<HashMap<String, Object>> listFollowByUserId(String userId);
+
+    Result<UserDO> checkOldPhoneNumber(String userId, String code, String phoneNumber);
+
+    Result<UserDO> checkNewPhoneNumber(String userId, String code, String phoneNumber);
+
+    Result<UserDO> changeNewPhoneNumber(String userId, String phoneNumber);
+
+    Result<HomepageDTO> saveChangeHomepage(HomepageDTO homepageDTO);
+
+    Result<String> getResumeByUserId(String userId);
+
+    Result<String> saveResumeByUserId(String userId, String resume);
+
+    Result<List<LoginLogDO>> getLoginLogByUserId(String userId);
+
+    Result<String> getHeadImageByUserId(String userId);
+
+    Result<String> saveHeadImageByUserId(MultipartFile image, String userId);
 }

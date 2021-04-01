@@ -2,7 +2,6 @@ package org.wenhu.creation.answer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.Result;
 import org.wenhu.creation.answer.service.impl.AnswerServiceImpl;
@@ -47,7 +46,7 @@ public class AnswerController {
 
     @PostMapping(name = "listAnswerByUserId", value = "listAnswerByUserId")
     Result<List<AnswerVO>> listAnswerByUserId(@RequestParam String userId, @RequestParam String type) {
-        return answerService.listAnswerByUserId(userId,type);
+        return answerService.listAnswerByUserId(userId, type);
     }
 
 
