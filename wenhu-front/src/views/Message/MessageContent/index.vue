@@ -23,35 +23,17 @@
       </el-col>
     </el-row>
     <el-divider />
-
-    <el-row>
-      <el-col :span="24">
-        <div class="grid-content bg-purple">
-          <label>
-            <textarea class="message_input_text" placeholder="" />
-          </label>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24">
-        <div class="grid-content bg-purple">
-          <div class="send_button">
-            <el-button type="primary">发送</el-button>
-
-          </div>
-        </div>
-      </el-col>
-    </el-row>
+    <MessageSend />
   </div>
 </template>
 
 <script>
 import MessageItem from './MessageItem'
+import MessageSend from '@/views/Message/MessageContent/MessageSend'
 
 export default {
   name: 'MessageContent',
-  components: { MessageItem },
+  components: { MessageSend, MessageItem },
   data() {
     return {
       sender_name: '用户姓名',
@@ -66,35 +48,24 @@ export default {
 <style scoped>
 #messageContent {
   background: rgb(255, 255, 255);
+  margin-top: -20px;
 }
 
 .grid-content {
   border-radius: 8px;
-  min-height: 36px;
+  min-height: 10px;
 }
 
 .messageContent_sender_name {
   font-weight: bold;
-  font-size: 15px;
+  font-size: 20px;
   color: #121212;
   text-align: center;
+  margin-top: 15px;
 }
 
 .messageContent_main {
-  height: 400px;
+  height: 520px;
   overflow-y: auto;
-}
-
-.message_input_text {
-  width: 90%;
-  height: 50px;
-  border: none;
-  resize: none;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.send_button {
-  margin-left: 80%;
 }
 </style>

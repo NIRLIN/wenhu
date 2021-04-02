@@ -1,10 +1,12 @@
 <template>
-  <div id="senderItem"/>
+  <div>
+    Home
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'SenderItem'
+  name: 'Home'
 }
 </script>
 

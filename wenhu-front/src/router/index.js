@@ -79,6 +79,10 @@ export const constantRoutes = [
     path: '/forgetPassword',
     component: () => import('@/views/Password/ForgetPassword')
   },
+  {
+    path: '/admin',
+    component: () => import('@/views/Admin/Home')
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', component: () => import('@/views/NotFound') }
@@ -87,6 +91,7 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
+  base: '/',
   routes: constantRoutes
 })
 

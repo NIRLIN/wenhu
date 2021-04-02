@@ -12,24 +12,32 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="1">
+      <el-col :span="1" style="margin-left: 5px;">
         <div class="grid-content bg-purple">
           <el-avatar :src="sender_image_url" />
         </div>
       </el-col>
       <el-col :span="20">
         <div class="grid-content bg-purple">
-          <div>
-            <el-tree :data="data" @node-contextmenu="getCheckedNodes" />
 
+          <div>
             <div class="bubble">
               <span class="messageItem_content_font">
                 <div class="messageItem_content_font">
-                  {{ send_message_content }}
+                  <el-popover
+                    placement="right"
+                    trigger="hover"
+                  >
+                    <el-button type="text">删除</el-button>
+                    <el-button type="text">举报</el-button>
+                    <span slot="reference">
+                      {{ send_message_content }}
+                    </span>
+                  </el-popover>
+
                 </div>
               </span>
             </div>
-
           </div>
 
         </div>

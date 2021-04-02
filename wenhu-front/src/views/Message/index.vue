@@ -1,16 +1,25 @@
 <template>
   <div id="Message">
-    <h1>这里是message</h1>
-    <MessageContent />
+    <el-card>
+      <el-container>
+        <el-aside width="260px">
+          <MessageLeft />
+        </el-aside>
+        <el-main style="border-left: 1px solid rgb(231, 231, 231);">
+          <MessageContent />
+        </el-main>
+      </el-container>
+    </el-card>
   </div>
 </template>
 
 <script>
-import MessageContent from './MessageContent'
 
+import MessageLeft from '@/views/Message/MessageLeft'
+import MessageContent from '@/views/Message/MessageContent'
 export default {
   name: 'Message',
-  components: { MessageContent }
+  components: { MessageContent, MessageLeft }
 }
 </script>
 
