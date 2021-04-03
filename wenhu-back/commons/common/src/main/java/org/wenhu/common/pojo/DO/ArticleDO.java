@@ -54,6 +54,7 @@ public class ArticleDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 
 

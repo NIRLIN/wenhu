@@ -59,6 +59,7 @@ public class HomepageDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 
 

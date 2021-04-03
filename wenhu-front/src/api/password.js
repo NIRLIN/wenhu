@@ -7,7 +7,6 @@ export function userLoginByPassword(data) {
     data
   })
 }
-
 export function userLoginByPhoneVerify(data) {
   return request({
     url: '/people/user/userLoginByPhoneVerify',

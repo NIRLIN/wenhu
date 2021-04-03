@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.wenhu.common.pojo.DO.LoginLogDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
@@ -214,12 +213,6 @@ public class UserController {
         return userService.saveResumeByUserId(userId, resume);
     }
 
-    @PostMapping(name = "getLoginLogByUserId", value = "getLoginLogByUserId")
-    public Result<List<LoginLogDO>> getLoginLogByUserId(@RequestBody Map<String, Object> objectMap) {
-        //用户id
-        String userId = (String) objectMap.get("userId");
-        return userService.getLoginLogByUserId(userId);
-    }
 
 
     @PostMapping(name = "getHeadImageByUserId", value = "getHeadImageByUserId")

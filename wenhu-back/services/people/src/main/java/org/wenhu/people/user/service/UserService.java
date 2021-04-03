@@ -2,7 +2,6 @@ package org.wenhu.people.user.service;
 
 
 import org.springframework.web.multipart.MultipartFile;
-import org.wenhu.common.pojo.DO.LoginLogDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
@@ -31,7 +30,6 @@ public interface UserService {
 
     Result<String> changePassword(String userId, String oldPassword, String newPassword);
 
-
     Result<UserDTO> getUserInfo(UserDTO userDTO);
 
     Result<HomepageDTO> getHomepageByUserId(UserDTO userDTO);
@@ -57,8 +55,6 @@ public interface UserService {
     Result<String> getResumeByUserId(String userId);
 
     Result<String> saveResumeByUserId(String userId, String resume);
-
-    Result<List<LoginLogDO>> getLoginLogByUserId(String userId);
 
     Result<String> getHeadImageByUserId(String userId);
 

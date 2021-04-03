@@ -44,6 +44,7 @@ public class PositionDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 
 

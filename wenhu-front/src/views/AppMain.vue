@@ -49,8 +49,6 @@ export default {
       this.getUrlIndex()
     }
   },
-  created() {
-  },
   methods: {
     getUrlIndex() {
       let tmp = 0

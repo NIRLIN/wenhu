@@ -47,5 +47,6 @@ public class FavoriteDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 }

@@ -69,6 +69,7 @@ public class ReportReviewDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 
 

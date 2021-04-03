@@ -44,6 +44,7 @@ public class SensitivityDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 
 

@@ -1,6 +1,7 @@
 package org.wenhu.common.pojo.DO;
 
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -74,6 +75,7 @@ public class UserDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 
 

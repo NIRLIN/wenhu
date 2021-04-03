@@ -78,6 +78,7 @@ public class AdminDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 
 

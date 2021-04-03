@@ -42,5 +42,6 @@ public class CollectAnswerDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 }

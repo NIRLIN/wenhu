@@ -79,10 +79,6 @@ export const constantRoutes = [
     path: '/forgetPassword',
     component: () => import('@/views/Password/ForgetPassword')
   },
-  {
-    path: '/admin',
-    component: () => import('@/views/Admin/Home')
-  },
 
   // 404 page must be placed at the end !!!
   { path: '*', component: () => import('@/views/NotFound') }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.wenhu.common.pojo.DO.HomepageDO;
-import org.wenhu.common.pojo.DO.LoginLogDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
@@ -14,7 +13,6 @@ import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.*;
 import org.wenhu.database.dao.HomepageDao;
-import org.wenhu.database.dao.LoginLogDao;
 import org.wenhu.database.dao.UserDao;
 import org.wenhu.feign.feign.CreationFeignClient;
 import org.wenhu.people.collect.controller.CollectController;
@@ -35,8 +33,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
-    @Autowired
-    private LoginLogDao loginLogDao;
     @Autowired
     private HomepageDao homepageDao;
     @Autowired
@@ -125,35 +121,28 @@ public class UserServiceImpl implements UserService {
         System.out.println("stringResult" + stringResult);
         //判断手机号是否已绑定，未绑定时不可验证登录
         if (ResultCode.USER_ERROR_A0154.getCode().equals(stringResult.getCode())) {
-            HashMap<String, Object> stringHashMap = new HashMap<>(1);
-            stringHashMap.put("phone_number", userDTO.getPhoneNumber());
-            List<UserDO> userDO = userDao.selectByMap(stringHashMap);
-            System.out.println("userDO" + userDO);
-            if (userDO.size() >= 1) {
-                for (UserDO aDo : userDO) {
-                    //循环取出数据，验证账号密码
-                    if (aDo.getPhoneNumber().equals(userDTO.getPhoneNumber()) && aDo.getPassword().equals(userDTO.getPassword())) {
-                        code = ResultCode.SUCCESS.getCode();
-                        message = ResultCode.SUCCESS.getMessage();
-                        //构造id数据进行返回
-                        data = "{\"id\":\"" + aDo.getId() + "\"}";
-                        //避免数据错误
-                        break;
-                    }
-                    if (!aDo.getPassword().equals(userDTO.getPassword())) {
-                        code = ResultCode.USER_ERROR_A0210.getCode();
-                        message = ResultCode.USER_ERROR_A0210.getMessage();
-                    }
+            QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("phone_number", userDTO.getPhoneNumber());
+            UserDO userDO = userDao.selectOne(queryWrapper);
+            if (userDO != null) {
+                //循环取出数据，验证账号密码
+                if (userDO.getPhoneNumber().equals(userDTO.getPhoneNumber()) && userDO.getPassword().equals(userDTO.getPassword())) {
+                    code = ResultCode.SUCCESS.getCode();
+                    message = ResultCode.SUCCESS.getMessage();
+                    //构造id数据进行返回
+                    data = "{\"id\":\"" + userDO.getId() + "\"}";
+                    //避免数据错误
                 }
-            } else {
+                if (!userDO.getPassword().equals(userDTO.getPassword())) {
+                    code = ResultCode.USER_ERROR_A0210.getCode();
+                    message = ResultCode.USER_ERROR_A0210.getMessage();
+                }
+            }
+        } else {
                 //避免验证不存在数据库中的手机号
                 code = ResultCode.USER_ERROR_A0201.getCode();
                 message = ResultCode.USER_ERROR_A0201.getMessage();
             }
-        } else {
-            code = ResultCode.USER_ERROR_A0201.getCode();
-            message = ResultCode.USER_ERROR_A0201.getMessage();
-        }
         return Result.succeed(code, message, data);
     }
 
@@ -165,18 +154,14 @@ public class UserServiceImpl implements UserService {
         String data = null;
         //判断手机号是否存在
         if (ResultCode.USER_ERROR_A0154.getCode().equals(stringResult.getCode())) {
-            HashMap<String, Object> stringHashMap = new HashMap<>(1);
-            stringHashMap.put("phone_number", userDTO.getPhoneNumber());
-            List<UserDO> userDO = userDao.selectByMap(stringHashMap);
+            QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("phone_number", userDTO.getPhoneNumber());
+            UserDO userDO = userDao.selectOne(queryWrapper);
+            code = ResultCode.SUCCESS.getCode();
+            message = ResultCode.SUCCESS.getMessage();
             if (userDO != null) {
-                code = ResultCode.SUCCESS.getCode();
-                message = ResultCode.SUCCESS.getMessage();
-                for (UserDO aDo : userDO) {
-                    if (aDo != null) {
-                        getPhoneVerifyCode(userDTO.getPhoneNumber(), verifyCode);
-                        data = "{\"id\":\"" + aDo.getId() + "\"}";
-                    }
-                }
+                getPhoneVerifyCode(userDTO.getPhoneNumber(), verifyCode);
+                data = "{\"id\":\"" + userDO.getId() + "\"}";
             }
         } else {
             code = ResultCode.USER_ERROR_A0201.getCode();
@@ -395,14 +380,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
-    @Override
-    public Result<List<LoginLogDO>> getLoginLogByUserId(String userId) {
-        QueryWrapper<LoginLogDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(userId != null, "id", userId);
-        List<LoginLogDO> loginLogDOS = loginLogDao.selectList(queryWrapper);
-        return Result.succeed(loginLogDOS);
-    }
 
     @Override
     public Result<String> getHeadImageByUserId(String userId) {

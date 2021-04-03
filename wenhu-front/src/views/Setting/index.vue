@@ -10,7 +10,7 @@
               <el-tab-pane label="主页管理" name="homepage"><ChangeHomepage :active_name="activeName" /></el-tab-pane>
               <el-tab-pane label="头像管理" name="headImage"><ChangeHeadImage :active_name="activeName" /></el-tab-pane>
               <el-tab-pane label="个性签名" name="resume"><ChangeResume :active_name="activeName" /> </el-tab-pane>
-              <el-tab-pane label="登录日志" name="loginLog"><LoginLog :active_name="activeName" /> </el-tab-pane>
+              <el-tab-pane label="个性签名" name="resume"><ChangeResume :active_name="activeName" /> </el-tab-pane>
             </el-tabs>
           </div>
         </el-col>
@@ -25,12 +25,11 @@ import ChangePhone from '@/views/Setting/ChangePhone'
 import ChangePassword from '@/views/Setting/ChangePassword'
 import ChangeHeadImage from '@/views/Setting/ChangeHeadImage'
 import ChangeResume from '@/views/Setting/ChangeResume'
-import LoginLog from '@/views/Setting/LoginLog'
 import ChangeHomepage from '@/views/Setting/ChangeHomepage'
 
 export default {
   name: 'Setting',
-  components: { ChangeHomepage, LoginLog, ChangeResume, ChangeHeadImage, ChangePassword, ChangePhone },
+  components: { ChangeHomepage, ChangeResume, ChangeHeadImage, ChangePassword, ChangePhone },
   data() {
     return {
       activeName: 'username'

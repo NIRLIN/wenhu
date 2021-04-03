@@ -60,6 +60,7 @@ public class AnswerDO {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 
 
