@@ -1,6 +1,7 @@
 package org.wenhu.common.pojo.DO;
 
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 

@@ -30,11 +30,6 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @GetMapping(name = "test", value = "test")
-    String test() {
-        log.debug("test==>test");
-        return "test";
-    }
 
     @RequestMapping(name = "userRegister", value = "userRegister", method = RequestMethod.POST)
     Result<String> userRegister(@RequestBody UserDTO userDTO) {
@@ -211,6 +206,22 @@ public class UserController {
         //个人简介
         String resume = (String) objectMap.get("resume");
         return userService.saveResumeByUserId(userId, resume);
+    }
+
+    @PostMapping(name = "getUsernameByUserId", value = "getUsernameByUserId")
+    public Result<String> getUsernameByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("userId");
+        return userService.getUsernameByUserId(userId);
+    }
+
+    @PostMapping(name = "saveUsernameByUserId", value = "saveUsernameByUserId")
+    public Result<String> saveUsernameByUserId(@RequestBody Map<String, Object> objectMap) {
+        //用户id
+        String userId = (String) objectMap.get("userId");
+        //个人简介
+        String username = (String) objectMap.get("username");
+        return userService.saveUsernameByUserId(userId, username);
     }
 
 

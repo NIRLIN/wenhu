@@ -13,7 +13,7 @@
       <el-col>
 
         <div v-for="(item,index) in items" :key="index" style="border-top: 1px solid rgb(231, 231, 231);">
-          <div style="margin-top: 10px;margin-bottom: 10px;">
+          <div style="margin-top: 15px;margin-bottom: 15px;">
             <el-popover
               placement="right"
               trigger="hover"

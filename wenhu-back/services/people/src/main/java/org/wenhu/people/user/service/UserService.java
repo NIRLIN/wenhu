@@ -59,4 +59,8 @@ public interface UserService {
     Result<String> getHeadImageByUserId(String userId);
 
     Result<String> saveHeadImageByUserId(MultipartFile image, String userId);
+
+    Result<String> getUsernameByUserId(String userId);
+
+    Result<String> saveUsernameByUserId(String userId, String username);
 }

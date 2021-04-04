@@ -395,8 +395,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result<String> saveHeadImageByUserId(MultipartFile image, String userId) {
         String data = null;
-        String code = null;
-        String message = null;
+        String code;
+        String message;
         try {
             //上传阿里oss
             data = AliyunOss.ossFileUpload("images/" + userId + image.getOriginalFilename(), image.getInputStream());
@@ -409,10 +409,48 @@ public class UserServiceImpl implements UserService {
             message = ResultCode.SUCCESS.getMessage();
             code = ResultCode.SUCCESS.getCode();
         } catch (IOException e) {
-//            e.printStackTrace();
             message = ResultCode.OPERATION_FAIL_D0001.getMessage();
             code = ResultCode.OPERATION_FAIL_D0001.getCode();
         }
         return Result.succeed(code, message, data);
+    }
+
+    @Override
+    public Result<String> getUsernameByUserId(String userId) {
+        String code;
+        String message;
+        String data = null;
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", userId);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO != null) {
+            code = ResultCode.SUCCESS.getCode();
+            message = ResultCode.SUCCESS.getMessage();
+            data = userDO.getUsername();
+        } else {
+            code = ResultCode.USER_ERROR_A0201.getCode();
+            message = ResultCode.USER_ERROR_A0201.getMessage();
+        }
+        return Result.succeed(code, message, data);
+    }
+
+    @Override
+    public Result<String> saveUsernameByUserId(String userId, String username) {
+        String code;
+        String message;
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", userId);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        userDO.setUsername(username);
+        userDO.setUpdateTime(LocalDateTime.now());
+        int i = userDao.updateById(userDO);
+        if (i == 1) {
+            code = ResultCode.SUCCESS.getCode();
+            message = ResultCode.SUCCESS.getMessage();
+        } else {
+            code = ResultCode.USER_ERROR_A0201.getCode();
+            message = ResultCode.USER_ERROR_A0201.getMessage();
+        }
+        return Result.succeed(code, message);
     }
 }

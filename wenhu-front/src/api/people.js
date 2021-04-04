@@ -103,6 +103,22 @@ export function saveResumeByUserId(data) {
   })
 }
 
+export function getUsernameByUserId(data) {
+  return request({
+    url: '/people/user/getUsernameByUserId',
+    method: 'post',
+    data
+  })
+}
+
+export function saveUsernameByUserId(data) {
+  return request({
+    url: '/people/user/saveUsernameByUserId',
+    method: 'post',
+    data
+  })
+}
+
 export function getLoginLogByUserId(data) {
   return request({
     url: '/people/user/getLoginLogByUserId',
