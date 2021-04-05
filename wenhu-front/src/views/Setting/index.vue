@@ -38,15 +38,7 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      if (this.activeName === 'homepage') {
-        console.log('homepage')
-      }
-      if (this.activeName === 'headImage') {
-        console.log('headImage')
-      }
-      if (this.activeName === 'loginLog') {
-        console.log('loginLog')
-      }
+
     }
   }
 }

@@ -1,10 +1,11 @@
 package org.wenhu.creation.answer.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.wenhu.common.pojo.DO.AnswerDO;
-import org.wenhu.common.pojo.VO.AnswerVO;
+import org.wenhu.common.pojo.DO.AnswerArticleDO;
+import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
 import org.wenhu.common.util.Result;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,12 +19,19 @@ public interface AnswerService {
 
     Result<String> saveAnswer(String userId, String questionId, String content);
 
-    Result<List<AnswerVO>> listAnswerByHeat(String questionId, String page);
+    Result<List<AnswerArticleDTO>> listAnswerByHeat(String questionId, String page);
 
-    Result<List<AnswerVO>> listAnswerByTime(String questionId, String page);
+    Result<List<AnswerArticleDTO>> listAnswerByTime(String questionId, String page);
 
-    Result<List<AnswerVO>> listAnswer(String page, QueryWrapper<AnswerDO> queryWrapper);
+    Result<List<AnswerArticleDTO>> listAnswer(String page, QueryWrapper<AnswerArticleDO> queryWrapper);
 
+    Result<List<AnswerArticleDTO>> listAnswerByUserId(String userId, String type);
 
-    Result<List<AnswerVO>> listAnswerByUserId(String userId, String type);
+    Result<HashMap<String, Object>> getUserAgreeAndCollectAnswer(String userId, String answerId);
+
+    Result<HashMap<String, Object>> userAgreeAnswer(String userId, String answerId);
+
+    Result<HashMap<String, Object>> userOpposeAnswer(String userId, String answerId);
+
+    Result<HashMap<String, Object>> getAnswerByAnswerId(String answerId);
 }

@@ -10,31 +10,29 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "question")
+@TableName("question")
 public class QuestionDO {
 
     /**
      * 问题id
      */
-
     private String id;
 
     /**
      * 用户id
      */
-
     private String userId;
 
     /**
-     * 题目
+     * 问题标题
      */
     private String title;
 
     /**
-     * 描述
+     * 问题描述
      */
     private String description;
 
@@ -63,6 +61,5 @@ public class QuestionDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }

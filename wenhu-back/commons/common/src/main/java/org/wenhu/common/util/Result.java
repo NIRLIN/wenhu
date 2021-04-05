@@ -22,6 +22,10 @@ public class Result<T> implements Serializable {
 
     private T data;
 
+    public static <T> Result<T> succeed() {
+        return succeed(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
+    }
+
     public static <T> Result<T> succeed(String message) {
         return succeed(ResultCode.SUCCESS.getCode(), message, null);
     }
@@ -40,6 +44,10 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> succeed(String code, String message, T data) {
         return new Result<>(code, message, data);
+    }
+
+    public static <T> Result<T> failed() {
+        return failed(ResultCode.UNKNOWN_ERROR.getMessage());
     }
 
     public static <T> Result<T> failed(String message) {

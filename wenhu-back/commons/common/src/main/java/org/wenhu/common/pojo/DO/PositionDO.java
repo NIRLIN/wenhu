@@ -7,20 +7,18 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "position")
+@TableName("position")
 public class PositionDO {
 
     /**
      * 职位id
      */
-
     private String id;
 
     /**
@@ -48,6 +46,5 @@ public class PositionDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }

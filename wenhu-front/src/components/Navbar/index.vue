@@ -54,17 +54,17 @@
               </el-avatar>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>
-                <el-link :underline="false" href="#/setting">
-                  <el-link :href="people_url" :underline="false">我的主页</el-link>
-                </el-link>
-              </el-dropdown-item>
+              <el-link :underline="false" href="#/setting">
+                <el-dropdown-item>
+                  <el-link :href="'#/people/'+user_id" :underline="false">我的主页</el-link>
+                </el-dropdown-item>
+              </el-link>
               <el-dropdown-item>创作中心</el-dropdown-item>
-              <el-dropdown-item>
-                <el-link :underline="false">
+              <el-link :underline="false">
+                <el-dropdown-item>
                   <el-link :underline="false" href="#/setting">设置</el-link>
-                </el-link>
-              </el-dropdown-item>
+                </el-dropdown-item>
+              </el-link>
               <el-link :underline="false" @click="logout">
                 <el-dropdown-item>
                   退出
@@ -121,8 +121,7 @@ export default {
       header_search_value: '',
       head_image_url: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       is_login: 0,
-      user_id: '123456',
-      people_url: '#/people/' + this.user_id
+      user_id: '123456'
     }
   },
   watch: {
@@ -145,7 +144,6 @@ export default {
     if (cookie) {
       this.is_login = 1
       this.user_id = getCookie()
-      this.people_url = '#/people/' + this.user_id
     }
     if (!cookie) {
       this.is_login = 0

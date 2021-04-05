@@ -58,14 +58,21 @@ export default {
       return true
     },
     changePassword() {
-      if (this.checkPassword()) {
-        const submitData = { 'userId': getCookie(), 'oldPassword': this.oldPassword, 'newPassword': this.newPassword }
-        changePassword(submitData).then((response) => {
+      if (getCookie() !== undefined) {
+        if (this.checkPassword()) {
+          const submitData = { 'userId': getCookie(), 'oldPassword': this.oldPassword, 'newPassword': this.newPassword }
+          changePassword(submitData).then((response) => {
+            Message.success({
+              message: '密码修改成功哦~',
+              center: true
+            })
+          })
+        } else {
           Message.success({
-            message: '密码修改成功哦~',
+            message: '请登录哦~',
             center: true
           })
-        })
+        }
       }
     }
   }

@@ -10,16 +10,15 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "homepage")
+@TableName("homepage")
 public class HomepageDO {
 
     /**
      * 用户id
      */
-
     private String id;
 
     /**
@@ -62,6 +61,5 @@ public class HomepageDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }

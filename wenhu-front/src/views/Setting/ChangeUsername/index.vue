@@ -46,12 +46,19 @@ export default {
   },
   watch: {
     active_name() {
-      if (this.active_name === 'username') {
-        const submitData = { 'userId': getCookie() }
-        getUsernameByUserId(submitData).then((response) => {
-          if (response.data != null) {
-            this.username = response.data
-          }
+      if (getCookie() !== undefined) {
+        if (this.active_name === 'username') {
+          const submitData = { 'userId': getCookie() }
+          getUsernameByUserId(submitData).then((response) => {
+            if (response.data != null) {
+              this.username = response.data
+            }
+          })
+        }
+      } else {
+        Message.success({
+          message: '请登录哦~',
+          center: true
         })
       }
     }

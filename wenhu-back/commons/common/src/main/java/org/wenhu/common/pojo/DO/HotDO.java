@@ -10,16 +10,15 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "hot")
+@TableName("hot")
 public class HotDO {
 
     /**
      * 热榜id
      */
-
     private String id;
 
     /**
@@ -57,6 +56,5 @@ public class HotDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }

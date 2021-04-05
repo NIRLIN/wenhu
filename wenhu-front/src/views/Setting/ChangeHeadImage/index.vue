@@ -55,10 +55,17 @@ export default {
   },
   watch: {
     active_name() {
-      if (this.active_name === 'headImage') {
-        const submitData = { 'userId': getCookie() }
-        getHeadImageByUserId(submitData).then((response) => {
-          this.headImage = response.data
+      if (getCookie() !== undefined) {
+        if (this.active_name === 'headImage') {
+          const submitData = { 'userId': getCookie() }
+          getHeadImageByUserId(submitData).then((response) => {
+            this.headImage = response.data
+          })
+        }
+      } else {
+        Message.success({
+          message: '请登录哦~',
+          center: true
         })
       }
     }

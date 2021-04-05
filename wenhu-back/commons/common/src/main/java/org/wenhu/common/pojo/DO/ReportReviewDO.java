@@ -10,16 +10,15 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "report_review")
+@TableName("report_review")
 public class ReportReviewDO {
 
     /**
      * 举报id
      */
-
     private String id;
 
     /**
@@ -72,6 +71,5 @@ public class ReportReviewDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }

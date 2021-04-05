@@ -1,15 +1,13 @@
 package org.wenhu.creation.article.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.wenhu.common.pojo.VO.ArticleVO;
+import org.springframework.web.bind.annotation.*;
+import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
 import org.wenhu.common.util.Result;
 import org.wenhu.creation.article.service.impl.ArticleServiceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author NIRLIN
@@ -25,7 +23,27 @@ public class ArticleController {
 
 
     @PostMapping(name = "listArticleByUserId", value = "listArticleByUserId")
-    Result<List<ArticleVO>> listArticleByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type) {
+    Result<List<AnswerArticleDTO>> listArticleByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type) {
         return articleService.listAnswerByUserId(userId, type);
+    }
+
+    @PostMapping(name = "getUserAgreeArticle", value = "getUserAgreeArticle")
+    Result<Boolean> getUserAgreeArticle(@RequestBody Map<String, Object> objectMap) {
+        String userId = (String) objectMap.get("userId");
+        String answerId = (String) objectMap.get("answerId");
+        return articleService.getUserAgreeArticle(userId, answerId);
+    }
+
+    @PostMapping(name = "saveAgreeArticleByUserId", value = "saveAgreeArticleByUserId")
+    Result<Boolean> saveAgreeArticleByUserId(@RequestBody Map<String, Object> objectMap) {
+        String userId = (String) objectMap.get("userId");
+        String answerId = (String) objectMap.get("answerId");
+        return articleService.saveAgreeArticleByUserId(userId, answerId);
+    }
+    @PostMapping(name = "saveOpposeArticleByUserId", value = "saveOpposeArticleByUserId")
+    Result<Boolean> saveOpposeArticleByUserId(@RequestBody Map<String, Object> objectMap) {
+        String userId = (String) objectMap.get("userId");
+        String answerId = (String) objectMap.get("answerId");
+        return articleService.saveOpposeArticleByUserId(userId, answerId);
     }
 }

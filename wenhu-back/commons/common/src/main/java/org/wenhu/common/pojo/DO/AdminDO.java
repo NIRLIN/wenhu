@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "admin")
+@TableName("admin")
 public class AdminDO {
 
     /**
@@ -81,6 +81,5 @@ public class AdminDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }

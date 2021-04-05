@@ -68,7 +68,7 @@
           <el-button size="small" type="primary">关注问题</el-button>
           <el-button size="small" icon="el-icon-edit" plain type="primary" @click="childSendEditAnswerStatus">写回答</el-button>
           <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-comment ">评论</el-button>
-          <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-promotion ">分享</el-button>
+          <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-promotion " @click="shareButton">分享</el-button>
           <el-button class="no_border_outline button_color button_margin_left" type="text">
             <el-dropdown trigger="click" :placement="'bottom'">
               <span class="el-dropdown-link">
@@ -88,6 +88,8 @@
 </template>
 
 <script>
+import { Message } from 'element-ui'
+
 export default {
   name: 'Question',
   props: {
@@ -107,6 +109,18 @@ export default {
     childSendEditAnswerStatus() {
       this.childSendEditAnswerStatusNumber = !this.childSendEditAnswerStatusNumber
       this.$emit('listenToChildEvent', this.childSendEditAnswerStatusNumber)
+    },
+    shareButton() {
+      const aux = document.createElement('input')
+      aux.setAttribute('value', this.question_name + '  -  闻乎  ' + window.location.href)
+      document.body.appendChild(aux)
+      aux.select()
+      document.execCommand('copy')
+      document.body.removeChild(aux)
+      Message.info({
+        message: '已复制链接',
+        center: true
+      })
     }
   }
 

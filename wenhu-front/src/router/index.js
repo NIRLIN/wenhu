@@ -52,6 +52,10 @@ export const constantRoutes = [
     component: () => import('@/views/QuestionAnswer')
   },
   {
+    path: '/answer/:id',
+    component: () => import('@/views/QuestionAnswer/OneAnswer')
+  },
+  {
     path: '/quiz',
     component: () => import('@/views/Quiz')
   },

@@ -1,9 +1,8 @@
 package org.wenhu.people.follow.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.wenhu.common.pojo.DO.FollowUserDO;
+import org.wenhu.common.pojo.DTO.FollowUserDTO;
 import org.wenhu.database.dao.FollowUserDao;
 import org.wenhu.people.follow.service.FollowService;
 
@@ -25,17 +24,12 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public HashMap<String, Object> listFollowByUserId(String userId) {
         //查询用户关注的人
-        QueryWrapper<FollowUserDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(userId != null, "follower_id", userId);
-        List<FollowUserDO> followUserDoS = followUserDao.selectList(queryWrapper);
-
+        List<FollowUserDTO> follows = followUserDao.listFollow(userId);
         //查询关注用户的人
-        QueryWrapper<FollowUserDO> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper1.eq(userId != null, "by_follower_id", userId);
-        List<FollowUserDO> followUserDoS1 = followUserDao.selectList(queryWrapper1);
+        List<FollowUserDTO> fans = followUserDao.listFans(userId);
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("followerId", followUserDoS);
-        hashMap.put("byFollowerId", followUserDoS1);
+        hashMap.put("follows", follows);
+        hashMap.put("fans", fans);
         return hashMap;
     }
 }

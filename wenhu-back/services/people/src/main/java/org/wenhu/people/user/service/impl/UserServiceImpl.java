@@ -8,9 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.wenhu.common.pojo.DO.HomepageDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
+import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
-import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.*;
 import org.wenhu.database.dao.HomepageDao;
 import org.wenhu.database.dao.UserDao;
@@ -139,10 +139,10 @@ public class UserServiceImpl implements UserService {
                 }
             }
         } else {
-                //避免验证不存在数据库中的手机号
-                code = ResultCode.USER_ERROR_A0201.getCode();
-                message = ResultCode.USER_ERROR_A0201.getMessage();
-            }
+            //避免验证不存在数据库中的手机号
+            code = ResultCode.USER_ERROR_A0201.getCode();
+            message = ResultCode.USER_ERROR_A0201.getMessage();
+        }
         return Result.succeed(code, message, data);
     }
 
@@ -256,13 +256,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Result<List<AnswerVO>> listAnswerByUserId(String userId, String type) {
+    public Result<List<AnswerArticleDTO>> listAnswerByUserId(String userId, String type) {
         return creationFeignClient.listAnswerByUserId(userId, type);
     }
 
 
     @Override
-    public Result<List<AnswerVO>> listArticleByUserId(String userId, String type) {
+    public Result<List<AnswerArticleDTO>> listArticleByUserId(String userId, String type) {
         return creationFeignClient.listArticleByUserId(userId, type);
     }
 

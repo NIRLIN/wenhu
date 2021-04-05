@@ -66,16 +66,23 @@ export default {
         })
         return
       }
-      const submitData = { 'userId': getCookie(), 'resume': this.resume }
-      saveResumeByUserId(submitData).then((response) => {
-        if (response.data !== null) {
-          this.homepage = response.data
-          Message.success({
-            message: '修改成功',
-            center: true
-          })
-        }
-      })
+      if (getCookie() !== undefined) {
+        const submitData = { 'userId': getCookie(), 'resume': this.resume }
+        saveResumeByUserId(submitData).then((response) => {
+          if (response.data !== null) {
+            this.homepage = response.data
+            Message.success({
+              message: '修改成功',
+              center: true
+            })
+          }
+        })
+      } else {
+        Message.success({
+          message: '请登录哦~',
+          center: true
+        })
+      }
     }
   }
 

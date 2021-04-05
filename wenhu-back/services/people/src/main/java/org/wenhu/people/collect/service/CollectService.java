@@ -12,4 +12,6 @@ import java.util.HashMap;
 public interface CollectService {
 
     Result<HashMap<String, Object>> collectService(String userId);
+
+    Result<HashMap<String, Object>> userCollectAnswer(String userId, String answerId);
 }

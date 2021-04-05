@@ -10,16 +10,15 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "follow_user")
+@TableName("follow_user")
 public class FollowUserDO {
 
     /**
      * 关注id
      */
-
     private String id;
 
     /**
@@ -47,6 +46,5 @@ public class FollowUserDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }

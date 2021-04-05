@@ -10,16 +10,15 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "answer")
-public class AnswerDO {
+@TableName("answer_article")
+public class AnswerArticleDO {
 
     /**
      * 回答id
      */
-
     private String id;
 
     /**
@@ -27,6 +26,10 @@ public class AnswerDO {
      */
     private String questionId;
 
+    /**
+     * 赞同或反对，1为回答，0为文章
+     */
+    private Integer answerArticle;
 
     /**
      * 用户id
@@ -63,6 +66,5 @@ public class AnswerDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }

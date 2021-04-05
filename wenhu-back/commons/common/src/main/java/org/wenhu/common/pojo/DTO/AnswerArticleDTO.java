@@ -1,8 +1,6 @@
 package org.wenhu.common.pojo.DTO;
 
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,19 +11,22 @@ import java.time.LocalDateTime;
  * @date 2021/3/15
  */
 @Data
-@TableName(value = "answer_article")
 public class AnswerArticleDTO {
 
     /**
-     * 回答id
+     * 赞同id
      */
-
     private String id;
 
     /**
      * 问题id
      */
     private String questionId;
+
+    /**
+     * 回答OR文章id,1为回答，0为文章
+     */
+    private Integer answerArticle;
 
 
     /**
@@ -34,14 +35,24 @@ public class AnswerArticleDTO {
     private String userId;
 
     /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 个人简介
+     */
+    private String resume;
+
+    /**
+     * 个人头像
+     */
+    private String headImage;
+
+    /**
      * 内容
      */
     private String content;
-
-    /**
-     * 回答OR文章,1为回答，0为文章
-     */
-    private Integer isAnswer;
 
     /**
      * 赞同数
@@ -67,6 +78,5 @@ public class AnswerArticleDTO {
      * 是否删除
      */
     private Integer isDeleted;
-
 
 }

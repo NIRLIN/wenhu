@@ -128,16 +128,30 @@ export default {
   },
   methods: {
     saveChangeHomepage() {
-      const submitData = { 'id': getCookie(), 'answer': this.homepage.answer, 'article': this.homepage.article, 'question': this.homepage.question, 'collect': this.homepage.collect, 'follow': this.homepage.follow }
-      saveChangeHomepage(submitData).then((response) => {
-        if (response.data !== null) {
-          this.homepage = response.data
-          Message.success({
-            message: '修改成功',
-            center: true
-          })
+      if (getCookie() !== undefined) {
+        const submitData = {
+          'id': getCookie(),
+          'answer': this.homepage.answer,
+          'article': this.homepage.article,
+          'question': this.homepage.question,
+          'collect': this.homepage.collect,
+          'follow': this.homepage.follow
         }
-      })
+        saveChangeHomepage(submitData).then((response) => {
+          if (response.data !== null) {
+            this.homepage = response.data
+            Message.success({
+              message: '修改成功',
+              center: true
+            })
+          }
+        })
+      } else {
+        Message.success({
+          message: '请登录哦~',
+          center: true
+        })
+      }
     }
   }
 

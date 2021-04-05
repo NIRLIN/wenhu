@@ -55,7 +55,7 @@ public class QuestionServiceImpl implements QuestionService {
         questionLogDO.setId(String.valueOf(SnowflakeUtils.genId()));
         questionLogDO.setMenderId(menderId);
         questionLogDO.setQuestionId(questionDO.getId());
-        questionLogDO.setIsTitle("0");
+        questionLogDO.setIsTitle(0);
         questionLogDO.setUpdateBeforeContent("");
         questionLogDO.setUpdateAfterContent(questionDO.getTitle());
         questionLogDO.setCreateTime(LocalDateTime.now());

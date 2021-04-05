@@ -1,39 +1,41 @@
 package org.wenhu.common.pojo.DO;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/25
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "favorite")
-public class FavoriteDO {
-    /**
-     * 收藏夹id
-     */
+@Accessors(chain = true)
+@TableName("agree_oppose")
+public class AgreeOpposeDO {
 
+    /**
+     * 赞同id
+     */
     private String id;
+
+    /**
+     * 回答OR文章id
+     */
+    private String answerArticleId;
+
+    /**
+     * 赞同或反对，1为赞同，0为反对
+     */
+    private Integer agreeOppose;
 
     /**
      * 用户id
      */
     private String userId;
-
-    /**
-     * 收藏夹名字
-     */
-    private String favoriteName;
-
-    /**
-     * 收藏数量
-     */
-    private String collectNumber;
 
     /**
      * 创建时间
@@ -48,6 +50,5 @@ public class FavoriteDO {
     /**
      * 是否删除
      */
-    @TableLogic
     private Integer isDeleted;
 }

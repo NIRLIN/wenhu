@@ -4,9 +4,9 @@ package org.wenhu.people.user.service;
 import org.springframework.web.multipart.MultipartFile;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
+import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
-import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.Result;
 
 import java.util.HashMap;
@@ -34,9 +34,9 @@ public interface UserService {
 
     Result<HomepageDTO> getHomepageByUserId(UserDTO userDTO);
 
-    Result<List<AnswerVO>> listAnswerByUserId(String userId, String type);
+    Result<List<AnswerArticleDTO>> listAnswerByUserId(String userId, String type);
 
-    Result<List<AnswerVO>> listArticleByUserId(String userId, String type);
+    Result<List<AnswerArticleDTO>> listArticleByUserId(String userId, String type);
 
     Result<List<QuestionDO>> listQuestionByUserId(String userId);
 

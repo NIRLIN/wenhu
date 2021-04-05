@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
+import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
 import org.wenhu.common.pojo.DTO.HomepageDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
-import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.Result;
 import org.wenhu.common.util.ResultCode;
 import org.wenhu.people.user.service.impl.UserServiceImpl;
@@ -110,7 +110,7 @@ public class UserController {
 
 
     @PostMapping(name = "listAnswerByUserId", value = "listAnswerByUserId")
-    public Result<List<AnswerVO>> listAnswerByUserId(@RequestBody Map<String, Object> objectMap) {
+    public Result<List<AnswerArticleDTO>> listAnswerByUserId(@RequestBody Map<String, Object> objectMap) {
         //用户id
         String userId = (String) objectMap.get("id");
         //获取方式
@@ -120,7 +120,7 @@ public class UserController {
 
 
     @PostMapping(name = "listArticleByUserId", value = "listArticleByUserId")
-    public Result<List<AnswerVO>> listArticleByUserId(@RequestBody Map<String, Object> objectMap) {
+    public Result<List<AnswerArticleDTO>> listArticleByUserId(@RequestBody Map<String, Object> objectMap) {
         //用户id
         String userId = (String) objectMap.get("id");
         //获取方式
@@ -165,7 +165,6 @@ public class UserController {
         String userId = (String) objectMap.get("id");
         String code = (String) objectMap.get("code");
         String phoneNumber = (String) objectMap.get("phoneNumber");
-
         return userService.checkNewPhoneNumber(userId, code, phoneNumber);
     }
 
@@ -223,7 +222,6 @@ public class UserController {
         String username = (String) objectMap.get("username");
         return userService.saveUsernameByUserId(userId, username);
     }
-
 
 
     @PostMapping(name = "getHeadImageByUserId", value = "getHeadImageByUserId")

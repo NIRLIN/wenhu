@@ -93,7 +93,6 @@
         </div>
       </el-col>
     </el-row>
-    <el-backtop />
   </div>
 </template>
 
@@ -193,20 +192,31 @@ export default {
         })
         return
       }
-      const submitData = { 'userId': getCookie(), 'questionId': this.$route.params.id, 'content': this.edit_answer_item }
-      // console.log(submitData)
-      saveAnswer(submitData).then((response) => {
+      if (getCookie() !== undefined) {
+        const submitData = {
+          'userId': getCookie(),
+          'questionId': this.$route.params.id,
+          'content': this.edit_answer_item
+        }
+        // console.log(submitData)
+        saveAnswer(submitData).then((response) => {
+          Message.success({
+            message: '发布成功',
+            center: true
+          })
+          setTimeout(() => {
+            this.$router.go(0)
+          }, 100)
+        })
+      } else {
         Message.success({
-          message: '发布成功',
+          message: '请登录哦~',
           center: true
         })
-        setTimeout(() => {
-          this.$router.go(0)
-        }, 100)
-      })
+      }
     },
     current_change(page) {
-      console.log(this.sortByHeat)
+      // console.log(this.sortByHeat)
       if (this.sortByHeat === 1) {
         this.methodListAnswerByHeat(page)
       }

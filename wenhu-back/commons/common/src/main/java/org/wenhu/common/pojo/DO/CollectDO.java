@@ -1,7 +1,6 @@
 package org.wenhu.common.pojo.DO;
 
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -10,16 +9,15 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "article")
-public class ArticleDO {
+@TableName("collect")
+public class CollectDO {
 
     /**
-     * 文章id
+     * 收藏id
      */
-
     private String id;
 
     /**
@@ -28,19 +26,15 @@ public class ArticleDO {
     private String userId;
 
     /**
-     * 内容
+     * 收藏回答或文章id
      */
-    private String content;
+    private String answerArticleId;
 
     /**
-     * 赞同数
+     * 文章或回答，1为回答，0为文章
      */
-    private String approvalNumber;
+    private Integer answerArticle;
 
-    /**
-     * 反对数
-     */
-    private String opposeNumber;
 
     /**
      * 创建时间
@@ -55,8 +49,6 @@ public class ArticleDO {
     /**
      * 是否删除
      */
-    @TableLogic
     private Integer isDeleted;
-
 
 }

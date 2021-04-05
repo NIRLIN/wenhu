@@ -10,16 +10,15 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "browsing")
+@TableName("browsing")
 public class BrowsingDO {
 
     /**
      * 记录id
      */
-
     private String id;
 
     /**
@@ -30,7 +29,7 @@ public class BrowsingDO {
     /**
      * 浏览id
      */
-    private String browseId;
+    private String answerArticleId;
 
     /**
      * 创建时间
@@ -47,6 +46,5 @@ public class BrowsingDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.wenhu.common.pojo.DO.QuestionDO;
+import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
-import org.wenhu.common.pojo.VO.AnswerVO;
 import org.wenhu.common.util.Result;
 
 import java.util.List;
@@ -27,15 +27,15 @@ public interface CreationFeignClient {
     Result<List<QuestionDO>> listQuestionByUserId(@RequestBody UserDTO userDTO);
 
     @PostMapping(name = "article/listArticleHeatByUserId", value = "article/listArticleHeatByUserId")
-    Result<List<AnswerVO>> listArticleHeatByUserId(@RequestBody UserDTO userDTO);
+    Result<List<AnswerArticleDTO>> listArticleHeatByUserId(@RequestBody UserDTO userDTO);
 
     @PostMapping(name = "article/listArticleTimeByUserId", value = "article/listArticleTimeByUserId")
-    Result<List<AnswerVO>> listArticleTimeByUserId(@RequestBody UserDTO userDTO);
+    Result<List<AnswerArticleDTO>> listArticleTimeByUserId(@RequestBody UserDTO userDTO);
 
 
     @PostMapping(name = "answer/listAnswerByUserId", value = "answer/listAnswerByUserId")
-    Result<List<AnswerVO>> listAnswerByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type);
+    Result<List<AnswerArticleDTO>> listAnswerByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type);
 
     @PostMapping(name = "article/listArticleByUserId", value = "article/listArticleByUserId")
-    Result<List<AnswerVO>> listArticleByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type);
+    Result<List<AnswerArticleDTO>> listArticleByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type);
 }

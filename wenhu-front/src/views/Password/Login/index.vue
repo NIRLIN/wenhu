@@ -212,7 +212,10 @@ export default {
           })
           return
         }
-        Message.success('成功，正在跳转')
+        Message.success({
+          message: '成功，正在跳转',
+          center: true
+        })
         setCookie(this.user_id_verify.id)
         setTimeout(() => {
           this.$router.go(0)
@@ -236,7 +239,10 @@ export default {
       const submitData = { 'phoneNumber': this.user_phone_number, 'password': this.user_password }
 
       userLoginByPassword(submitData).then((response) => {
-        Message.success('成功，正在跳转')
+        Message.success({
+          message: '成功，正在跳转',
+          center: true
+        })
         this.user_id = JSON.parse(response.data)
         setCookie(this.user_id)
         setCookie(this.user_id_verify.id)

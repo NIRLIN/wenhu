@@ -10,16 +10,15 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/3/15
+ * @date 2021/04/04
  */
 @Data
-@TableName(value = "question_log")
+@TableName("question_log")
 public class QuestionLogDO {
 
     /**
      * 日志id
      */
-
     private String id;
 
     /**
@@ -32,12 +31,10 @@ public class QuestionLogDO {
      */
     private String questionId;
 
-
     /**
-     * 题目或描述0为题目
+     * 题目或描述,0为题目，1为描述
      */
-    private String isTitle;
-
+    private Integer isTitle;
 
     /**
      * 修改前内容
@@ -64,6 +61,5 @@ public class QuestionLogDO {
      */
     @TableLogic
     private Integer isDeleted;
-
 
 }
