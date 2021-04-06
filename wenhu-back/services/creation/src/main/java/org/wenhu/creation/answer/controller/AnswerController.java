@@ -35,6 +35,7 @@ public class AnswerController {
         Integer page = (Integer) objectMap.get("page");
         return answerService.listAnswerByHeat(questionId, String.valueOf(page));
     }
+
     @PostMapping(name = "listAnswerByTime", value = "listAnswerByTime")
     Result<List<AnswerArticleDTO>> listAnswerByTime(@RequestBody Map<String, Object> objectMap) {
         String questionId = (String) objectMap.get("questionId");
@@ -52,11 +53,10 @@ public class AnswerController {
     }
 
     @PostMapping(name = "getAnswerByAnswerId", value = "getAnswerByAnswerId")
-    Result<HashMap<String,Object>> getAnswerByAnswerId(@RequestBody Map<String, Object> objectMap) {
+    Result<HashMap<String, Object>> getAnswerByAnswerId(@RequestBody Map<String, Object> objectMap) {
         String answerId = (String) objectMap.get("answerId");
         return answerService.getAnswerByAnswerId(answerId);
     }
-
 
 
     @PostMapping(name = "listAnswerByUserId", value = "listAnswerByUserId")
@@ -77,6 +77,7 @@ public class AnswerController {
         String answerId = (String) objectMap.get("answerId");
         return answerService.userAgreeAnswer(userId, answerId);
     }
+
     @PostMapping(name = "userOpposeAnswer", value = "userOpposeAnswer")
     Result<HashMap<String, Object>> userOpposeAnswer(@RequestBody Map<String, Object> objectMap) {
         String userId = (String) objectMap.get("userId");

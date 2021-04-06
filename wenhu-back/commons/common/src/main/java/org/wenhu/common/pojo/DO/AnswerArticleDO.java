@@ -4,6 +4,7 @@ package org.wenhu.common.pojo.DO;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -11,8 +12,10 @@ import java.time.LocalDateTime;
  * @author NIRLIN
  * @version 1.0
  * @date 2021/04/04
+ * @Accessors(chain = true) 开启链式
  */
 @Data
+@Accessors(chain = true)
 @TableName("answer_article")
 public class AnswerArticleDO {
 
@@ -44,12 +47,12 @@ public class AnswerArticleDO {
     /**
      * 赞同数
      */
-    private String approvalNumber;
+    private Integer approvalNumber;
 
     /**
      * 反对数
      */
-    private String opposeNumber;
+    private Integer opposeNumber;
 
     /**
      * 创建时间

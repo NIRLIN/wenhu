@@ -125,7 +125,7 @@ export default {
         title: '',
         userId: ''
       },
-      answer_list: '',
+      answer_list: [],
       sortByHeat: 1
     }
   },
@@ -150,12 +150,16 @@ export default {
       const submitData = { 'questionId': this.$route.params.id, 'page': page }
       listAnswerByHeat(submitData).then((response) => {
         this.answer_list = response.data
+        console.log(this.answer_list)
       })
     },
     methodListAnswerByTime(page) {
       const submitData = { 'questionId': this.$route.params.id, 'page': page }
       listAnswerByTime(submitData).then((response) => {
         this.answer_list = response.data
+        console.log(this.answer_list)
+
+        // 问题搁置，数据刷新页面不刷新
       })
     },
     childSendEditAnswerStatus: function(listenToChildEvent) {
@@ -216,7 +220,6 @@ export default {
       }
     },
     current_change(page) {
-      // console.log(this.sortByHeat)
       if (this.sortByHeat === 1) {
         this.methodListAnswerByHeat(page)
       }

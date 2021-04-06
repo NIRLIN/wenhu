@@ -33,8 +33,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Result<String> saveQuestion(QuestionDTO questionDTO, String menderId) {
-        String code = null;
-        String message = null;
+        String code;
+        String message;
         String data = null;
         //插入问题
         QuestionDO questionDO = new QuestionDO();
@@ -42,8 +42,8 @@ public class QuestionServiceImpl implements QuestionService {
         questionDO.setUserId(menderId);
         questionDO.setTitle(questionDTO.getTitle());
         questionDO.setDescription(questionDTO.getDescription());
-        questionDO.setFollowNumber("0");
-        questionDO.setBrowseNumber("0");
+        questionDO.setFollowNumber(0);
+        questionDO.setBrowseNumber(0);
         questionDO.setCreateTime(LocalDateTime.now());
         questionDO.setUpdateTime(LocalDateTime.now());
         questionDO.setIsDeleted(0);
@@ -75,8 +75,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Result<QuestionDTO> getQuestionById(String id) {
-        String code = null;
-        String message = null;
+        String code;
+        String message;
         QuestionDTO data = null;
         QuestionDO questionDO = questionDao.selectById(id);
         if (questionDO != null) {

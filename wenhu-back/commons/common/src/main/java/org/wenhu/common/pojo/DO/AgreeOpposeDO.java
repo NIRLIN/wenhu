@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
  * @author NIRLIN
  * @version 1.0
  * @date 2021/04/04
+ * @Accessors(chain = true) 开启链式
  */
 @Data
 @Accessors(chain = true)

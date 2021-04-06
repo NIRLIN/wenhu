@@ -36,11 +36,11 @@ public class QuestionDTO {
     /**
      * 关注数
      */
-    private String followNumber;
+    private Integer followNumber;
 
     /**
      * 浏览数
      */
-    private String browseNumber;
+    private Integer browseNumber;
 
 }

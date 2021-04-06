@@ -46,12 +46,13 @@
 
       <el-col :span="24">
         <div class="grid-content ">
-          <el-button v-if="agreeButtonBool" size="small" type="primary" @click="agreeButton"><i class=" el-icon-caret-top icon_size" />赞同 {{ article_approvalNumber }}</el-button>
-          <el-button v-if="!agreeButtonBool" plain size="small" type="primary" @click="agreeButton"><i class=" el-icon-caret-top icon_size" />赞同 {{ article_approvalNumber }}</el-button>
-          <el-button plain size="small" type="primary" @click="opposeButton"><i class=" el-icon-caret-bottom icon_size" /></el-button>
+          <el-button v-if="agreeArticleButtonBool" size="small" type="primary" @click="agreeArticleButton"><i class=" el-icon-caret-top icon_size" />赞同 {{ article_approvalNumber }}</el-button>
+          <el-button v-if="!agreeArticleButtonBool" plain size="small" type="primary" @click="agreeArticleButton"><i class=" el-icon-caret-top icon_size" />赞同 {{ article_approvalNumber }}</el-button>
+          <el-button plain size="small" type="primary" @click="opposeArticleButton"><i class=" el-icon-caret-bottom icon_size" /></el-button>
           <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-s-comment icon_size" />评论</el-button>
           <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-s-promotion icon_size" />分享</el-button>
-          <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-star-off icon_size" />收藏</el-button>
+          <el-button v-if="collectArticleButtonBool" class="no_border_outline button_margin_left button_color" type="text" @click="collectArticleButton"><i class="el-icon-star-on icon_size" style="font-size: 18px;" />收藏</el-button>
+          <el-button v-if="!collectArticleButtonBool" class="no_border_outline button_margin_left button_color" type="text" @click="collectArticleButton"><i class="el-icon-star-off icon_size" style="font-size: 18px;" />收藏</el-button>
           <el-button class="no_border_outline button_margin_left button_color" type="text">
             <el-dropdown trigger="click" :placement="'bottom'">
               <span class="el-dropdown-link">
@@ -64,14 +65,13 @@
           </el-button>
         </div>
       </el-col>
-
     </el-row>
   </div>
 </template>
 
 <script>
 import { getCookie } from '@/utils/login-status'
-import { saveOpposeArticleByUserId, saveAgreeArticleByUserId, getUserAgreeArticle } from '@/api/answer'
+import { userOpposeArticle, userAgreeArticle, getUserAgreeArticle, userCollectArticle, getUserCollectArticle } from '@/api/answer'
 import { Message } from 'element-ui'
 
 export default {
@@ -86,7 +86,6 @@ export default {
       d = d < 10 ? '0' + d : d
       let h = date.getHours()
       let m = date.getMinutes()
-      d = d >= 10 ? d : '0' + d
       h = h >= 10 ? h : '0' + h
       m = m >= 10 ? m : '0' + m
       if (hours) {
@@ -102,8 +101,9 @@ export default {
   },
   data() {
     return {
-      agreeButtonBool: false,
-      article_id: this.answer_item.answerId,
+      agreeArticleButtonBool: false,
+      collectArticleButtonBool: false,
+      article_id: this.answer_item.id,
       article_head_image: this.answer_item.headImage,
       article_username: this.answer_item.username,
       article_resume: this.answer_item.resume,
@@ -114,37 +114,62 @@ export default {
     }
   },
   beforeMount() {
-    if (getCookie() !== undefined) {
-      const submitData = { 'userId': getCookie(), 'answerId': this.article_id }
-      getUserAgreeArticle(submitData).then((response) => {
-        this.agreeButtonBool = response.data
-      })
+    if (this.answer_item !== undefined) {
+      if (getCookie() !== undefined) {
+        const submitData = { 'userId': getCookie(), 'answerId': this.article_id }
+        getUserAgreeArticle(submitData).then((response) => {
+          this.agreeArticleButtonBool = response.data
+        })
+        getUserCollectArticle(submitData).then((response) => {
+          console.log(response.data.collectResult)
+          this.collectArticleButtonBool = response.data.collectResult
+        })
+      }
     }
   },
   methods: {
-    agreeButton() {
+    agreeArticleButton() {
       if (getCookie() !== undefined) {
         const submitData = { 'userId': getCookie(), 'answerId': this.article_id }
-        saveAgreeArticleByUserId(submitData).then((response) => {
-          this.agreeButtonBool = response.data
-          if (this.agreeButtonBool) {
-            this.article_approvalNumber = parseInt(this.article_approvalNumber) + 1
-          } else {
-            this.article_approvalNumber = parseInt(this.article_approvalNumber) - 1
-          }
-        })
-      }
-    },
-    opposeButton() {
-      if (getCookie() !== undefined) {
-        const submitData = { 'userId': getCookie(), 'answerId': this.article_id }
-        saveOpposeArticleByUserId(submitData).then((response) => {
-          this.agreeButtonBool = false
-          this.article_approvalNumber = this.article_approvalNumber - 1
+        userAgreeArticle(submitData).then((response) => {
+          this.agreeArticleButtonBool = response.data.agreeBool
+          this.article_approvalNumber = response.data.approval_number
         })
       } else {
         Message.success({
           message: '请登录哦~',
+          center: true
+        })
+      }
+    },
+    opposeArticleButton() {
+      if (getCookie() !== undefined) {
+        const submitData = { 'userId': getCookie(), 'answerId': this.article_id }
+        userOpposeArticle(submitData).then((response) => {
+          this.agreeArticleButtonBool = response.data.agreeBool
+          this.article_approvalNumber = response.data.approval_number
+        })
+      } else {
+        Message.success({
+          message: '请登录哦~',
+          center: true
+        })
+      }
+    },
+    collectArticleButton() {
+      if (getCookie() !== undefined) {
+        const submitData = { 'userId': getCookie(), 'answerId': this.article_id }
+        userCollectArticle(submitData).then((response) => {
+          // console.log(response.data)
+          this.collectArticleButtonBool = response.data.collectResult
+          Message.success({
+            message: '操作成功',
+            center: true
+          })
+        })
+      } else {
+        Message.error({
+          message: '未登录，请登录重试',
           center: true
         })
       }

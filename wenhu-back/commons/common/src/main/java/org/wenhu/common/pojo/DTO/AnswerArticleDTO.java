@@ -57,12 +57,12 @@ public class AnswerArticleDTO {
     /**
      * 赞同数
      */
-    private String approvalNumber;
+    private Integer approvalNumber;
 
     /**
      * 反对数
      */
-    private String opposeNumber;
+    private Integer opposeNumber;
 
     /**
      * 创建时间

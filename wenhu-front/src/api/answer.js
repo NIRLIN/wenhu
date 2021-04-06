@@ -55,9 +55,9 @@ export function userOpposeAnswer(data) {
   })
 }
 
-export function userCollectAnswer(data) {
+export function userCollectArticle(data) {
   return request({
-    url: '/people/collect/userCollectAnswer',
+    url: '/people/collect/userCollectArticle',
     method: 'post',
     data
   })
@@ -71,16 +71,16 @@ export function getUserAgreeAndCollectAnswer(data) {
   })
 }
 
-export function saveAgreeArticleByUserId(data) {
+export function userAgreeArticle(data) {
   return request({
-    url: '/creation/article/saveAgreeArticleByUserId',
+    url: '/creation/article/userAgreeArticle',
     method: 'post',
     data
   })
 }
-export function saveOpposeArticleByUserId(data) {
+export function userOpposeArticle(data) {
   return request({
-    url: '/creation/article/saveOpposeArticleByUserId',
+    url: '/creation/article/userOpposeArticle',
     method: 'post',
     data
   })
@@ -89,6 +89,20 @@ export function saveOpposeArticleByUserId(data) {
 export function getUserAgreeArticle(data) {
   return request({
     url: '/creation/article/getUserAgreeArticle',
+    method: 'post',
+    data
+  })
+}
+export function getUserCollectArticle(data) {
+  return request({
+    url: '/creation/article/getUserCollectArticle',
+    method: 'post',
+    data
+  })
+}
+export function getArticleByArticleId(data) {
+  return request({
+    url: '/creation/article/getArticleByArticleId',
     method: 'post',
     data
   })

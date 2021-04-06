@@ -3,7 +3,7 @@ package org.wenhu.database.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import org.wenhu.common.pojo.DO.ReportAnswerDO;
+import org.wenhu.common.pojo.DO.ReportAnswerArticleDO;
 
 /**
  * @author NIRLIN
@@ -13,5 +13,5 @@ import org.wenhu.common.pojo.DO.ReportAnswerDO;
 
 @Mapper
 @Repository
-public interface ReportAnswerDao extends BaseMapper<ReportAnswerDO> {
+public interface ReportAnswerArticleDao extends BaseMapper<ReportAnswerArticleDO> {
 }

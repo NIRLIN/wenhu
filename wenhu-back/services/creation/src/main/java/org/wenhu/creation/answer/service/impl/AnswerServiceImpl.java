@@ -60,8 +60,8 @@ public class AnswerServiceImpl implements AnswerService {
         answerDO.setQuestionId(questionId);
         answerDO.setUserId(userId);
         answerDO.setContent(content);
-        answerDO.setApprovalNumber("0");
-        answerDO.setOpposeNumber("0");
+        answerDO.setApprovalNumber(0);
+        answerDO.setOpposeNumber(0);
         answerDO.setCreateTime(LocalDateTime.now());
         answerDO.setUpdateTime(LocalDateTime.now());
         answerDO.setIsDeleted(0);
@@ -100,7 +100,6 @@ public class AnswerServiceImpl implements AnswerService {
         queryWrapper
                 .eq("question_id", questionId)
                 .eq("answer_article", 1)
-
                 .orderByDesc("update_time");
         //不传入userId
         return listAnswer(page, queryWrapper);
@@ -267,17 +266,14 @@ public class AnswerServiceImpl implements AnswerService {
                 //逻辑删除，即为未赞同
                 agreeOpposeDO.setIsDeleted(1);
 
-                answerArticleDO.setUpdateTime(LocalDateTime.now());
-                //修改赞同数
-                answerArticleDO.setApprovalNumber(String.valueOf(Integer.parseInt(answerArticleDO.getApprovalNumber()) - 1));
-                int i = answerArticleDao.updateById(answerArticleDO);
-            } else if (agreeOpposeDO.getIsDeleted() == 1) {
+                //修改赞同数，减少
+                answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() - 1);
+            } else{
                 agreeOpposeDO.setIsDeleted(0);
 
-                //修改赞同数
-                answerArticleDO.setUpdateTime(LocalDateTime.now());
-                answerArticleDO.setApprovalNumber(String.valueOf(Integer.parseInt(answerArticleDO.getApprovalNumber()) + 1));
-                int i = answerArticleDao.updateById(answerArticleDO);
+                //修改赞同数，增加
+
+                answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() + 1);
             }
             agreeOpposeDO.setUpdateTime(LocalDateTime.now());
             agreeOpposeDao.updateById(agreeOpposeDO);
@@ -291,7 +287,10 @@ public class AnswerServiceImpl implements AnswerService {
                     .setCreateTime(LocalDateTime.now())
                     .setIsDeleted(0);
             agreeOpposeDao.insert(agreeOpposeDO);
+            //新插入赞同时，同时修改赞同数
+            answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() + 1);
         }
+        answerArticleDao.updateById(answerArticleDO);
         HashMap<String, Object> hashMap = new HashMap<>(3);
         //为0，代表赞同，为1，代表无赞同数据
         if (agreeOpposeDO.getIsDeleted() == 0) {
@@ -321,9 +320,9 @@ public class AnswerServiceImpl implements AnswerService {
             agreeOpposeDO.setIsDeleted(1);
             agreeOpposeDO.setUpdateTime(LocalDateTime.now());
             agreeOpposeDao.updateById(agreeOpposeDO);
-            answerArticleDO.setUpdateTime(LocalDateTime.now());
-            answerArticleDO.setApprovalNumber(String.valueOf(Integer.parseInt(answerArticleDO.getApprovalNumber()) - 1));
-            int i = answerArticleDao.updateById(answerArticleDO);
+
+            answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() - 1);
+            answerArticleDao.updateById(answerArticleDO);
         }
         hashMap.put("approval_number", answerArticleDO.getApprovalNumber());
         hashMap.put("agreeBool", false);

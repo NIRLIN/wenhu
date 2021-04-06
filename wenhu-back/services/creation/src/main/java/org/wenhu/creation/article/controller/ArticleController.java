@@ -6,6 +6,7 @@ import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
 import org.wenhu.common.util.Result;
 import org.wenhu.creation.article.service.impl.ArticleServiceImpl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,16 +35,30 @@ public class ArticleController {
         return articleService.getUserAgreeArticle(userId, answerId);
     }
 
-    @PostMapping(name = "saveAgreeArticleByUserId", value = "saveAgreeArticleByUserId")
-    Result<Boolean> saveAgreeArticleByUserId(@RequestBody Map<String, Object> objectMap) {
+    @PostMapping(name = "getUserCollectArticle", value = "getUserCollectArticle")
+    Result<HashMap<String, Object>> getUserCollectArticle(@RequestBody Map<String, Object> objectMap) {
         String userId = (String) objectMap.get("userId");
         String answerId = (String) objectMap.get("answerId");
-        return articleService.saveAgreeArticleByUserId(userId, answerId);
+        return articleService.getUserCollectArticle(userId, answerId);
     }
-    @PostMapping(name = "saveOpposeArticleByUserId", value = "saveOpposeArticleByUserId")
-    Result<Boolean> saveOpposeArticleByUserId(@RequestBody Map<String, Object> objectMap) {
+
+    @PostMapping(name = "userAgreeArticle", value = "userAgreeArticle")
+    Result<HashMap<String, Object>> userAgreeArticle(@RequestBody Map<String, Object> objectMap) {
         String userId = (String) objectMap.get("userId");
         String answerId = (String) objectMap.get("answerId");
-        return articleService.saveOpposeArticleByUserId(userId, answerId);
+        return articleService.userAgreeArticle(userId, answerId);
+    }
+
+    @PostMapping(name = "userOpposeArticle", value = "userOpposeArticle")
+    Result<HashMap<String, Object>> userOpposeArticle(@RequestBody Map<String, Object> objectMap) {
+        String userId = (String) objectMap.get("userId");
+        String answerId = (String) objectMap.get("answerId");
+        return articleService.userOpposeArticle(userId, answerId);
+    }
+
+    @PostMapping(name = "getArticleByArticleId", value = "getArticleByArticleId")
+    Result<AnswerArticleDTO> getArticleByArticleId(@RequestBody Map<String, Object> objectMap) {
+        String articleId = (String) objectMap.get("articleId");
+        return articleService.getArticleByArticleId(articleId);
     }
 }

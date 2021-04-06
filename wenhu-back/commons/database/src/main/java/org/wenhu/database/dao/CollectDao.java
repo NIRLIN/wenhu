@@ -37,6 +37,7 @@ public interface CollectDao extends BaseMapper<CollectDO> {
             "\tLEFT JOIN `user` ON `user`.id = collect.user_id \n" +
             "WHERE\n" +
             "\tcollect.user_id = #{userId} \n" +
+            "\tAND collect.is_deleted =0\n" +
             "\tAND collect.answer_article =#{isAnswer}")
     List<AnswerArticleDTO> listCollect(@Param("userId") String userId, @Param("isAnswer") Integer isAnswer);
 }

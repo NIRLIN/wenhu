@@ -3,6 +3,7 @@ package org.wenhu.creation.article.service;
 import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
 import org.wenhu.common.util.Result;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,7 +17,11 @@ public interface ArticleService {
 
     Result<Boolean> getUserAgreeArticle(String userId, String answerId);
 
-    Result<Boolean> saveAgreeArticleByUserId(String userId, String answerId);
+    Result<HashMap<String, Object>> getUserCollectArticle(String userId, String answerId);
 
-    Result<Boolean> saveOpposeArticleByUserId(String userId, String answerId);
+    Result<HashMap<String, Object>> userAgreeArticle(String userId, String answerId);
+
+    Result<HashMap<String, Object>> userOpposeArticle(String userId, String answerId);
+
+    Result<AnswerArticleDTO> getArticleByArticleId(String articleId);
 }

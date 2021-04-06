@@ -46,7 +46,7 @@
 
       <el-col :span="24">
         <div class="grid-content ">
-          <el-button v-if="agreeButtonBool" size="small" type="primary" @click="agreeAnswerButton"><i class=" el-icon-caret-top icon_size" />赞同 {{ answer.approvalNumber }}</el-button>
+          <el-button v-if="agreeButtonBool" size="small" type="primary" @click="agreeAnswerButton"><i class=" el-icon-caret-top icon_size" />已赞同 {{ answer.approvalNumber }}</el-button>
           <el-button v-if="!agreeButtonBool" plain size="small" type="primary" @click="agreeAnswerButton"><i class=" el-icon-caret-top icon_size" />赞同 {{ answer.approvalNumber }}</el-button>
           <el-button plain size="small" type="primary" @click="opposeButton"><i class=" el-icon-caret-bottom icon_size" /></el-button>
           <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-s-comment icon_size" />评论</el-button>
@@ -87,7 +87,6 @@ export default {
       d = d < 10 ? '0' + d : d
       let h = date.getHours()
       let m = date.getMinutes()
-      d = d >= 10 ? d : '0' + d
       h = h >= 10 ? h : '0' + h
       m = m >= 10 ? m : '0' + m
       if (hours) {
@@ -183,7 +182,7 @@ export default {
       if (getCookie() !== undefined) {
         const submitData = { 'userId': getCookie(), 'answerId': this.answer.id }
         userCollectAnswer(submitData).then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           this.collectButtonBool = response.data.collectResult
           Message.success({
             message: '操作成功',
