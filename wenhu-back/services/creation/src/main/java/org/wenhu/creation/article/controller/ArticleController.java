@@ -25,7 +25,7 @@ public class ArticleController {
 
     @PostMapping(name = "listArticleByUserId", value = "listArticleByUserId")
     Result<List<AnswerArticleDTO>> listArticleByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type) {
-        return articleService.listAnswerByUserId(userId, type);
+        return articleService.listArticleByUserId(userId, type);
     }
 
     @PostMapping(name = "getUserAgreeArticle", value = "getUserAgreeArticle")

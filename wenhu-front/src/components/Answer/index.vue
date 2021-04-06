@@ -2,23 +2,24 @@
   <div v-if="answer_item" class="class_margin">
     <el-row>
       <el-col :span="22">
-        <div class="grid-content">
-          <div style="width: 50px; float:left">
-            <el-link :underline="false">
+        <el-link :href="'#/people/'+answer.userId" :underline="false">
+          <div class="grid-content" style="min-width: 100px;">
+            <div style="width: 50px; float:left">
               <el-avatar :size="40" :src="answer.head_image" shape="square" />
-            </el-link>
-          </div>
-          <div style="float: left;">
-            <div>
-              <el-link :underline="false">
-                <span class="answer_font_name">{{ answer.username }}</span>
-              </el-link>
             </div>
-            <div>
-              <span class="answer_font_resume">{{ answer.resume }}</span>
+            <div style="float: left;">
+              <div>
+                <el-link :underline="false">
+                  <span class="answer_font_name">{{ answer.username }}</span>
+                </el-link>
+              </div>
+              <div>
+                <span class="answer_font_resume">{{ answer.resume }}</span>
+              </div>
             </div>
           </div>
-        </div>
+        </el-link>
+
       </el-col>
 
     </el-row>
@@ -114,6 +115,32 @@ export default {
         updateTime: this.answer_item.updateTime,
         approvalNumber: this.answer_item.approvalNumber,
         questionId: this.answer_item.questionId
+      }
+    }
+  },
+  watch: {
+    answer_item() {
+      this.answer.id = this.answer_item.id
+      this.answer.head_image = this.answer_item.headImage
+      this.answer.username = this.answer_item.username
+      this.answer.resume = this.answer_item.resume
+      this.answer.content = this.answer_item.content
+      this.answer.userId = this.answer_item.userId
+      this.answer.updateTime = this.answer_item.updateTime
+      this.answer.approvalNumber = this.answer_item.approvalNumber
+      this.answer.questionId = this.answer_item.questionId
+      if (getCookie() !== undefined) {
+        const submitData = { 'userId': getCookie(), 'answerId': this.answer.id }
+        // console.log(this.answer_item)
+        getUserAgreeAndCollectAnswer(submitData).then((response) => {
+          this.agreeButtonBool = response.data.boolAgree
+          this.collectButtonBool = response.data.boolCollect
+        })
+      } else {
+        Message.success({
+          message: '请登录哦~',
+          center: true
+        })
       }
     }
   },

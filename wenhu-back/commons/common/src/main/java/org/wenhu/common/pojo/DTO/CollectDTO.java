@@ -1,6 +1,7 @@
 package org.wenhu.common.pojo.DTO;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author NIRLIN
@@ -8,6 +9,8 @@ import lombok.Data;
  * @date 2021/3/25
  */
 @Data
+@Accessors(chain = true)
+
 public class CollectDTO {
     /**
      * 收藏id

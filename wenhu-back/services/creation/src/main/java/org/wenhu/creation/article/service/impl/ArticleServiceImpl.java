@@ -40,7 +40,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     @Override
-    public Result<List<AnswerArticleDTO>> listAnswerByUserId(String userId, String type) {
+    public Result<List<AnswerArticleDTO>> listArticleByUserId(String userId, String type) {
         //查询最近发布文章
         String queryByTime = "time";
         //查询热度最高文章
@@ -76,20 +76,18 @@ public class ArticleServiceImpl implements ArticleService {
             return Result.succeed(code, message);
         }
         UserDO userDO = userDao.selectById(userId);
-        List<AnswerArticleDTO> articleVOList = articleDOList.stream().map(t -> {
-            AnswerArticleDTO articleVO = new AnswerArticleDTO();
-            articleVO.setAnswerArticle(t.getAnswerArticle());
-            articleVO.setUserId(t.getUserId());
-            articleVO.setContent(t.getContent());
-            articleVO.setApprovalNumber(t.getApprovalNumber());
-            articleVO.setOpposeNumber(t.getOpposeNumber());
-            articleVO.setUpdateTime(t.getUpdateTime());
-            //查出回答对应用户信息
-            articleVO.setUsername(userDO.getUsername());
-            articleVO.setResume(userDO.getResume());
-            articleVO.setHeadImage(userDO.getHeadImage());
-            return articleVO;
-        }).collect(Collectors.toList());
+        List<AnswerArticleDTO> articleVOList = articleDOList.stream().map(t -> new AnswerArticleDTO()
+                .setAnswerArticle(t.getAnswerArticle())
+                .setUserId(t.getUserId())
+                .setContent(t.getContent())
+                .setApprovalNumber(t.getApprovalNumber())
+                .setOpposeNumber(t.getOpposeNumber())
+                .setUpdateTime(t.getUpdateTime())
+                .setId(t.getId())
+
+                .setUsername(userDO.getUsername()) //查出回答对应用户信息
+                .setResume(userDO.getResume())
+                .setHeadImage(userDO.getHeadImage())).collect(Collectors.toList());
         //数据遍历
         //查出回答对应用户信息
         return Result.succeed(articleVOList);
@@ -174,6 +172,8 @@ public class ArticleServiceImpl implements ArticleService {
                     .setCreateTime(LocalDateTime.now())
                     .setIsDeleted(0);
             agreeOpposeDao.insert(agreeOpposeDO);
+            //修改赞同数,第一次赞同时加一
+            answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() + 1);
         }
         answerArticleDao.updateById(answerArticleDO);
         HashMap<String, Object> hashMap = new HashMap<>(3);

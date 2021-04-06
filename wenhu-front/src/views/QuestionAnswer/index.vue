@@ -150,16 +150,14 @@ export default {
       const submitData = { 'questionId': this.$route.params.id, 'page': page }
       listAnswerByHeat(submitData).then((response) => {
         this.answer_list = response.data
-        console.log(this.answer_list)
+        // console.log(this.answer_list)
       })
     },
     methodListAnswerByTime(page) {
       const submitData = { 'questionId': this.$route.params.id, 'page': page }
       listAnswerByTime(submitData).then((response) => {
         this.answer_list = response.data
-        console.log(this.answer_list)
-
-        // 问题搁置，数据刷新页面不刷新
+        // 问题搁置，数据刷新页面不刷新 问题原因，父子组件传值错误
       })
     },
     childSendEditAnswerStatus: function(listenToChildEvent) {

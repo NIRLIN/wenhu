@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface ArticleService {
 
-    Result<List<AnswerArticleDTO>> listAnswerByUserId(String userId, String type);
+    Result<List<AnswerArticleDTO>> listArticleByUserId(String userId, String type);
 
     Result<Boolean> getUserAgreeArticle(String userId, String answerId);
 

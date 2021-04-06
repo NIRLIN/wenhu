@@ -2,23 +2,26 @@
   <div v-if="answer_item" class="class_margin">
     <el-row>
       <el-col :span="22">
-        <div class="grid-content">
-          <div style="width: 50px; float:left">
-            <el-link :underline="false">
-              <el-avatar :size="40" :src="article_head_image" shape="square" />
-            </el-link>
-          </div>
-          <div style="float: left;">
-            <div>
+        <el-link :href="'#/people/'+article_userId" :underline="false">
+
+          <div class="grid-content">
+            <div style="width: 50px; float:left">
               <el-link :underline="false">
-                <span class="article_font_name">{{ article_username }}</span>
+                <el-avatar :size="40" :src="article_head_image" shape="square" />
               </el-link>
             </div>
-            <div>
-              <span class="article_font_resume">{{ article_resume }}</span>
+            <div style="float: left;">
+              <div>
+                <el-link :underline="false">
+                  <span class="article_font_name">{{ article_username }}</span>
+                </el-link>
+              </div>
+              <div>
+                <span class="article_font_resume">{{ article_resume }}</span>
+              </div>
             </div>
           </div>
-        </div>
+        </el-link>
       </el-col>
 
     </el-row>
@@ -121,7 +124,7 @@ export default {
           this.agreeArticleButtonBool = response.data
         })
         getUserCollectArticle(submitData).then((response) => {
-          console.log(response.data.collectResult)
+          // console.log(response.data.collectResult)
           this.collectArticleButtonBool = response.data.collectResult
         })
       }
@@ -131,6 +134,7 @@ export default {
     agreeArticleButton() {
       if (getCookie() !== undefined) {
         const submitData = { 'userId': getCookie(), 'answerId': this.article_id }
+        // console.log(this.answer_item)
         userAgreeArticle(submitData).then((response) => {
           this.agreeArticleButtonBool = response.data.agreeBool
           this.article_approvalNumber = response.data.approval_number

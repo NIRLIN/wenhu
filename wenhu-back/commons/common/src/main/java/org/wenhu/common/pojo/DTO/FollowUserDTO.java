@@ -2,6 +2,7 @@ package org.wenhu.common.pojo.DTO;
 
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  * @date 2021/04/04
  */
 @Data
+@Accessors(chain = true)
 public class FollowUserDTO {
 
     /**
