@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+</head>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #f6f6f6;
+    }
+
+
+    .pure-table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        empty-cells: show;
+        border: 1px solid #cbcbcb;
+    }
+
+    .pure-table caption {
+        font: italic 85%/1 arial, sans-serif;
+        padding: 1em 0;
+        text-align: center;
+    }
+
+    .pure-table td, .pure-table th {
+        border-left: 1px solid #cbcbcb;
+        font-size: inherit;
+        margin: 0;
+        overflow: visible;
+        padding: .5em 1em;
+    }
+
+    .pure-table thead {
+        background-color: #ffffff;
+        color: #8590a6;
+        text-align: left;
+        vertical-align: bottom;
+    }
+
+    .pure-table-horizontal td, .pure-table-horizontal th {
+        border-width: 0 0 1px 0;
+        border-bottom: 1px solid #cbcbcb;
+    }
+
+</style>
+<body>
+<div id="app">
+    <div th:replace="~{common/header :: header}"></div>
+    <el-container>
+        <el-container>
+            <el-aside width="250px" style="height: 1000px;">
+                <div th:replace="~{common/leftNavbar :: leftNavbar}"></div>
+            </el-aside>
+            <el-main>
+                <table class="pure-table pure-table-horizontal">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>用户名</th>
+                        <th>手机号</th>
+                        <th>个性签名</th>
+                        <th>是否封禁</th>
+                        <th>封禁截止日期</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user:${userDoObject}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.phoneNumber}"></td>
+                        <td th:text="${user.resume}"></td>
+                        <td th:text="${user.deadlineDate}<=${#temporals.createNow()}?'未封禁':'已封禁'"></td>
+                        <td th:text="${#temporals.format(user.deadlineDate, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td>
+                            <el-popover
+                                    placement="right"
+                                    width="400"
+                                    trigger="click">
+                                {{aaa}}
+
+                                <div style="margin-left: 5%;">
+                                    <el-input
+                                            placeholder="用户名"
+                                            th:value="${user.username}"
+                                            style="width: 40%;float: left;" >
+                                    </el-input>
+                                    <el-input
+                                            placeholder="手机号"
+                                            th:value="${user.phoneNumber}"
+                                            style="width: 40%;float: left;margin-left: 15%;" >
+                                    </el-input>
+                                </div>
+                                <div style="margin-left: 5%;">
+                                    <el-input
+                                            placeholder="签名"
+                                            th:value="${user.resume}"
+                                            style="width: 40%;float: left;" >
+                                    </el-input>
+                                    <div class="block">
+                                        <el-date-picker
+                                                th:value="${user.deadlineDate}"
+                                                v-model="datetime"
+                                                type="datetime"
+                                                style="width: 40%;margin-left: 15%;"
+                                                placeholder="选择日期时间"
+                                                align="right"
+                                                >
+                                        </el-date-picker>
+                                    </div>
+                                </div>
+                                <el-button style="width: 90%;margin-left: 5%;" type="primary">保存</el-button>
+
+                                <el-button slot="reference">编辑</el-button>
+                            </el-popover>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </el-main>
+        </el-container>
+    </el-container>
+</div>
+</body>
+
+<!-- import Vue before Element -->
+<script th:src="@{/static/vue/dist/vue.js}"></script>
+<!-- import JavaScript -->
+<script th:src="@{/static/element-ui/lib/index.js}"></script>
+<link rel="stylesheet" th:href="@{/static/element-ui/lib/theme-chalk/index.css}">
+<script th:src="@{/static/vue-router/dist/vue-router.js}"></script>
+<script>
+
+
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                datetime: new Date(),
+                aaa: ''
+            }
+        }
+    })
+</script>
+</html>

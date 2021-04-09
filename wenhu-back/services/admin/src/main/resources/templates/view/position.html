@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<style>
+    .grid-content {
+        border-radius: 4px;
+        min-height: 16px;
+        background-color: #3a8ee6;
+    }
+</style>
+<body>
+<div id="login">
+    <el-row>
+        <el-col :span="6" :offset="9"><div class="grid-content">
+            <span>管理员登录</span>
+        </div></el-col>
+    </el-row>
+    <el-row>
+        <el-col :span="6" :offset="9"><div class="grid-content">
+            <el-input
+                    placeholder="请输入内容"
+                    prefix-icon="el-icon-user"
+                    clearable>
+            </el-input>
+
+        </div></el-col>
+    </el-row>
+    <el-row>
+        <el-col :span="6" :offset="9"><div class="grid-content">
+
+            <el-input placeholder="请输入密码"
+                      prefix-icon="el-icon-lock"
+                      show-password>
+            </el-input>
+        </div></el-col>
+    </el-row>
+
+    <el-row>
+        <el-col :span="6" :offset="9"><div class="grid-content">
+
+            <el-button style="width: 100%;" type="primary" @click="aaa">主要按钮</el-button>
+        </div></el-col>
+    </el-row>
+
+</div>
+
+</body>
+<!-- import Vue before Element -->
+<script th:src="@{/static/vue/dist/vue.js}"></script>
+<!-- import JavaScript -->
+<script th:src="@{/static/element-ui/lib/index.js}"></script>
+<link rel="stylesheet" th:href="@{/static/element-ui/lib/theme-chalk/index.css}">
+<script>
+    new Vue({
+        el: '#login',
+        data: function () {
+            return {visible: false}
+        },
+        methods: {
+            aaa() {
+                alert("Aaaa")
+            }
+        }
+    })
+</script>
+</html>
+
