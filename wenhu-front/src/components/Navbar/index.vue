@@ -106,6 +106,7 @@
 // eslint-disable-next-line no-unused-vars
 import { getCookie, setCookie, removeCookie } from '@/utils/login-status'
 import { Message } from 'element-ui'
+import { getHeadImageByUserId } from '@/api/people'
 
 export default {
   name: 'Navbar',
@@ -144,6 +145,10 @@ export default {
     if (cookie) {
       this.is_login = 1
       this.user_id = getCookie()
+      const submitData = { 'userId': this.user_id }
+      getHeadImageByUserId(submitData).then((response) => {
+        this.head_image_url = response.data
+      })
     }
     if (!cookie) {
       this.is_login = 0

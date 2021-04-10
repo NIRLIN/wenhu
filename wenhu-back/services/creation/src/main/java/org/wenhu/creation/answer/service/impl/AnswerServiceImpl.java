@@ -149,62 +149,20 @@ public class AnswerServiceImpl implements AnswerService {
         String queryByTime = "time";
         //查询热度最高回答
         String queryByHeat = "heat";
-        QueryWrapper<AnswerArticleDO> queryWrapper = new QueryWrapper<>();
+        List<AnswerArticleDTO> articleDTOList=null;
         if (type == null) {
             //查询对应用户id的回答、根据时间排序--降序
-            queryWrapper
-                    .eq(userId != null, "user_id", userId)
-                    .eq("answer_article", 1)
-                    .orderByDesc("update_time");
+             articleDTOList=answerArticleDao.listAnswerByTime(userId);
         }
         if (queryByTime.equals(type)) {
             //查询对应用户id的回答、根据时间排序--降序
-            queryWrapper
-                    .eq(userId != null, "user_id", userId)
-                    .eq("answer_article", 1)
-                    .orderByDesc("update_time");
+            articleDTOList=answerArticleDao.listAnswerByTime(userId);
         }
         if (queryByHeat.equals(type)) {
-            //查询对应用户id的回答、根据时间排序--降序
-            queryWrapper
-                    .eq(userId != null, "user_id", userId)
-                    .eq("answer_article", 1)
-                    .orderByDesc("approval_number");
+            //查询对应用户id的回答、根据赞同排序--降序
+            articleDTOList=answerArticleDao.listAnswerByApproval(userId);
         }
-        String code;
-        String message;
-        List<AnswerArticleDO> answerDOList = answerArticleDao.selectList(queryWrapper);
-        if (answerDOList == null) {
-            //没有查询到回答时返回
-            code = ResultCode.NO_FOUND_DATA.getCode();
-            message = ResultCode.NO_FOUND_DATA.getMessage();
-            return Result.succeed(code, message);
-        }
-        List<AnswerArticleDTO> answerVOList = new ArrayList<>();
-
-        //查出回答对应用户信息
-        UserDO userDO = userDao.selectById(userId);
-
-        //数据遍历
-        for (AnswerArticleDO answerDO : answerDOList) {
-            AnswerArticleDTO answerVO = new AnswerArticleDTO();
-            answerVO.setId(answerDO.getId());
-            answerVO.setAnswerArticle(answerDO.getAnswerArticle());
-            answerVO.setQuestionId(answerDO.getQuestionId());
-            answerVO.setUserId(answerDO.getUserId());
-            answerVO.setContent(answerDO.getContent());
-            answerVO.setApprovalNumber(answerDO.getApprovalNumber());
-            answerVO.setOpposeNumber(answerDO.getOpposeNumber());
-            answerVO.setUpdateTime(answerDO.getUpdateTime());
-            //查出回答对应用户信息
-            if (userDO != null) {
-                answerVO.setUsername(userDO.getUsername());
-                answerVO.setResume(userDO.getResume());
-                answerVO.setHeadImage(userDO.getHeadImage());
-            }
-            answerVOList.add(answerVO);
-        }
-        return Result.succeed(answerVOList);
+        return Result.succeed(articleDTOList);
     }
 
     @Override

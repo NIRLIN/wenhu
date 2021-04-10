@@ -67,7 +67,6 @@
         <div class="grid-content  ">
           <el-button size="small" type="primary">关注问题</el-button>
           <el-button size="small" icon="el-icon-edit" plain type="primary" @click="childSendEditAnswerStatus">写回答</el-button>
-          <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-comment ">评论</el-button>
           <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-promotion " @click="shareButton">分享</el-button>
           <el-button class="no_border_outline button_color button_margin_left" type="text">
             <el-dropdown trigger="click" :placement="'bottom'">
@@ -112,7 +111,7 @@ export default {
     },
     shareButton() {
       const aux = document.createElement('input')
-      aux.setAttribute('value', this.question_name + '  -  闻乎  ' + window.location.href)
+      aux.setAttribute('value', this.question_item.title + '  -  闻乎  ' + window.location.href)
       document.body.appendChild(aux)
       aux.select()
       document.execCommand('copy')

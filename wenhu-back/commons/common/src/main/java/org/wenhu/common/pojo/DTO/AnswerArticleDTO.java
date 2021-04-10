@@ -26,6 +26,11 @@ public class AnswerArticleDTO {
     private String questionId;
 
     /**
+     * 问题标题
+     */
+    private String title;
+
+    /**
      * 回答OR文章id,1为回答，0为文章
      */
     private Integer answerArticle;

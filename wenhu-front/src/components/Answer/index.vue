@@ -50,7 +50,7 @@
           <el-button v-if="agreeButtonBool" size="small" type="primary" @click="agreeAnswerButton"><i class=" el-icon-caret-top icon_size" />已赞同 {{ answer.approvalNumber }}</el-button>
           <el-button v-if="!agreeButtonBool" plain size="small" type="primary" @click="agreeAnswerButton"><i class=" el-icon-caret-top icon_size" />赞同 {{ answer.approvalNumber }}</el-button>
           <el-button plain size="small" type="primary" @click="opposeButton"><i class=" el-icon-caret-bottom icon_size" /></el-button>
-          <el-button class="no_border_outline button_margin_left button_color" type="text"><i class="el-icon-s-comment icon_size" />评论</el-button>
+          <el-button class="no_border_outline button_margin_left button_color" type="text" @click="showReviewMethod"><i class="el-icon-s-comment icon_size" />{{ reviewButtonValue }}</el-button>
           <el-button class="no_border_outline button_margin_left button_color" type="text" @click="shareButton"><i class="el-icon-s-promotion icon_size" />分享</el-button>
           <el-button v-if="collectButtonBool" class="no_border_outline button_margin_left button_color" type="text" @click="collectAnswerButton"><i class="el-icon-star-on icon_size" style="font-size: 18px;" />收藏</el-button>
           <el-button v-if="!collectButtonBool" class="no_border_outline button_margin_left button_color" type="text" @click="collectAnswerButton"><i class="el-icon-star-off icon_size" style="font-size: 18px;" />收藏</el-button>
@@ -66,7 +66,13 @@
           </el-button>
         </div>
       </el-col>
-
+    </el-row>
+    <el-row v-show="reviewButtonBool" class="answer_margin">
+      <el-col :span="24">
+        <div class="grid-content ">
+          <Review ref="reviewValue" class="review-height" />
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -75,9 +81,11 @@
 import { getCookie } from '@/utils/login-status'
 import { userOpposeAnswer, userCollectAnswer, userAgreeAnswer, getUserAgreeAndCollectAnswer } from '@/api/answer'
 import { Message } from 'element-ui'
+import Review from '@/components/Review'
 
 export default {
   name: 'Answer',
+  components: { Review },
   filters: {
     formatTimer: function(value, hours) {
       const date = new Date(value)
@@ -105,6 +113,8 @@ export default {
     return {
       agreeButtonBool: false,
       collectButtonBool: false,
+      reviewButtonBool: false,
+      reviewButtonValue: ' 评论',
       answer: {
         id: this.answer_item.id,
         head_image: this.answer_item.headImage,
@@ -222,6 +232,15 @@ export default {
           center: true
         })
       }
+    },
+    showReviewMethod() {
+      this.reviewButtonBool = !this.reviewButtonBool
+      if (this.reviewButtonBool) {
+        this.reviewButtonValue = ' 收起评论'
+        this.$refs.reviewValue.getListReviewMethod(this.answer.id)
+      } else {
+        this.reviewButtonValue = ' 评论'
+      }
     }
   }
 }
@@ -235,7 +254,7 @@ export default {
 
 .grid-content {
   border-radius: 10px;
-  min-height: 20px;
+  min-height: 16px;
 }
 
 .answer_font_name {
@@ -274,5 +293,9 @@ export default {
 }
 .icon_size{
   font-size: 15px;
+}
+.review-height{
+  max-height: 800px;
+  overflow-y: auto;
 }
 </style>

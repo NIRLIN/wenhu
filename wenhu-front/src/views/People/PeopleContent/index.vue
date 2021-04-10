@@ -31,7 +31,12 @@
                   <div>
                     <div v-for="(item,index) in homeData.answer" :key="index" class="people_content_list ">
                       <div class="answer_item">
-                        <Answer :answer_item="item" />
+                        <el-link :href="'#/question/'+item.questionId" :underline="false">
+                          <span style="font-size: 16px;font-weight: bold;margin:5px;">
+                            {{ item.title }}
+                          </span>
+                        </el-link>
+                        <Answer :answer_item="item" style="margin-top: 10px;" />
                       </div>
                     </div>
                     <div v-if="homeData.answer.length===0" class="people_content_list ">

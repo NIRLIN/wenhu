@@ -63,6 +63,14 @@ export function userCollectArticle(data) {
   })
 }
 
+export function userCollectAnswer(data) {
+  return request({
+    url: '/people/collect/userCollectAnswer',
+    method: 'post',
+    data
+  })
+}
+
 export function getUserAgreeAndCollectAnswer(data) {
   return request({
     url: '/creation/answer/getUserAgreeAndCollectAnswer',
@@ -107,3 +115,39 @@ export function getArticleByArticleId(data) {
     data
   })
 }
+export function getReviewById(data) {
+  return request({
+    url: '/creation/review/getReviewById',
+    method: 'post',
+    data
+  })
+}
+export function getReviewCount(data) {
+  return request({
+    url: '/creation/review/getReviewCount',
+    method: 'post',
+    data
+  })
+}
+export function getReplyByReviewId(data) {
+  return request({
+    url: '/creation/review/getReplyByReviewId',
+    method: 'post',
+    data
+  })
+}
+export function saveReview(data) {
+  return request({
+    url: '/creation/review/saveReview',
+    method: 'post',
+    data
+  })
+}
+export function saveReply(data) {
+  return request({
+    url: '/creation/review/saveReply',
+    method: 'post',
+    data
+  })
+}
+
