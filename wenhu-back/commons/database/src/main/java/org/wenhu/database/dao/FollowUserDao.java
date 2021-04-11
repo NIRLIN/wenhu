@@ -31,7 +31,8 @@ public interface FollowUserDao extends BaseMapper<FollowUserDO> {
             "\tfollow_user\n" +
             "\tLEFT JOIN `user` ON `user`.id = follow_user.by_follower_id \n" +
             "WHERE\n" +
-            "\tfollow_user.follower_id =#{userId}")
+            "\tfollow_user.follower_id =#{userId} \n" +
+            "\tAND follow_user.is_deleted = 0")
     List<FollowUserDTO> listFollow(@Param("userId") String userId);
 
     @Select("SELECT DISTINCT\n" +
@@ -45,6 +46,7 @@ public interface FollowUserDao extends BaseMapper<FollowUserDO> {
             "\tfollow_user\n" +
             "\tLEFT JOIN `user` ON `user`.id = follow_user.follower_id \n" +
             "WHERE\n" +
-            "\tfollow_user.by_follower_id =#{userId}")
+            "\tfollow_user.by_follower_id =#{userId} \n" +
+            "\tAND follow_user.is_deleted = 0")
     List<FollowUserDTO> listFans(@Param("userId") String userId);
 }

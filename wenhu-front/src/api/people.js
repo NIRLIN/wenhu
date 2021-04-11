@@ -54,6 +54,20 @@ export function listCollectByUserId(data) {
     data
   })
 }
+export function followUserOperation(data) {
+  return request({
+    url: '/people/follow/followUserOperation',
+    method: 'post',
+    data
+  })
+}
+export function getUserFollow(data) {
+  return request({
+    url: '/people/follow/getUserFollow',
+    method: 'post',
+    data
+  })
+}
 
 export function listFollowByUserId(data) {
   return request({

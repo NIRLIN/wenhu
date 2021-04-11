@@ -32,7 +32,8 @@
             <br>
             <br>
             <br>
-            <el-button class="button_width" type="info">关注</el-button>
+            <el-button v-if="!isFollow" class="button_width" type="primary" @click="followUserMethod">关注</el-button>
+            <el-button v-if="isFollow" class="button_width" type="info" @click="followUserMethod">已关注</el-button>
             <el-button class="button_width" plain type="info">发私信</el-button>
             <br>
             <br>
@@ -45,8 +46,9 @@
 </template>
 
 <script>
-import { getUserInfo } from '@/api/people'
+import { followUserOperation, getUserFollow, getUserInfo } from '@/api/people'
 import { getCookie } from '@/utils/login-status'
+import { Message } from 'element-ui'
 export default {
   name: 'PeopleHeader',
   data() {
@@ -57,7 +59,8 @@ export default {
       activeName: 'second',
       user_id: this.$route.params.id,
       user_id_cookie: '',
-      fullscreenLoading: false
+      fullscreenLoading: false,
+      isFollow: false
     }
   },
   created() {
@@ -74,6 +77,29 @@ export default {
     }).catch(() => {
       this.fullscreenLoading = true
     })
+    if (getCookie() !== undefined) {
+      const submitData = { 'userId': getCookie(), 'byFollowerId': this.$route.params.id }
+      console.log(submitData)
+      getUserFollow(submitData).then((response) => {
+        this.isFollow = response.data.followResult
+      })
+    }
+  },
+  methods: {
+    followUserMethod() {
+      if (getCookie() !== undefined) {
+        const submitData = { 'userId': getCookie(), 'byFollowerId': this.$route.params.id }
+        console.log(submitData)
+        followUserOperation(submitData).then((response) => {
+          this.isFollow = response.data.followResult
+        })
+      } else {
+        Message.success({
+          message: '请登录哦~',
+          center: true
+        })
+      }
+    }
   }
 
 }

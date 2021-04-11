@@ -1,11 +1,16 @@
 package org.wenhu.people.follow.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.wenhu.common.pojo.DO.FollowUserDO;
 import org.wenhu.common.pojo.DTO.FollowUserDTO;
+import org.wenhu.common.util.Result;
+import org.wenhu.common.util.SnowflakeUtils;
 import org.wenhu.database.dao.FollowUserDao;
 import org.wenhu.people.follow.service.FollowService;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,5 +36,62 @@ public class FollowServiceImpl implements FollowService {
         hashMap.put("follows", follows);
         hashMap.put("fans", fans);
         return hashMap;
+    }
+
+
+    @Override
+    public Result<HashMap<String, Object>> followUserOperation(String userId, String byFollowerId) {
+        QueryWrapper<FollowUserDO> followUserQueryWrapper = new QueryWrapper<>();
+        followUserQueryWrapper
+                .eq("follower_id", userId)
+                .eq("by_follower_id", byFollowerId);
+        FollowUserDO followUserDO = followUserDao.selectOne(followUserQueryWrapper);
+        HashMap<String, Object> hashMap = new HashMap<>(1);
+
+        if (followUserDO != null) {
+            if (followUserDO.getIsDeleted() == 0) {
+                followUserDO.setIsDeleted(1);
+                //删除关注时否认
+                hashMap.put("followResult", false);
+            } else if (followUserDO.getIsDeleted() == 1) {
+                followUserDO.setIsDeleted(0);
+                hashMap.put("followResult", true);
+            }
+            followUserDO.setUpdateTime(LocalDateTime.now());
+            followUserDao.updateById(followUserDO);
+        } else {
+            followUserDO = new FollowUserDO()
+                    .setId(String.valueOf(SnowflakeUtils.genId()))
+                    .setFollowerId(userId)
+                    .setByFollowerId(byFollowerId)
+                    .setCreateTime(LocalDateTime.now())
+                    .setUpdateTime(LocalDateTime.now())
+                    .setIsDeleted(0);
+            int insert = followUserDao.insert(followUserDO);
+            if (insert == 1) {
+                hashMap.put("followResult", true);
+            } else {
+                hashMap.put("followResult", false);
+            }
+        }
+        return Result.succeed(hashMap);
+    }
+
+    @Override
+    public Result<HashMap<String, Object>> getUserFollow(String userId, String byFollowerId) {
+        QueryWrapper<FollowUserDO> followUserQueryWrapper = new QueryWrapper<>();
+        followUserQueryWrapper
+                .eq("follower_id", userId)
+                .eq("by_follower_id", byFollowerId)
+                .eq("is_deleted", 0);
+        FollowUserDO followUserDO = followUserDao.selectOne(followUserQueryWrapper);
+        HashMap<String, Object> hashMap = new HashMap<>(1);
+
+        if (followUserDO != null) {
+            hashMap.put("followResult", true);
+        } else {
+            hashMap.put("followResult", false);
+        }
+        return Result.succeed(hashMap);
     }
 }

@@ -47,7 +47,6 @@ public class FollowUserDO {
     /**
      * 是否删除
      */
-    @TableLogic
     private Integer isDeleted;
 
 }
