@@ -149,18 +149,18 @@ public class AnswerServiceImpl implements AnswerService {
         String queryByTime = "time";
         //查询热度最高回答
         String queryByHeat = "heat";
-        List<AnswerArticleDTO> articleDTOList=null;
+        List<AnswerArticleDTO> articleDTOList = null;
         if (type == null) {
             //查询对应用户id的回答、根据时间排序--降序
-             articleDTOList=answerArticleDao.listAnswerByTime(userId);
+            articleDTOList = answerArticleDao.listAnswerByTime(userId);
         }
         if (queryByTime.equals(type)) {
             //查询对应用户id的回答、根据时间排序--降序
-            articleDTOList=answerArticleDao.listAnswerByTime(userId);
+            articleDTOList = answerArticleDao.listAnswerByTime(userId);
         }
         if (queryByHeat.equals(type)) {
             //查询对应用户id的回答、根据赞同排序--降序
-            articleDTOList=answerArticleDao.listAnswerByApproval(userId);
+            articleDTOList = answerArticleDao.listAnswerByApproval(userId);
         }
         return Result.succeed(articleDTOList);
     }
@@ -226,7 +226,7 @@ public class AnswerServiceImpl implements AnswerService {
 
                 //修改赞同数，减少
                 answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() - 1);
-            } else{
+            } else {
                 agreeOpposeDO.setIsDeleted(0);
 
                 //修改赞同数，增加

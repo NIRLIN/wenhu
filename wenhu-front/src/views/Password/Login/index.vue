@@ -118,9 +118,9 @@ export default {
   data() {
     return {
       activeName: 'first',
-      user_phone_number: '18798189064',
+      user_phone_number: '',
       user_phone_code: '',
-      user_password: '123456',
+      user_password: '',
       user_verify_code_system: '',
       user_verify_code_user: '',
       verify_code_system_create_time: '',

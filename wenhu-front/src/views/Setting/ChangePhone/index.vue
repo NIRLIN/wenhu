@@ -84,7 +84,7 @@ export default {
   name: 'ChangePhone',
   data() {
     return {
-      phone_number: '18798189064',
+      phone_number: '',
       new_phone_number: '',
       getVerifyCodePhoneNumber: '',
       verify_code_user: '',

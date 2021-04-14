@@ -37,24 +37,27 @@ public class ReviewController {
         String id = (String) objectMap.get("id");
         return reviewService.getReviewCount(id);
     }
+
     @PostMapping(name = "saveReview", value = "saveReview")
-    Result<List<ReviewDTO>>  saveReview(@RequestBody Map<String, Object> objectMap) {
+    Result<List<ReviewDTO>> saveReview(@RequestBody Map<String, Object> objectMap) {
         String id = (String) objectMap.get("id");
         String userId = (String) objectMap.get("userId");
         String reviewContent = (String) objectMap.get("reviewContent");
-        return reviewService.saveReview(id,userId,reviewContent);
+        return reviewService.saveReview(id, userId, reviewContent);
     }
+
     @PostMapping(name = "getReplyByReviewId", value = "getReplyByReviewId")
     Result<List<ReplyDTO>> getReplyByReviewId(@RequestBody Map<String, Object> objectMap) {
         String id = (String) objectMap.get("id");
         return reviewService.getReplyByReviewId(id);
     }
+
     @PostMapping(name = "saveReply", value = "saveReply")
-    Result<List<ReplyDTO>>  saveReply(@RequestBody Map<String, Object> objectMap) {
+    Result<List<ReplyDTO>> saveReply(@RequestBody Map<String, Object> objectMap) {
         String parentReviewId = (String) objectMap.get("id");
         String userId = (String) objectMap.get("userId");
-        String byReplierId= (String) objectMap.get("byReplierId");
+        String byReplierId = (String) objectMap.get("byReplierId");
         String replyContent = (String) objectMap.get("replyContent");
-        return reviewService.saveReply(parentReviewId,userId,byReplierId,replyContent);
+        return reviewService.saveReply(parentReviewId, userId, byReplierId, replyContent);
     }
 }

@@ -51,7 +51,7 @@
     <div th:replace="~{common/header :: header}"></div>
     <el-container>
         <el-container>
-            <el-aside width="250px" style="height: 1000px;">
+            <el-aside style="height: 1000px;" width="250px">
                 <div th:replace="~{common/leftNavbar :: leftNavbar}"></div>
             </el-aside>
             <el-main>
@@ -78,37 +78,37 @@
                         <td>
                             <el-popover
                                     placement="right"
-                                    width="400"
-                                    trigger="click">
+                                    trigger="click"
+                                    width="400">
                                 {{aaa}}
 
                                 <div style="margin-left: 5%;">
                                     <el-input
                                             placeholder="用户名"
-                                            th:value="${user.username}"
-                                            style="width: 40%;float: left;" >
+                                            style="width: 40%;float: left;"
+                                            th:value="${user.username}">
                                     </el-input>
                                     <el-input
                                             placeholder="手机号"
-                                            th:value="${user.phoneNumber}"
-                                            style="width: 40%;float: left;margin-left: 15%;" >
+                                            style="width: 40%;float: left;margin-left: 15%;"
+                                            th:value="${user.phoneNumber}">
                                     </el-input>
                                 </div>
                                 <div style="margin-left: 5%;">
                                     <el-input
                                             placeholder="签名"
-                                            th:value="${user.resume}"
-                                            style="width: 40%;float: left;" >
+                                            style="width: 40%;float: left;"
+                                            th:value="${user.resume}">
                                     </el-input>
                                     <div class="block">
                                         <el-date-picker
-                                                th:value="${user.deadlineDate}"
-                                                v-model="datetime"
-                                                type="datetime"
-                                                style="width: 40%;margin-left: 15%;"
-                                                placeholder="选择日期时间"
                                                 align="right"
-                                                >
+                                                placeholder="选择日期时间"
+                                                style="width: 40%;margin-left: 15%;"
+                                                th:value="${user.deadlineDate}"
+                                                type="datetime"
+                                                v-model="datetime"
+                                        >
                                         </el-date-picker>
                                     </div>
                                 </div>

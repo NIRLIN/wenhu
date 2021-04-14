@@ -16,7 +16,7 @@ public interface ReviewService {
 
     Result<List<ReviewDTO>> getReviewById(String id);
 
-    Result<List<ReviewDTO>>  saveReview(String id, String userId, String reviewContent);
+    Result<List<ReviewDTO>> saveReview(String id, String userId, String reviewContent);
 
     Result<List<ReplyDTO>> getReplyByReviewId(String id);
 

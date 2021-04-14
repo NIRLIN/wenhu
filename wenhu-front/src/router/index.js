@@ -89,7 +89,7 @@ export const constantRoutes = [
   },
   {
     path: '/test',
-    component: () => import('@/components/Review')
+    component: () => import('@/components/Search')
   },
 
   // 404 page must be placed at the end !!!

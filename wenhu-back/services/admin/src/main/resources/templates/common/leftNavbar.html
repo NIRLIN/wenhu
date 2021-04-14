@@ -5,7 +5,7 @@
 </head>
 <body>
 <div id="leftNavbar" th:fragment="leftNavbar">
-    <el-menu default-active="1" class="el-menu-vertical-demo" >
+    <el-menu class="el-menu-vertical-demo" default-active="1">
         <el-submenu index="1">
             <template slot="title">
                 <i class="el-icon-s-cooperation"></i>
@@ -19,9 +19,9 @@
                 <i class="el-icon-edit"></i>
                 <span slot="title">创作管理</span>
             </template>
-            <el-menu-item index="2-1" >问题管理</el-menu-item>
-            <el-menu-item index="2-2" >回答管理</el-menu-item>
-            <el-menu-item index="2-3" >文章管理</el-menu-item>
+            <el-menu-item index="2-1">问题管理</el-menu-item>
+            <el-menu-item index="2-2">回答管理</el-menu-item>
+            <el-menu-item index="2-3">文章管理</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
             <template slot="title">

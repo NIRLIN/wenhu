@@ -1,17 +1,19 @@
+server:
+  host: 192.168.228.128
 spring:
   cloud:
     nacos:
       config:
-        server-addr: 39.100.232.173:8848
+        server-addr: ${server.host}:8848
         username: nacos
-        password: nacos
+        password: 123456
         file-extension: yaml
         extension-configs:
           - data-id: wenhu-config.yaml
             refresh: true
         group: wenhu
       discovery:
-        server-addr: 39.100.232.173:8848
+        server-addr: ${server.host}:8848
         username: nacos
-        password: nacos
+        password: 123456
         group: wenhu
