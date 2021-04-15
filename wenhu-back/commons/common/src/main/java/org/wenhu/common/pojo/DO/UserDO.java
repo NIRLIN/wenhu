@@ -55,11 +55,6 @@ public class UserDO {
     private String headImage;
 
     /**
-     * 是否封禁
-     */
-    private Integer isBanned;
-
-    /**
      * 封禁截止日期
      */
     private LocalDateTime deadlineDate;
