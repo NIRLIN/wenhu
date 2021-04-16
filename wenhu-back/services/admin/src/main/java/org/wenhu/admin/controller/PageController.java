@@ -16,9 +16,14 @@ public class PageController {
         return "view/login";
     }
 
-    @GetMapping("userList.html")
-    public String userList() {
-        return "view/userList";
+    @GetMapping("listUserNoBanned.html")
+    public String listUserNoBanned() {
+        return "view/listUserNoBanned";
+    }
+
+    @GetMapping("listUserIsBanned.html")
+    public String listUserIsBanned() {
+        return "view/listUserIsBanned";
     }
 
 }
