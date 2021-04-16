@@ -106,9 +106,9 @@
                 <div style="margin-top: 10px;">
 
                     <el-table :data="listUserIsBanned" border fit highlight-current-row v-loading="">
-                        <el-table-column align="center" type="index" width="80">
+                        <el-table-column align="center" label="序号" type="index" width="80">
                         </el-table-column>
-                        <el-table-column align="center" label="id" width="150">
+                        <el-table-column align="center" label="id" width="250">
                             <template slot-scope="{row}">
                                 <span>{{ row.id }}</span>
                             </template>
@@ -185,7 +185,7 @@
                     <div style="width: 100%;background-color: #ffffff;">
                         <el-pagination :hide-on-single-page="true" :page-size="10" :total="listUserIsBannedCount"
                                        @current-change="current_change"
-                                       layout="prev, pager, next" style="text-align:center;"/>
+                                       layout="total, prev, pager, next" style="text-align:center;"/>
                     </div>
                 </div>
             </el-main>
@@ -296,14 +296,14 @@
                         })
                     } else {
                         this.$message({
-                            message: '修改成功',
+                            message: '修改失败',
                             type: 'success',
                             center: true
                         })
                     }
                 }).catch(() => {
                     this.$message({
-                        message: '修改成功',
+                        message: '修改失败',
                         type: 'success',
                         center: true
                     })

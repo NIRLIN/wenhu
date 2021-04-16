@@ -26,4 +26,19 @@ public class PageController {
         return "view/listUserIsBanned";
     }
 
+    @GetMapping("listQuestion.html")
+    public String listQuestion() {
+        return "view/listQuestion";
+    }
+
+    @GetMapping("listAnswer.html")
+    public String listAnswer() {
+        return "view/listAnswer";
+    }
+
+    @GetMapping("listArticle.html")
+    public String listArticle() {
+        return "view/listArticle";
+    }
+
 }
