@@ -11,8 +11,15 @@
                 <i class="el-icon-s-cooperation"></i>
                 <span slot="title">权限管理</span>
             </template>
-            <el-menu-item index="1-1">员工管理</el-menu-item>
-            <el-menu-item index="1-2">职位管理</el-menu-item>
+            <el-menu-item index="1-1">
+                <el-link :underline="false" href="listAdminNoBaned.html">未封禁员工</el-link>
+            </el-menu-item>
+            <el-menu-item index="1-2">
+                <el-link :underline="false" href="listAdminIsBaned.html">封禁员工</el-link>
+            </el-menu-item>
+            <el-menu-item index="1-3">
+                <el-link :underline="false" href="listPosition.html.html">职位管理</el-link>
+            </el-menu-item>
         </el-submenu>
         <el-submenu index="2">
             <template slot="title">
@@ -25,7 +32,9 @@
             <el-menu-item index="2-2">
                 <el-link :underline="false" href="listAnswer.html">回答管理</el-link>
             </el-menu-item>
-            <el-menu-item index="2-3">文章管理</el-menu-item>
+            <el-menu-item index="2-3">
+                <el-link :underline="false" href="listArticle.html">文章管理</el-link>
+            </el-menu-item>
         </el-submenu>
         <el-submenu index="3">
             <template slot="title">
@@ -56,7 +65,9 @@
                 <span slot="title">功能中心</span>
             </template>
             <el-menu-item index="5-1">热榜管理</el-menu-item>
-            <el-menu-item index="5-2">敏感词管理</el-menu-item>
+            <el-menu-item index="5-2">
+                <el-link :underline="false" href="listSensitivity.html">敏感词管理</el-link>
+            </el-menu-item>
         </el-submenu>
         <el-submenu index="6">
             <template slot="title">

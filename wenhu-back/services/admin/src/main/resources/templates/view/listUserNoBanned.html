@@ -157,6 +157,15 @@
                         <el-table-column align="center" fixed="right" label="操作" width="200">
                             <template slot-scope="{$index,row}">
                                 <el-button
+                                        @click="abandonEditUser($index, row)"
+                                        icon="el-icon-error"
+                                        size="small"
+                                        type="warning"
+                                        v-if="isEditList[$index]"
+                                >
+                                    放弃
+                                </el-button>
+                                <el-button
                                         @click="saveUserMethod($index, row)"
                                         icon="el-icon-document-checked"
                                         size="small"
@@ -278,6 +287,8 @@
                 if ((typeof row.deadlineDate) === 'string') {
                     row.deadlineDate = new Date(row.deadlineDate)
                 }
+                this.abandonEditUser(index, row)
+
                 row.deadlineDate = this.dateFormatMethod(row.deadlineDate)
                 Vue.set(this.isEditList, index, false)
                 axios.post('/user/saveUser', JSON.stringify(row),
@@ -307,7 +318,9 @@
             editUserMethod(index, row) {
                 Vue.set(this.isEditList, index, true)
             },
-
+            abandonEditUser(index, row) {
+                Vue.set(this.isEditList, index, false)
+            },
             listUserBySearch() {
                 this.listUserBySearchMethod(1)
             },
@@ -333,7 +346,7 @@
                 if (this.searchSelect === '4') {
                     submitData = {'page': page, 'resume': this.searchInput}
                 }
-                console.log(submitData)
+                // console.log(submitData)
                 axios.post('/user/listUserNoBanedSearch', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {

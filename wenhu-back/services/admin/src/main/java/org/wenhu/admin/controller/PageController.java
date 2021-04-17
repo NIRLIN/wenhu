@@ -41,4 +41,24 @@ public class PageController {
         return "view/listArticle";
     }
 
+    @GetMapping("listSensitivity.html")
+    public String listSensitivity() {
+        return "view/listSensitivity";
+    }
+
+    @GetMapping("listAdminIsBaned.html")
+    public String listAdminIsBaned() {
+        return "view/listAdminIsBaned";
+    }
+
+    @GetMapping("listAdminNoBaned.html")
+    public String listAdminNoBaned() {
+        return "view/listAdminNoBaned";
+    }
+
+    @GetMapping("listPosition.html")
+    public String listPosition() {
+        return "view/listPosition";
+    }
+
 }

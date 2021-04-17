@@ -58,10 +58,10 @@
                                 <span slot="title">用户中心</span>
                             </template>
                             <el-menu-item index="4-1">
-                                <el-link href="listUserNoBanned.html" :underline="false">用户列表</el-link>
+                                <el-link :underline="false" href="listUserNoBanned.html">用户列表</el-link>
                             </el-menu-item>
                             <el-menu-item index="4-2">
-                                <el-link href="listUserIsBanned.html" :underline="false">封禁列表</el-link>
+                                <el-link :underline="false" href="listUserIsBanned.html">封禁列表</el-link>
                             </el-menu-item>
                         </el-submenu>
                         <el-submenu index="5">
@@ -161,6 +161,15 @@
 
                         <el-table-column align="center" fixed="right" label="操作" width="200">
                             <template slot-scope="{$index,row}">
+                                <el-button
+                                        @click="abandonEditUser($index, row)"
+                                        icon="el-icon-error"
+                                        size="small"
+                                        type="warning"
+                                        v-if="isEditList[$index]"
+                                >
+                                    放弃
+                                </el-button>
                                 <el-button
                                         @click="saveUserMethod($index, row)"
                                         icon="el-icon-document-checked"
@@ -283,6 +292,8 @@
                 if ((typeof row.deadlineDate) === 'string') {
                     row.deadlineDate = new Date(row.deadlineDate)
                 }
+                this.abandonEditUser(index, row)
+
                 row.deadlineDate = this.dateFormatMethod(row.deadlineDate)
                 Vue.set(this.isEditList, index, false)
                 axios.post('/user/saveUser', JSON.stringify(row),
@@ -312,7 +323,9 @@
             editUserMethod(index, row) {
                 Vue.set(this.isEditList, index, true)
             },
-
+            abandonEditUser(index, row) {
+                Vue.set(this.isEditList, index, false)
+            },
             listUserBySearch() {
                 this.listUserBySearchMethod(1)
             },
@@ -338,7 +351,7 @@
                 if (this.searchSelect === '4') {
                     submitData = {'page': page, 'resume': this.searchInput}
                 }
-                console.log(submitData)
+                // console.log(submitData)
                 axios.post('/user/listUserIsBanedSearch', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {

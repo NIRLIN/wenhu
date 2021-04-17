@@ -27,7 +27,7 @@ public class SensitivityDO {
     /**
      * 名称
      */
-    private String name;
+    private String value;
 
     /**
      * 替换词

@@ -228,7 +228,7 @@
         },
         methods: {
             listAnswerArticleMethod(page) {
-                const submitData = {'page': page,'answerArticle': this.answerArticle}
+                const submitData = {'page': page, 'answerArticle': this.answerArticle}
                 axios.post('/answerArticle/listAnswerArticle', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
@@ -294,18 +294,22 @@
                 }
                 let submitData = ''
                 if (this.searchSelect === '1') {
-                    submitData = {'page': page,'answerArticle': this.answerArticle, 'answerArticleId': this.searchInput}
+                    submitData = {
+                        'page': page,
+                        'answerArticle': this.answerArticle,
+                        'answerArticleId': this.searchInput
+                    }
                 }
                 if (this.searchSelect === '2') {
-                    submitData = {'page': page,'answerArticle': this.answerArticle, 'questionId': this.searchInput}
+                    submitData = {'page': page, 'answerArticle': this.answerArticle, 'questionId': this.searchInput}
                 }
                 if (this.searchSelect === '3') {
-                    submitData = {'page': page,'answerArticle': this.answerArticle, 'userId': this.searchInput}
+                    submitData = {'page': page, 'answerArticle': this.answerArticle, 'userId': this.searchInput}
                 }
                 if (this.searchSelect === '4') {
-                    submitData = {'page': page,'answerArticle': this.answerArticle, 'content': this.searchInput}
+                    submitData = {'page': page, 'answerArticle': this.answerArticle, 'content': this.searchInput}
                 }
-                console.log(submitData)
+                // console.log(submitData)
                 axios.post('/answerArticle/listAnswerArticleBySearch', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {

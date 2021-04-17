@@ -19,5 +19,6 @@ public interface UserService {
     Boolean saveUser(UserDO userDO);
 
     HashMap<String, Object> listUserNoBanedSearch(Map<String, Object> objectMap);
+
     HashMap<String, Object> listUserIsBanedSearch(Map<String, Object> objectMap);
 }

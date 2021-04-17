@@ -83,59 +83,48 @@
             <el-main>
                 <div th:html>
                     <el-breadcrumb separator="/">
-                        <el-breadcrumb-item><a>创作中心</a></el-breadcrumb-item>
-                        <el-breadcrumb-item v-if="answerArticle===1">回答管理</el-breadcrumb-item>
-                        <el-breadcrumb-item v-if="answerArticle===0">文章管理</el-breadcrumb-item>
+                        <el-breadcrumb-item><a>功能中心</a></el-breadcrumb-item>
+                        <el-breadcrumb-item>敏感词管理</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
                 <div style="margin-top: 20px;">
                     <el-input class="input-with-select" placeholder="请输入内容" v-model="searchInput">
                         <el-select placeholder="请选择" slot="prepend" v-model="searchSelect">
                             <el-option label="id" value="1"></el-option>
-                            <el-option label="问题id" value="2"></el-option>
-                            <el-option label="用户id" value="3"></el-option>
-                            <el-option label="内容" value="4"></el-option>
+                            <el-option label="值" value="2"></el-option>
+                            <el-option label="替换值" value="3"></el-option>
                         </el-select>
-                        <el-button @click="listAnswerArticleBySearch" icon="el-icon-search" slot="append"></el-button>
+                        <el-button @click="listQuestionBySearch" icon="el-icon-search" slot="append"></el-button>
                     </el-input>
                 </div>
                 <div style="margin-top: 10px;">
 
-                    <el-table :data="listAnswerArticle" border fit highlight-current-row v-loading="">
-                        <el-table-column align="center" label="序号" type="index" width="80">
+                    <el-table :data="listSensitivity" border fit highlight-current-row v-loading="">
+                        <el-table-column align="center" label="序号" type="index" width="200">
                         </el-table-column>
-                        <el-table-column align="center" label="id" width="250">
+                        <el-table-column align="center" label="id" width="350">
                             <template slot-scope="{row}">
                                 <span>{{ row.id }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" label="问题id" width="150">
-                            <template slot-scope="{$index,row}">
-                                <span>{{ row.userId }}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="center" label="用户id" width="150">
-                            <template slot-scope="{$index,row}">
-                                <span>{{ row.userId }}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="center" label="内容" width="250">
+                        <el-table-column align="center" label="值" width="350">
                             <template slot-scope="{$index,row}">
                                 <span v-if="isEditList[$index]">
-                                    <el-input class="edit-input" size="small" v-model="row.content"/>
+                                    <el-input class="edit-input" size="small" v-model="row.value"/>
                                 </span>
-                                <span v-else>{{ row.content }}</span>
+                                <span v-else>{{ row.value }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" label="赞同数" width="150">
+                        <el-table-column align="center" label="替换值" width="350">
                             <template slot-scope="{$index,row}">
                                 <span v-if="isEditList[$index]">
-                                    <el-input class="edit-input" size="small" v-model="row.approvalNumber"/>
+                                    <el-input class="edit-input" size="small" v-model="row.substitute"/>
                                 </span>
-                                <span v-else>{{ row.approvalNumber }}</span>
+                                <span v-else>{{ row.substitute }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" label="修改时间" width="250">
+
+                        <el-table-column align="center" label="修改时间" width="350">
                             <template slot-scope="{$index,row}">
                                 <span>{{ row.updateTime | formatTimer(true) }}</span>
                             </template>
@@ -144,7 +133,7 @@
                         <el-table-column align="center" fixed="right" label="操作" width="200">
                             <template slot-scope="{$index,row}">
                                 <el-button
-                                        @click="abandonEditAnswerArticleMethod($index, row)"
+                                        @click="abandonEditSensitivity($index, row)"
                                         icon="el-icon-error"
                                         size="small"
                                         type="warning"
@@ -153,7 +142,7 @@
                                     放弃
                                 </el-button>
                                 <el-button
-                                        @click="saveAnswerArticleMethod($index, row)"
+                                        @click="saveSensitivityMethod($index, row)"
                                         icon="el-icon-document-checked"
                                         size="small"
                                         type="success"
@@ -162,7 +151,7 @@
                                     保存
                                 </el-button>
                                 <el-button
-                                        @click="editAnswerArticleMethod($index, row)"
+                                        @click="editQuestionMethod($index, row)"
                                         icon="el-icon-edit"
                                         size="small"
                                         type="primary"
@@ -174,7 +163,7 @@
                         </el-table-column>
                     </el-table>
                     <div style="width: 100%;background-color: #ffffff;">
-                        <el-pagination :hide-on-single-page="true" :page-size="10" :total="listAnswerArticleCount"
+                        <el-pagination :hide-on-single-page="true" :page-size="10" :total="listSensitivityCount"
                                        @current-change="current_change"
                                        layout="total, prev, pager, next" style="text-align:center;"/>
                     </div>
@@ -216,43 +205,43 @@
                 datetime: new Date(),
                 searchSelect: '',
                 searchInput: '',
-                answerArticle: 0,
-                listAnswerArticle: [],
-                listAnswerArticleCount: 0,
-                searchAnswerArticleCount: 0,
+                listSensitivity: [],
+                listSensitivityCount: 0,
+                searchSensitivity: 0,
                 isEditList: []
             }
         },
         created() {
-            this.listAnswerArticleMethod(1)
+            this.listSensitivityMethod(1)
         },
         methods: {
-            listAnswerArticleMethod(page) {
-                const submitData = {'page': page, 'answerArticle': this.answerArticle}
-                axios.post('/answerArticle/listAnswerArticle', submitData,
+            listSensitivityMethod(page) {
+                this.searchSensitivity = 0
+                const submitData = {'page': page}
+                axios.post('/sensitivity/listSensitivity', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
-                    this.listAnswerArticle = response.data.listAnswerArticle
-                    this.listAnswerArticleCount = response.data.listAnswerArticleCount
-                    for (let i = 0; i < this.listAnswerArticle.length; i++) {
+                    this.listSensitivity = response.data.listSensitivity
+                    this.listSensitivityCount = response.data.listSensitivityCount
+                    for (let i = 0; i < this.listSensitivity.length; i++) {
                         this.isEditList.push(false)
                     }
                 })
             },
             current_change(page) {
-                if (this.searchAnswerArticleCount === 0) {
-                    this.listAnswerArticleMethod(page)
+                if (this.searchSensitivity === 0) {
+                    this.listSensitivityMethod(page)
                 }
-                if (this.searchAnswerArticleCount === 1) {
-                    this.listAnswerArticleBySearchMethod(page)
+                if (this.searchSensitivity === 1) {
+                    this.listSensitivityBySearchMethod(page)
                 }
             },
-            saveAnswerArticleMethod(index, row) {
-                this.abandonEditAnswerArticleMethod(index, row)
-                axios.post('/answerArticle/saveAnswerArticle', JSON.stringify(row),
+            saveSensitivityMethod(index, row) {
+                this.abandonEditSensitivity(index, row)
+                axios.post('/sensitivity/saveSensitivity', JSON.stringify(row),
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
-                    if (response.data.saveAnswerArticleResult) {
+                    if (response.data.saveSensitivityResult) {
                         this.$message({
                             message: '修改成功',
                             type: 'success',
@@ -273,17 +262,17 @@
                     })
                 })
             },
-            editAnswerArticleMethod(index, row) {
+            editQuestionMethod(index, row) {
                 Vue.set(this.isEditList, index, true)
             },
-            abandonEditAnswerArticleMethod(index, row) {
+            abandonEditSensitivity(index, row) {
                 Vue.set(this.isEditList, index, false)
             },
 
-            listAnswerArticleBySearch() {
-                this.listAnswerArticleBySearchMethod(1)
+            listQuestionBySearch() {
+                this.listSensitivityBySearchMethod(1)
             },
-            listAnswerArticleBySearchMethod(page) {
+            listSensitivityBySearchMethod(page) {
                 if (this.searchInput === '' || this.searchSelect === '') {
                     this.$message({
                         message: '请选择并输入哦~',
@@ -294,30 +283,23 @@
                 }
                 let submitData = ''
                 if (this.searchSelect === '1') {
-                    submitData = {
-                        'page': page,
-                        'answerArticle': this.answerArticle,
-                        'answerArticleId': this.searchInput
-                    }
+                    submitData = {'page': page, 'sensitivityId': this.searchInput}
                 }
                 if (this.searchSelect === '2') {
-                    submitData = {'page': page, 'answerArticle': this.answerArticle, 'questionId': this.searchInput}
+                    submitData = {'page': page, 'value': this.searchInput}
                 }
                 if (this.searchSelect === '3') {
-                    submitData = {'page': page, 'answerArticle': this.answerArticle, 'userId': this.searchInput}
+                    submitData = {'page': page, 'substitute': this.searchInput}
                 }
-                if (this.searchSelect === '4') {
-                    submitData = {'page': page, 'answerArticle': this.answerArticle, 'content': this.searchInput}
-                }
-                // console.log(submitData)
-                axios.post('/answerArticle/listAnswerArticleBySearch', submitData,
+                console.log(submitData)
+                axios.post('/sensitivity/listSensitivitySearch', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
                     //标记属于搜索页面
-                    this.searchAnswerArticleCount = 1
-                    this.listAnswerArticle = response.data.listAnswerArticleSearch
-                    this.listAnswerArticleCount = response.data.listAnswerArticleSearchCount
-                    for (let i = 0; i < this.listAnswerArticle.length; i++) {
+                    this.searchSensitivity = 1
+                    this.listSensitivity = response.data.listSensitivitySearch
+                    this.listSensitivityCount = response.data.listSensitivitySearchCount
+                    for (let i = 0; i < this.listSensitivity.length; i++) {
                         this.isEditList.push(false)
                     }
                 })

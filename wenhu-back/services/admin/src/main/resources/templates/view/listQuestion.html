@@ -175,7 +175,7 @@
                         </el-table-column>
                     </el-table>
                     <div style="width: 100%;background-color: #ffffff;">
-                        <el-pagination :hide-on-single-page="true" :page-size="10"  :total="countQuestion"
+                        <el-pagination :hide-on-single-page="true" :page-size="10" :total="countQuestion"
                                        @current-change="current_change"
                                        layout="total, prev, pager, next" style="text-align:center;"/>
                     </div>
@@ -228,7 +228,7 @@
         },
         methods: {
             listQuestionMethod(page) {
-                this.searchQuestion=0
+                this.searchQuestion = 0
                 const submitData = {'page': page}
                 axios.post('/question/listQuestion', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
@@ -306,7 +306,7 @@
                 if (this.searchSelect === '4') {
                     submitData = {'page': page, 'description': this.searchInput}
                 }
-                console.log(submitData)
+                // console.log(submitData)
                 axios.post('/question/listQuestionSearch', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {

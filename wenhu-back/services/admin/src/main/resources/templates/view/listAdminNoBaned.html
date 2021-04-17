@@ -21,7 +21,7 @@
     <div th:replace="~{common/header :: header}"></div>
     <el-container>
         <el-container>
-            <el-menu class="el-menu-vertical-demo" default-active="2-1">
+            <el-menu class="el-menu-vertical-demo" default-active="4-1">
                 <el-submenu index="1">
                     <template slot="title">
                         <i class="el-icon-s-cooperation"></i>
@@ -33,7 +33,7 @@
                 <el-submenu index="2">
                     <template slot="title">
                         <i class="el-icon-edit"></i>
-                        <span slot="title">创作中心</span>
+                        <span slot="title">创作管理</span>
                     </template>
                     <el-menu-item index="2-1">问题管理</el-menu-item>
                     <el-menu-item index="2-2">回答管理</el-menu-item>
@@ -56,7 +56,7 @@
                         <span slot="title">用户中心</span>
                     </template>
                     <el-menu-item index="4-1">
-                        <el-link :underline="false" href="listUserNoBanned.html">用户列表</el-link>
+                        <el-link :underline="false" href="listAdmin.html">用户列表</el-link>
                     </el-menu-item>
                     <el-menu-item index="4-2">
                         <el-link :underline="false" href="listUserIsBanned.html">封禁列表</el-link>
@@ -83,56 +83,78 @@
             <el-main>
                 <div th:html>
                     <el-breadcrumb separator="/">
-                        <el-breadcrumb-item><a>创作中心</a></el-breadcrumb-item>
-                        <el-breadcrumb-item v-if="answerArticle===1">回答管理</el-breadcrumb-item>
-                        <el-breadcrumb-item v-if="answerArticle===0">文章管理</el-breadcrumb-item>
+                        <el-breadcrumb-item><a>权限管理</a></el-breadcrumb-item>
+                        <el-breadcrumb-item v-if="adminBaned===0">封禁员工</el-breadcrumb-item>
+                        <el-breadcrumb-item v-if="adminBaned===1">未封禁员工</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
                 <div style="margin-top: 20px;">
                     <el-input class="input-with-select" placeholder="请输入内容" v-model="searchInput">
                         <el-select placeholder="请选择" slot="prepend" v-model="searchSelect">
                             <el-option label="id" value="1"></el-option>
-                            <el-option label="问题id" value="2"></el-option>
-                            <el-option label="用户id" value="3"></el-option>
-                            <el-option label="内容" value="4"></el-option>
+                            <el-option label="用户名" value="2"></el-option>
+                            <el-option label="手机号" value="3"></el-option>
+                            <el-option label="个性签名" value="4"></el-option>
                         </el-select>
-                        <el-button @click="listAnswerArticleBySearch" icon="el-icon-search" slot="append"></el-button>
+                        <el-button @click="listAdminBySearch" icon="el-icon-search" slot="append"></el-button>
                     </el-input>
                 </div>
                 <div style="margin-top: 10px;">
 
-                    <el-table :data="listAnswerArticle" border fit highlight-current-row v-loading="">
+                    <el-table :data="listAdmin" border fit highlight-current-row v-loading="">
                         <el-table-column align="center" label="序号" type="index" width="80">
                         </el-table-column>
-                        <el-table-column align="center" label="id" width="250">
+                        <el-table-column align="center" label="id" width="150">
                             <template slot-scope="{row}">
                                 <span>{{ row.id }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" label="问题id" width="150">
-                            <template slot-scope="{$index,row}">
-                                <span>{{ row.userId }}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="center" label="用户id" width="150">
-                            <template slot-scope="{$index,row}">
-                                <span>{{ row.userId }}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="center" label="内容" width="250">
+                        <el-table-column align="center" label="用户名" width="150">
                             <template slot-scope="{$index,row}">
                                 <span v-if="isEditList[$index]">
-                                    <el-input class="edit-input" size="small" v-model="row.content"/>
+                                    <el-input class="edit-input" size="small" v-model="row.username"/>
                                 </span>
-                                <span v-else>{{ row.content }}</span>
+                                <span v-else>{{ row.username }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" label="赞同数" width="150">
+                        <el-table-column align="center" label="职位id" width="200">
                             <template slot-scope="{$index,row}">
                                 <span v-if="isEditList[$index]">
-                                    <el-input class="edit-input" size="small" v-model="row.approvalNumber"/>
+                                    <el-input class="edit-input" size="small" v-model="row.positionId"/>
                                 </span>
-                                <span v-else>{{ row.approvalNumber }}</span>
+                                <span v-else>{{ row.positionId }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="center" label="手机号" width="150">
+                            <template slot-scope="{$index,row}">
+                                <span v-if="isEditList[$index]">
+                                    <el-input class="edit-input" size="small" v-model="row.phoneNumber"/>
+                                </span>
+                                <span v-else>{{ row.phoneNumber }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="center" label="个性签名" width="250">
+                            <template slot-scope="{$index,row}">
+                                <span v-if="isEditList[$index]">
+                                    <el-input class="edit-input" size="small" v-model="row.resume"/>
+                                </span>
+                                <span v-else>{{ row.resume }}</span>
+                            </template>
+                        </el-table-column>
+
+                        <el-table-column align="center" label="封禁时间" width="250">
+                            <template slot-scope="{$index,row}">
+                                <span v-if="isEditList[$index]">
+                                    <el-date-picker
+                                            :picker-options="pickerOptions"
+                                            align="center"
+                                            format="yyyy-MM-dd HH:mm:ss"
+                                            placeholder="选择日期时间"
+                                            type="datetime"
+                                            v-model="row.deadlineDate">
+                                    </el-date-picker>
+                                </span>
+                                <span v-else>{{ row.deadlineDate | formatTimer(true) }}</span>
                             </template>
                         </el-table-column>
                         <el-table-column align="center" label="修改时间" width="250">
@@ -144,7 +166,7 @@
                         <el-table-column align="center" fixed="right" label="操作" width="200">
                             <template slot-scope="{$index,row}">
                                 <el-button
-                                        @click="abandonEditAnswerArticleMethod($index, row)"
+                                        @click="abandonEditAdmin($index, row)"
                                         icon="el-icon-error"
                                         size="small"
                                         type="warning"
@@ -153,7 +175,7 @@
                                     放弃
                                 </el-button>
                                 <el-button
-                                        @click="saveAnswerArticleMethod($index, row)"
+                                        @click="saveAdminMethod($index, row)"
                                         icon="el-icon-document-checked"
                                         size="small"
                                         type="success"
@@ -162,7 +184,7 @@
                                     保存
                                 </el-button>
                                 <el-button
-                                        @click="editAnswerArticleMethod($index, row)"
+                                        @click="editUserMethod($index, row)"
                                         icon="el-icon-edit"
                                         size="small"
                                         type="primary"
@@ -174,7 +196,7 @@
                         </el-table-column>
                     </el-table>
                     <div style="width: 100%;background-color: #ffffff;">
-                        <el-pagination :hide-on-single-page="true" :page-size="10" :total="listAnswerArticleCount"
+                        <el-pagination :hide-on-single-page="true" :page-size="10" :total="listAdminCount"
                                        @current-change="current_change"
                                        layout="total, prev, pager, next" style="text-align:center;"/>
                     </div>
@@ -216,43 +238,73 @@
                 datetime: new Date(),
                 searchSelect: '',
                 searchInput: '',
-                answerArticle: 0,
-                listAnswerArticle: [],
-                listAnswerArticleCount: 0,
-                searchAnswerArticleCount: 0,
-                isEditList: []
+                listAdmin: [],
+                listAdminCount: 0,
+                searchAdminPage: 0,
+                adminBaned: 0,
+                isEditList: [],
+                pickerOptions: {
+                    shortcuts: [{
+                        text: '明天',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() + 3600 * 1000 * 24);
+                            picker.$emit('pick', date);
+                        }
+                    }, {
+                        text: '三天后',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() + 3600 * 1000 * 24 * 3);
+                            picker.$emit('pick', date);
+                        }
+                    }, {
+                        text: '一周后',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() + 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', date);
+                        }
+                    }]
+                },
             }
         },
         created() {
-            this.listAnswerArticleMethod(1)
+            this.listAdminMethod(1)
         },
         methods: {
-            listAnswerArticleMethod(page) {
-                const submitData = {'page': page, 'answerArticle': this.answerArticle}
-                axios.post('/answerArticle/listAnswerArticle', submitData,
+            listAdminMethod(page) {
+                const submitData = {'page': page, 'adminBaned': this.adminBaned}
+                axios.post('/admin/listAdmin', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
-                    this.listAnswerArticle = response.data.listAnswerArticle
-                    this.listAnswerArticleCount = response.data.listAnswerArticleCount
-                    for (let i = 0; i < this.listAnswerArticle.length; i++) {
+                    this.listAdmin = response.data.listAdmin
+                    this.listAdminCount = response.data.listAdminCount
+                    for (let i = 0; i < this.listAdmin.length; i++) {
                         this.isEditList.push(false)
                     }
                 })
             },
             current_change(page) {
-                if (this.searchAnswerArticleCount === 0) {
-                    this.listAnswerArticleMethod(page)
+                if (this.searchAdminPage === 0) {
+                    this.listAdminMethod(page)
                 }
-                if (this.searchAnswerArticleCount === 1) {
-                    this.listAnswerArticleBySearchMethod(page)
+                if (this.searchAdminPage === 1) {
+                    this.listAdminSearchMethod(page)
                 }
             },
-            saveAnswerArticleMethod(index, row) {
-                this.abandonEditAnswerArticleMethod(index, row)
-                axios.post('/answerArticle/saveAnswerArticle', JSON.stringify(row),
+            saveAdminMethod(index, row) {
+                if ((typeof row.deadlineDate) === 'string') {
+                    row.deadlineDate = new Date(row.deadlineDate)
+                }
+                this.abandonEditAdmin(index, row)
+
+                row.deadlineDate = this.dateFormatMethod(row.deadlineDate)
+                Vue.set(this.isEditList, index, false)
+                axios.post('/admin/saveAdmin', JSON.stringify(row),
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
-                    if (response.data.saveAnswerArticleResult) {
+                    if (response.data) {
                         this.$message({
                             message: '修改成功',
                             type: 'success',
@@ -273,17 +325,16 @@
                     })
                 })
             },
-            editAnswerArticleMethod(index, row) {
+            editUserMethod(index, row) {
                 Vue.set(this.isEditList, index, true)
             },
-            abandonEditAnswerArticleMethod(index, row) {
+            abandonEditAdmin(index, row) {
                 Vue.set(this.isEditList, index, false)
             },
-
-            listAnswerArticleBySearch() {
-                this.listAnswerArticleBySearchMethod(1)
+            listAdminBySearch() {
+                this.listAdminSearchMethod(1)
             },
-            listAnswerArticleBySearchMethod(page) {
+            listAdminSearchMethod(page) {
                 if (this.searchInput === '' || this.searchSelect === '') {
                     this.$message({
                         message: '请选择并输入哦~',
@@ -294,33 +345,39 @@
                 }
                 let submitData = ''
                 if (this.searchSelect === '1') {
-                    submitData = {
-                        'page': page,
-                        'answerArticle': this.answerArticle,
-                        'answerArticleId': this.searchInput
-                    }
+                    submitData = {'page': page, 'adminBaned': this.adminBaned, 'adminId': this.searchInput}
                 }
                 if (this.searchSelect === '2') {
-                    submitData = {'page': page, 'answerArticle': this.answerArticle, 'questionId': this.searchInput}
+                    submitData = {'page': page, 'adminBaned': this.adminBaned, 'username': this.searchInput}
                 }
                 if (this.searchSelect === '3') {
-                    submitData = {'page': page, 'answerArticle': this.answerArticle, 'userId': this.searchInput}
+                    submitData = {'page': page, 'adminBaned': this.adminBaned, 'phoneNumber': this.searchInput}
                 }
                 if (this.searchSelect === '4') {
-                    submitData = {'page': page, 'answerArticle': this.answerArticle, 'content': this.searchInput}
+                    submitData = {'page': page, 'adminBaned': this.adminBaned, 'resume': this.searchInput}
                 }
-                // console.log(submitData)
-                axios.post('/answerArticle/listAnswerArticleBySearch', submitData,
+                console.log(submitData)
+                axios.post('/admin/listAdminSearch', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
                     //标记属于搜索页面
-                    this.searchAnswerArticleCount = 1
-                    this.listAnswerArticle = response.data.listAnswerArticleSearch
-                    this.listAnswerArticleCount = response.data.listAnswerArticleSearchCount
-                    for (let i = 0; i < this.listAnswerArticle.length; i++) {
+                    this.searchAdminPage = 1
+                    this.listAdmin = response.data.listAdminSearch
+                    this.listAdminCount = response.data.listAdminSearchCount
+                    for (let i = 0; i < this.listAdmin.length; i++) {
                         this.isEditList.push(false)
                     }
                 })
+            },
+
+            dateFormatMethod(date) {
+                Y = date.getFullYear() + ''
+                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+                D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate())
+                h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours())
+                m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes())
+                s = (date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds())
+                return Y + '-' + M + '-' + D + 'T' + h + ':' + m + ':' + s
             },
         }
     })
