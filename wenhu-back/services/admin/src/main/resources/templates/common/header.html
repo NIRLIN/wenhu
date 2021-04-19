@@ -22,11 +22,19 @@
                         <span th:text="${session.username}">用户名</span>
                     </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="c">个人信息</el-dropdown-item>
-                    <el-link :underline="false" href="changePassword.html">
-                        <el-dropdown-item command="c">修改密码</el-dropdown-item>
+                    <el-link :underline="false" href="/admin/people.html" style="width: 100px;">
+                        <el-dropdown-item>个人信息</el-dropdown-item>
                     </el-link>
-                    <el-dropdown-item command="e" divided>退出</el-dropdown-item>
+                    <br>
+                    <el-link :underline="false" href="changePassword.html" style="width: 100px;">
+                        <el-dropdown-item>修改密码</el-dropdown-item>
+                    </el-link>
+                    <br>
+                    <el-link :underline="false" href="/user/userNoLogin" style="width: 100px;">
+                        <el-dropdown-item divided>
+                            退出
+                        </el-dropdown-item>
+                    </el-link>
                 </el-dropdown-menu>
             </el-dropdown>
         </el-menu-item>

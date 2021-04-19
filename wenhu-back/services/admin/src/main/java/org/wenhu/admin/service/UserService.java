@@ -62,4 +62,5 @@ public interface UserService {
     HashMap<String, Object> listUserIsBanedSearch(Map<String, Object> objectMap);
 
     String changePassword(String userId, String oldPassword, String oneNewPassword);
+
 }

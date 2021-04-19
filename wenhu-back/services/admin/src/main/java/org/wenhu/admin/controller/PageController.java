@@ -22,6 +22,11 @@ public class PageController {
         return "view/index";
     }
 
+    @GetMapping("/admin/people.html")
+    public String people() {
+        return "view/people";
+    }
+
     @RequestMapping({"changePassword.html"})
     public String changePassword() {
         return "view/changePassword";

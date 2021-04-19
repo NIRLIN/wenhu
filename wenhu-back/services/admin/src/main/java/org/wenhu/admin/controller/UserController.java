@@ -36,6 +36,15 @@ public class UserController {
         return "redirect:/login.html";
     }
 
+    @GetMapping("userNoLogin")
+    public String userNoLogin(HttpSession httpSession, RedirectAttributes redirectAttributes) {
+        httpSession.removeAttribute("userId");
+        httpSession.removeAttribute("username");
+        httpSession.removeAttribute("loginInfo");
+        return "redirect:/login.html";
+    }
+
+
     @PostMapping("changePassword")
     public String changePassword(@RequestParam String oldPassword, @RequestParam String oneNewPassword, HttpSession httpSession, RedirectAttributes redirectAttributes) {
         String changePasswordSuccess = "修改成功,请重新登录~";

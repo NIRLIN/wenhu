@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+</head>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #f6f6f6;
+    }
+
+    .grid-content {
+        border-radius: 4px;
+        min-height: 16px;
+        margin-top: 15px;
+    }
+
+</style>
+<body>
+<div id="app">
+    <div th:replace="~{common/header :: header}"></div>
+    <el-container>
+        <el-container>
+            <el-aside width="240px">
+                <el-menu class="el-menu-vertical-demo" default-active="0">
+                    <div th:replace="~{common/menuMain :: menuMain}"></div>
+                </el-menu>
+            </el-aside>
+            <el-main>
+                <el-row style="margin-top: 20px;">
+                    <el-col :offset="5" :span="12">
+                        <div class="grid-content">
+                            <el-form class="demo-ruleForm" label-width="100px" status-icon>
+                            <span th:text="${people}">
+                            </span>
+                                <el-form-item label="用户名">
+                                    <el-input name="username" type="text" v-model="people.username"></el-input>
+                                </el-form-item>
+                                <el-form-item label="手机号">
+                                    <el-input name="phoneNumber" type="text" v-model="people.phoneNumber"></el-input>
+                                </el-form-item>
+                                <el-form-item label="个性签名">
+                                    <el-input name="resume" type="text" v-model="people.resume"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button @click="saveAdminMethod" style="width: 100%;" type="primary">提交
+                                    </el-button>
+                                </el-form-item>
+                            </el-form>
+
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-main>
+        </el-container>
+    </el-container>
+</div>
+</body>
+<script th:src="@{/static/vue/dist/vue.js}"></script>
+<script th:src="@{/static/element-ui/lib/index.js}"></script>
+<link rel="stylesheet" th:href="@{/static/element-ui/lib/theme-chalk/index.css}">
+<script th:src="@{/static/vue-router/dist/vue-router.js}"></script>
+<script th:src="@{/static/axios/dist/axios.min.js}"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                people: {
+                    username: '',
+                    phoneNumber: '',
+                    resume: ''
+                }
+            }
+        },
+        created() {
+            this.getAdminPeopleInfo()
+        },
+        methods: {
+            getAdminPeopleInfo() {
+                axios.get('/admin/peopleInfo').then(response => {
+                    this.people = response.data
+                })
+            },
+            saveAdminMethod() {
+                axios.post('/admin/saveAdmin', JSON.stringify(this.people),
+                    {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+                ).then(response => {
+                    if (response.data) {
+                        this.$message({
+                            message: '修改成功',
+                            type: 'success',
+                            center: true
+                        })
+                    } else {
+                        this.$message({
+                            message: '修改失败',
+                            type: 'success',
+                            center: true
+                        })
+                    }
+                }).catch(() => {
+                    this.$message({
+                        message: '修改失败',
+                        type: 'success',
+                        center: true
+                    })
+                })
+            }
+        }
+    })
+</script>
+</html>

@@ -106,4 +106,11 @@ public class AdminServiceImpl implements AdminService {
         return adminDao.selectCount(queryWrapper);
     }
 
+
+    @Override
+    public AdminDO people(String userId) {
+        QueryWrapper<AdminDO> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("id", userId);
+        return adminDao.selectOne(userQueryWrapper);
+    }
 }
