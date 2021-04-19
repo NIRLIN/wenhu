@@ -19,11 +19,13 @@
                          <img alt=""
                               src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
                         </el-avatar>
-                        <span>用户名</span>
+                        <span th:text="${session.username}">用户名</span>
                     </span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="c">个人信息</el-dropdown-item>
-                    <el-dropdown-item command="c">修改密码</el-dropdown-item>
+                    <el-link :underline="false" href="changePassword.html">
+                        <el-dropdown-item command="c">修改密码</el-dropdown-item>
+                    </el-link>
                     <el-dropdown-item command="e" divided>退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>

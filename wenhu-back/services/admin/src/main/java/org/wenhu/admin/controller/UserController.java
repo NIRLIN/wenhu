@@ -2,14 +2,12 @@ package org.wenhu.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wenhu.admin.service.impl.UserServiceImpl;
 import org.wenhu.common.pojo.DO.UserDO;
-import org.wenhu.database.dao.UserDao;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +22,32 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @Autowired
-    private UserDao userDao;
+    @PostMapping("userLogin")
+    public String userLogin(@RequestParam String phoneNumber, @RequestParam String password, HttpSession httpSession, RedirectAttributes redirectAttributes) {
+        UserDO userDO = userService.userLogin(phoneNumber, password);
+        if (userDO != null) {
+            httpSession.setAttribute("userId", userDO.getId());
+            httpSession.setAttribute("username", userDO.getUsername());
+            httpSession.removeAttribute("loginInfo");
+            return "redirect:/index.html";
+        } else {
+            redirectAttributes.addFlashAttribute("loginInfo", "账号或密码错误");
+        }
+        return "redirect:/login.html";
+    }
+
+    @PostMapping("changePassword")
+    public String changePassword(@RequestParam String oldPassword, @RequestParam String oneNewPassword, HttpSession httpSession, RedirectAttributes redirectAttributes) {
+        String changePasswordSuccess = "修改成功,请重新登录~";
+        String userId = (String) httpSession.getAttribute("userId");
+        String changePasswordInfo = userService.changePassword(userId, oldPassword, oneNewPassword);
+        redirectAttributes.addFlashAttribute("changePasswordInfo", changePasswordInfo);
+        if (changePasswordSuccess.equals(changePasswordInfo)) {
+            return "redirect:/login.html";
+        } else {
+            return "redirect:/changePassword.html";
+        }
+    }
 
     @ResponseBody
     @PostMapping("listUserNoBanned")

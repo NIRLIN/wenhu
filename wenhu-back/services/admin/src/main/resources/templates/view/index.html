@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+</head>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #f6f6f6;
+    }
+
+    .el-select .el-input {
+        width: 130px;
+    }
+
+</style>
+<body>
+<div id="app">
+    <div th:replace="~{common/header :: header}"></div>
+    <el-container>
+        <el-container>
+            <el-aside width="240px">
+                <el-menu class="el-menu-vertical-demo" default-active="0">
+                    <div th:replace="~{common/menuMain :: menuMain}"></div>
+                </el-menu>
+            </el-aside>
+            <el-main>
+            </el-main>
+        </el-container>
+    </el-container>
+</div>
+</body>
+<script th:src="@{/static/vue/dist/vue.js}"></script>
+<script th:src="@{/static/element-ui/lib/index.js}"></script>
+<link rel="stylesheet" th:href="@{/static/element-ui/lib/theme-chalk/index.css}">
+<script th:src="@{/static/vue-router/dist/vue-router.js}"></script>
+<script th:src="@{/static/axios/dist/axios.min.js}"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {}
+        }
+    })
+</script>
+</html>

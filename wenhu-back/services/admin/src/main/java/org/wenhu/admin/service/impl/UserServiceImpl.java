@@ -25,6 +25,48 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
+    public UserDO userLogin(String phoneNumber, String password) {
+        //手机号或密码为空不允许登录验证
+        if (phoneNumber == null || password == null) {
+            return null;
+        }
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("phone_number", phoneNumber)
+                .eq("password", password);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO != null) {
+
+            return userDO;
+        }
+        return null;
+    }
+
+
+    @Override
+    public String changePassword(String userId, String oldPassword, String oneNewPassword) {
+        if (userId == null) {
+            return "未登录哦~";
+        }
+        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("id", userId)
+                .eq("password", oldPassword);
+        UserDO userDO = userDao.selectOne(queryWrapper);
+        if (userDO == null) {
+            return "密码错误";
+        }
+        userDO.setPassword(oneNewPassword);
+        userDO.setUpdateTime(LocalDateTime.now());
+        int i = userDao.updateById(userDO);
+        if (i == 1) {
+            return "修改成功,请重新登录~";
+        } else {
+            return "修改失败";
+        }
+    }
+
+    @Override
     public HashMap<String, Object> listUserNoBanned(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
         //条件构造
@@ -127,6 +169,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean saveUser(UserDO userDO) {
+        //修改时间
         userDO.setUpdateTime(LocalDateTime.now());
         int i = userDao.updateById(userDO);
         return i == 1;

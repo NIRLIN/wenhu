@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+</head>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #f6f6f6;
+    }
+
+    .grid-content {
+        border-radius: 4px;
+        min-height: 36px;
+        margin-top: 20px;
+    }
+
+</style>
+<body>
+<div id="app">
+    <el-row style="margin-top: 150px;">
+        <el-col :span="6" :offset="9">
+            <div class="grid-content">
+                <el-form status-icon id="loginForm" action="user/userLogin" method="post" label-width="100px"
+                         class="demo-ruleForm">
+                    <el-row>
+                        <el-col :span="24">
+                            <div class="grid-content" style="font-size: 25px;text-align: center;">
+                    <span style="font-size: 25px;text-align: center;">
+                        系统登录
+                    </span>
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24">
+                            <div class="grid-content">
+                                <el-input v-model="phoneNumber" name="phoneNumber" placeholder="手机号"
+                                          prefix-icon="el-icon-user"></el-input>
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24">
+                            <div class="grid-content">
+                                <el-input placeholder="密码" v-model="password" name="password" show-password
+                                          prefix-icon="el-icon-lock"></el-input>
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <div style="text-align: center;margin-top: 10px;">
+                        <span th:text="${loginInfo}" style="color: red;"></span>
+                        <span th:text="${changePasswordInfo}" style="color: red;"></span>
+                    </div>
+                    <el-row>
+                        <el-col :span="24">
+                            <div class="grid-content">
+                                <el-button style="width: 100%;" @click="submitLoginMethod" type="primary">登录
+                                </el-button>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+        </el-col>
+    </el-row>
+
+</div>
+</body>
+<script th:src="@{/static/vue/dist/vue.js}"></script>
+<script th:src="@{/static/element-ui/lib/index.js}"></script>
+<link rel="stylesheet" th:href="@{/static/element-ui/lib/theme-chalk/index.css}">
+<script th:src="@{/static/vue-router/dist/vue-router.js}"></script>
+<script th:src="@{/static/axios/dist/axios.min.js}"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                phoneNumber: '',
+                password: ''
+            }
+        },
+        methods: {
+            submitLoginMethod() {
+                const FloatRegexPhone = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
+                if (!FloatRegexPhone.test(this.phoneNumber)) {
+                    this.$message.error({
+                        message: '手机号错误哦~',
+                        center: true
+                    })
+                    return false
+                }
+                const FloatRegexPassword = /\w{6,16}/
+                if (!FloatRegexPassword.test(this.password)) {
+                    this.$message.error({
+                        message: '错了哦，密码是6-16位字母的组合，区分大小写',
+                        center: true
+                    })
+                    return false
+                }
+                const form = document.getElementById('loginForm');
+                form.submit();
+            }
+        }
+    })
+</script>
+</html>

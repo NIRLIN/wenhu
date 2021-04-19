@@ -11,9 +11,6 @@
         background-color: #f6f6f6;
     }
 
-    .el-select .el-input {
-        width: 130px;
-    }
 
 </style>
 <body>
@@ -21,64 +18,87 @@
     <div th:replace="~{common/header :: header}"></div>
     <el-container>
         <el-container>
-            <el-menu class="el-menu-vertical-demo" default-active="4-1">
-                <el-submenu index="1">
-                    <template slot="title">
-                        <i class="el-icon-s-cooperation"></i>
-                        <span slot="title">权限管理</span>
-                    </template>
-                    <el-menu-item index="1-1">员工管理</el-menu-item>
-                    <el-menu-item index="1-2">职位管理</el-menu-item>
-                </el-submenu>
-                <el-submenu index="2">
-                    <template slot="title">
-                        <i class="el-icon-edit"></i>
-                        <span slot="title">创作管理</span>
-                    </template>
-                    <el-menu-item index="2-1">问题管理</el-menu-item>
-                    <el-menu-item index="2-2">回答管理</el-menu-item>
-                    <el-menu-item index="2-3">文章管理</el-menu-item>
-                </el-submenu>
-                <el-submenu index="3">
-                    <template slot="title">
-                        <i class="el-icon-warning"></i>
-                        <span slot="title">举报中心</span>
-                    </template>
-                    <el-menu-item index="3-1">问题举报</el-menu-item>
-                    <el-menu-item index="3-2">回答举报</el-menu-item>
-                    <el-menu-item index="3-3">文章举报</el-menu-item>
-                    <el-menu-item index="3-4">评论举报</el-menu-item>
-                    <el-menu-item index="3-5">私信举报</el-menu-item>
-                </el-submenu>
-                <el-submenu index="4">
-                    <template slot="title">
-                        <i class="el-icon-user-solid"></i>
-                        <span slot="title">用户中心</span>
-                    </template>
-                    <el-menu-item index="4-1">
-                        <el-link :underline="false" href="listAdmin.html">用户列表</el-link>
+            <el-aside width="240px">
+                <el-menu class="el-menu-vertical-demo" default-active="1-1">
+                    <el-menu-item index="0">
+                        <template slot="title">
+                            <el-link :underline="false" href="index.html"><i class="el-icon-s-home"></i></el-link>
+                            <span><el-link :underline="false" href="index.html">系统主页</el-link></span>
+                        </template>
                     </el-menu-item>
-                    <el-menu-item index="4-2">
-                        <el-link :underline="false" href="listUserIsBanned.html">封禁列表</el-link>
-                    </el-menu-item>
-                </el-submenu>
-                <el-submenu index="5">
-                    <template slot="title">
-                        <i class="el-icon-s-help"></i>
-                        <span slot="title">功能中心</span>
-                    </template>
-                    <el-menu-item index="5-1">热榜管理</el-menu-item>
-                    <el-menu-item index="5-2">敏感词管理</el-menu-item>
-                </el-submenu>
-                <el-submenu index="6">
-                    <template slot="title">
-                        <i class="el-icon-s-tools"></i>
-                        <span slot="title">系统中心</span>
-                    </template>
-                    <el-menu-item index="6-1">SQL监控</el-menu-item>
-                    <el-menu-item index="6-2">服务监控</el-menu-item>
-                </el-submenu>
-            </el-menu>
+                    <el-submenu index="1">
+                        <template slot="title">
+                            <i class="el-icon-s-cooperation"></i>
+                            <span slot="title">权限管理</span>
+                        </template>
+                        <el-menu-item index="1-1">
+                            <el-link :underline="false" href="listAdminNoBaned.html">未封禁员工</el-link>
+                        </el-menu-item>
+                        <el-menu-item index="1-2">
+                            <el-link :underline="false" href="listAdminIsBaned.html">封禁员工</el-link>
+                        </el-menu-item>
+                        <el-menu-item index="1-3">
+                            <el-link :underline="false" href="listPosition.html.html">职位管理</el-link>
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="2">
+                        <template slot="title">
+                            <i class="el-icon-edit"></i>
+                            <span slot="title">创作中心</span>
+                        </template>
+                        <el-menu-item index="2-1">
+                            <el-link :underline="false" href="listQuestion.html">问题管理</el-link>
+                        </el-menu-item>
+                        <el-menu-item index="2-2">
+                            <el-link :underline="false" href="listAnswer.html">回答管理</el-link>
+                        </el-menu-item>
+                        <el-menu-item index="2-3">
+                            <el-link :underline="false" href="listArticle.html">文章管理</el-link>
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="3">
+                        <template slot="title">
+                            <i class="el-icon-warning"></i>
+                            <span slot="title">举报中心</span>
+                        </template>
+                        <el-menu-item index="3-1">问题举报</el-menu-item>
+                        <el-menu-item index="3-2">回答举报</el-menu-item>
+                        <el-menu-item index="3-3">文章举报</el-menu-item>
+                        <el-menu-item index="3-4">评论举报</el-menu-item>
+                        <el-menu-item index="3-5">私信举报</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="4">
+                        <template slot="title">
+                            <i class="el-icon-user-solid"></i>
+                            <span slot="title">用户中心</span>
+                        </template>
+                        <el-menu-item index="4-1">
+                            <el-link :underline="false" href="listUserNoBanned.html">用户列表</el-link>
+                        </el-menu-item>
+                        <el-menu-item index="4-2">
+                            <el-link :underline="false" href="listUserIsBanned.html">封禁列表</el-link>
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="5">
+                        <template slot="title">
+                            <i class="el-icon-s-help"></i>
+                            <span slot="title">功能中心</span>
+                        </template>
+                        <el-menu-item index="5-1">热榜管理</el-menu-item>
+                        <el-menu-item index="5-2">
+                            <el-link :underline="false" href="listSensitivity.html">敏感词管理</el-link>
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="6">
+                        <template slot="title">
+                            <i class="el-icon-s-tools"></i>
+                            <span slot="title">系统中心</span>
+                        </template>
+                        <el-menu-item index="6-1">SQL监控</el-menu-item>
+                        <el-menu-item index="6-2">服务监控</el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
 
             <el-main>
                 <div th:html>
