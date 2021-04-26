@@ -12,6 +12,7 @@ import org.wenhu.common.util.Result;
 import org.wenhu.common.util.ResultCode;
 import org.wenhu.common.util.SnowflakeUtils;
 import org.wenhu.creation.question.service.QuestionService;
+import org.wenhu.creation.util.FilterSensitivity;
 import org.wenhu.database.dao.QuestionDao;
 import org.wenhu.database.dao.QuestionLogDao;
 
@@ -30,6 +31,8 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionDao questionDao;
     @Autowired
     private QuestionLogDao questionLogDao;
+    @Autowired
+    private FilterSensitivity filterSensitivity;
 
     @Override
     public Result<String> saveQuestion(QuestionDTO questionDTO, String menderId) {
@@ -40,8 +43,8 @@ public class QuestionServiceImpl implements QuestionService {
         QuestionDO questionDO = new QuestionDO();
         questionDO.setId(String.valueOf(SnowflakeUtils.genId()));
         questionDO.setUserId(menderId);
-        questionDO.setTitle(questionDTO.getTitle());
-        questionDO.setDescription(questionDTO.getDescription());
+        questionDO.setTitle(filterSensitivity.filterSensitiveWord(questionDTO.getTitle()));
+        questionDO.setDescription(filterSensitivity.filterSensitiveWord(questionDTO.getDescription()));
         questionDO.setFollowNumber(0);
         questionDO.setBrowseNumber(0);
         questionDO.setCreateTime(LocalDateTime.now());

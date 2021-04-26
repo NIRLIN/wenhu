@@ -26,12 +26,16 @@ public class AnswerArticleServiceImpl implements AnswerArticleService {
 
     @Override
     public HashMap<String, Object> listAnswerArticle(Map<String, Object> objectMap) {
+        //获取分页信息
         Integer page = (Integer) objectMap.get("page");
         Integer answerArticle = (Integer) objectMap.get("answerArticle");
+        //构建条件构造器
         QueryWrapper<AnswerArticleDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .eq("answer_article", answerArticle);
+        //获取回答列表
         List<AnswerArticleDO> listAnswerArticle = listAnswerArticlePage(page, queryWrapper);
+        //统计回答总数
         Integer listAnswerArticleCount = listAnswerArticleCount(queryWrapper);
         HashMap<String, Object> hashMap = new HashMap<>(2);
         hashMap.put("listAnswerArticle", listAnswerArticle);

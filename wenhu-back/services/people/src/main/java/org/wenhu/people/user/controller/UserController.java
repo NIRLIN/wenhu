@@ -32,9 +32,9 @@ public class UserController {
 
 
     @RequestMapping(name = "userRegister", value = "userRegister", method = RequestMethod.POST)
-    Result<String> userRegister(@RequestBody UserDTO userDTO) {
-        Result<String> register = userService.userRegister(userDTO);
-        System.out.println("userDTO" + userDTO);
+    Result<String> userRegister(@RequestBody UserDO userDO) {
+        Result<String> register = userService.userRegister(userDO);
+        System.out.println("userDTO" + userDO);
         System.out.println("register" + register);
         return register;
     }

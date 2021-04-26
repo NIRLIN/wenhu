@@ -11,8 +11,6 @@
               <el-col :span="24">
                 <div class="grid-content bg-purple">
                   <nav>
-                    <el-link :underline="false" class="nav_font" href="#/recommend">推荐</el-link>
-                    <el-link :underline="false" class="nav_font" href="#/follow">关注</el-link>
                     <el-link :underline="false" class="nav_font change_font_color" href="#/hot">热榜</el-link>
                   </nav>
                 </div>

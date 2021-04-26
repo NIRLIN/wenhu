@@ -151,3 +151,11 @@ export function saveReply(data) {
   })
 }
 
+export function getBySearch(data) {
+  return request({
+    url: '/search/search?search=' + data,
+    method: 'get',
+    data
+  })
+}
+

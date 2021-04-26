@@ -46,12 +46,7 @@
               </el-col>
             </el-row>
             <el-row v-if="active===0">
-              <el-col v-if="!user_is_human" :span="24">
-                <div class="grid-content input_margin">
-                  <SlideVerify @childByValue="childByValue" />
-                </div>
-              </el-col>
-              <el-col v-if="user_is_human" :span="24">
+              <el-col :span="24">
                 <div class="grid-content input_margin">
                   <el-input
                     v-model="user_verify_code_user"
@@ -236,14 +231,15 @@ export default {
       })
     },
     userRegisterButton() {
-      const submitData = { 'username': this.user_name, 'password': this.password, 'phoneNumber': this.user_phone_number }
+      const submitData = { 'username': this.user_name, 'password': this.user_password, 'phoneNumber': this.user_phone_number }
+      // console.log(submitData)
       userRegister(submitData).then((response) => {
         Message.success({
           message: '注册成功，请登录',
           center: true
         })
+        this.$router.push('login')
       })
-      this.$router.push('login')
     },
 
     getVerifyCodeTime() {

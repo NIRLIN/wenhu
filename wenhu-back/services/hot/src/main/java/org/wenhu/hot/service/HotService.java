@@ -7,13 +7,10 @@ import java.util.Set;
  * @version 1.0
  * @date 2021/3/2
  */
-public interface HotService<T> {
+public interface HotService {
 
-    /**
-     * 获取热榜信息
-     *
-     * @return 返回List<T>
-     */
     Set<String> listHotQuestion();
+
+    void countQuestionHeat();
 
 }

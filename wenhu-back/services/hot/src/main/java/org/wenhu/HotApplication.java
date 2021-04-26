@@ -1,4 +1,4 @@
-package org.wenhu.hot;
+package org.wenhu;
 
 
 import org.springframework.boot.SpringApplication;

@@ -34,12 +34,7 @@ public class UserServiceImpl implements UserService {
         queryWrapper
                 .eq("phone_number", phoneNumber)
                 .eq("password", password);
-        UserDO userDO = userDao.selectOne(queryWrapper);
-        if (userDO != null) {
-
-            return userDO;
-        }
-        return null;
+        return userDao.selectOne(queryWrapper);
     }
 
 

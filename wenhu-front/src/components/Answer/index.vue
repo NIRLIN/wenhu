@@ -162,11 +162,6 @@ export default {
         this.agreeButtonBool = response.data.boolAgree
         this.collectButtonBool = response.data.boolCollect
       })
-    } else {
-      Message.success({
-        message: '请登录哦~',
-        center: true
-      })
     }
   },
   methods: {
@@ -178,11 +173,6 @@ export default {
           this.agreeButtonBool = response.data.agreeBool
           this.answer.approvalNumber = response.data.approval_number
         })
-      } else {
-        Message.success({
-          message: '请登录哦~',
-          center: true
-        })
       }
     },
     opposeButton() {
@@ -192,11 +182,6 @@ export default {
         userOpposeAnswer(submitData).then((response) => {
           this.agreeButtonBool = response.data.agreeBool
           this.answer.approvalNumber = response.data.approval_number
-        })
-      } else {
-        Message.success({
-          message: '请登录哦~',
-          center: true
         })
       }
     },
@@ -225,11 +210,6 @@ export default {
             message: '操作成功',
             center: true
           })
-        })
-      } else {
-        Message.error({
-          message: '未登录，请登录重试',
-          center: true
         })
       }
     },

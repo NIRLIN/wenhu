@@ -26,6 +26,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public HashMap<String, Object> listQuestion(Map<String, Object> objectMap) {
+        //获取分页信息
         Integer page = (Integer) objectMap.get("page");
         QueryWrapper<QuestionDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("update_time");

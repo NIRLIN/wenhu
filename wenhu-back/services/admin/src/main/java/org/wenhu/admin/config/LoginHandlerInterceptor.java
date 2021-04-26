@@ -1,5 +1,6 @@
 package org.wenhu.admin.config;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,18 +11,19 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0
  * @date 2021/4/7
  */
+
+@Component
 public class LoginHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//        Object jobNo = request.getSession().getAttribute("jobNo");
-//        Object name = request.getSession().getAttribute("name");
-//        if (jobNo==null ||name==null){
-//            request.setAttribute("error","无权限，请登录！");
-//            request.getRequestDispatcher("/login.html").forward(request,response);
-//            return false;
-//        }else {
-//            return true;
-//        }
-        return true;
+        Object userId = request.getSession().getAttribute("userId");
+        Object username = request.getSession().getAttribute("username");
+        if (userId==null ||username==null){
+            request.setAttribute("loginInfo","无权限，请登录！");
+            request.getRequestDispatcher("/login.html").forward(request,response);
+            return false;
+        }else {
+            return true;
+        }
     }
 }

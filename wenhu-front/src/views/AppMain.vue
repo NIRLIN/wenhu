@@ -73,7 +73,6 @@ export default {
 .grid-content {
   min-height: 8px;
   border-radius: 50px;
-  background-color: #d9e0e8;
 }
 
 .main_min_width {

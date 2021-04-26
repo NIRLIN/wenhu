@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2021/3/18
  */
 public interface UserService {
-    Result<String> userRegister(UserDTO userDTO);
+    Result<String> userRegister(UserDO userDO);
 
     Result<String> checkPhoneExist(String phoneNumber);
 

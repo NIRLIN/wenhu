@@ -17,7 +17,7 @@
           <div class="grid-content bg-purple-light">
             <div id="title_url">
               <el-link id="el_link" :href="hot_question_url" :underline="false" target="_blank">{{
-                hot_question.question_title }}
+                hot_question.questionTitle }}
               </el-link>
             </div>
           </div>
@@ -33,7 +33,7 @@
         <div class="grid-content bg-purple-light">
           <div id="title_description">
             <el-link id="el_link_content" :href="hot_question_url" :underline="false">
-              <span>{{ hot_question.question_description }}</span>
+              <span v-html="hot_question.questionDescription">{{ hot_question.questionDescription }}</span>
             </el-link>
           </div>
         </div>
@@ -47,7 +47,7 @@
         <div class="grid-content bg-purple">
           <div id="footer_hot">
             <span>
-              <i class="el-icon-data-line" /> {{ hot_question.question_heat }}万热度
+              <i class="el-icon-data-line" /> {{ hot_question.questionHeat }}万热度
             </span>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default {
     }
   },
   created() {
-    this.hot_question_url = '#/question/' + this.hot_question.question_id
+    this.hot_question_url = '#/question/' + this.hot_question.questionId
   },
   methods: {
     copy_link: function() {

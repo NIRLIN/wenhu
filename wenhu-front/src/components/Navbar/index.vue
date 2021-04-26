@@ -16,8 +16,10 @@
       <el-menu-item class="hot_margin_left" index="1">
         <el-link :underline="false" href="#/hot">首页</el-link>
       </el-menu-item>
-      <el-menu-item index="2">发现</el-menu-item>
-      <el-menu-item index="3">更多</el-menu-item>
+      <el-menu-item index="2">
+        <el-link :underline="false" href="#/follow">关注</el-link>
+      </el-menu-item>
+      <el-menu-item v-show="false" index="3" />
       <el-menu-item class="input_width">
         <el-input
           v-model="header_search_value"
@@ -25,6 +27,7 @@
           placeholder="请输入内容"
           size="medium"
           suffix-icon="el-icon-search"
+          @keyup.enter.native="goSearchPageMethod"
         />
       </el-menu-item>
       <el-menu-item v-if="is_login">
@@ -38,7 +41,7 @@
         <div class="grid-content bg-purple">
           <el-link :underline="false" href="#/message">
             <el-button class="header_message" type="text">
-              <el-badge :value="1" class="item" type="primary">
+              <el-badge class="item" type="primary">
                 <i class="el-icon-message header_message_size" />
               </el-badge>
             </el-button>
@@ -157,6 +160,10 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
+    },
+    goSearchPageMethod() {
+      this.$router.push('search?search=' + this.header_search_value)
+      console.log('asda')
     },
     getUrlIndex() {
       let tmp = 0

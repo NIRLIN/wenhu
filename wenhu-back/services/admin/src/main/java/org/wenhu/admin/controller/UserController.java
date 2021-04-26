@@ -24,8 +24,10 @@ public class UserController {
 
     @PostMapping("userLogin")
     public String userLogin(@RequestParam String phoneNumber, @RequestParam String password, HttpSession httpSession, RedirectAttributes redirectAttributes) {
+        //获取账号密码
         UserDO userDO = userService.userLogin(phoneNumber, password);
         if (userDO != null) {
+            //登录成功将用户信息存入session
             httpSession.setAttribute("userId", userDO.getId());
             httpSession.setAttribute("username", userDO.getUsername());
             httpSession.removeAttribute("loginInfo");

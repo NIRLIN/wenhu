@@ -45,10 +45,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Result<String> userRegister(UserDTO userDTO) {
+    public Result<String> userRegister(UserDO userDO) {
         String message;
         String code;
-        Result<String> stringResult = checkPhoneExist(userDTO.getPhoneNumber());
+        Result<String> stringResult = checkPhoneExist(userDO.getPhoneNumber());
         //判断手机号是否已绑定，已绑定时不可注册
         if (stringResult.getCode().equals(ResultCode.USER_ERROR_A0154.getCode())) {
             message = ResultCode.USER_ERROR_A0100.getMessage();
@@ -56,15 +56,10 @@ public class UserServiceImpl implements UserService {
             return Result.succeed(code, message);
         }
         //数据补全
-        UserDO userDO = new UserDO();
         userDO.setId(String.valueOf(SnowflakeUtils.genId()));
-        userDO.setUsername(userDTO.getUsername());
-        userDO.setPhoneNumber(userDTO.getPhoneNumber());
-        userDO.setPassword(userDTO.getPassword());
         userDO.setEmail("这个人没填邮箱哦~");
         userDO.setResume("这个人没填个性签名哦~");
         userDO.setHeadImage("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
-        userDO.setIsBanned(0);
         userDO.setDeadlineDate(LocalDateTime.now());
         userDO.setCreateTime(LocalDateTime.now());
         userDO.setUpdateTime(LocalDateTime.now());
@@ -117,26 +112,28 @@ public class UserServiceImpl implements UserService {
         String code = null;
         String message = null;
         String data = null;
-        System.out.println("userDTO" + userDTO);
-        System.out.println("stringResult" + stringResult);
         //判断手机号是否已绑定，未绑定时不可验证登录
         if (ResultCode.USER_ERROR_A0154.getCode().equals(stringResult.getCode())) {
             QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("phone_number", userDTO.getPhoneNumber());
+            queryWrapper
+                    .eq("phone_number", userDTO.getPhoneNumber())
+                    .eq("password", userDTO.getPassword());
             UserDO userDO = userDao.selectOne(queryWrapper);
             if (userDO != null) {
-                //循环取出数据，验证账号密码
-                if (userDO.getPhoneNumber().equals(userDTO.getPhoneNumber()) && userDO.getPassword().equals(userDTO.getPassword())) {
+                if (LocalDateTime.now().compareTo(userDO.getDeadlineDate()) > 0){
                     code = ResultCode.SUCCESS.getCode();
                     message = ResultCode.SUCCESS.getMessage();
                     //构造id数据进行返回
                     data = "{\"id\":\"" + userDO.getId() + "\"}";
-                    //避免数据错误
+                }else {
+                    code = ResultCode.USER_ERROR_A0202.getCode();
+                    message = ResultCode.USER_ERROR_A0202.getMessage()+"截止"+userDO.getDeadlineDate();
                 }
-                if (!userDO.getPassword().equals(userDTO.getPassword())) {
-                    code = ResultCode.USER_ERROR_A0210.getCode();
-                    message = ResultCode.USER_ERROR_A0210.getMessage();
-                }
+
+                //避免数据错误
+            } else {
+                code = ResultCode.USER_ERROR_A0210.getCode();
+                message = ResultCode.USER_ERROR_A0210.getMessage();
             }
         } else {
             //避免验证不存在数据库中的手机号

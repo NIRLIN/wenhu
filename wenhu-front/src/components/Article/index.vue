@@ -139,11 +139,6 @@ export default {
           this.agreeArticleButtonBool = response.data.agreeBool
           this.article_approvalNumber = response.data.approval_number
         })
-      } else {
-        Message.success({
-          message: '请登录哦~',
-          center: true
-        })
       }
     },
     opposeArticleButton() {
@@ -152,11 +147,6 @@ export default {
         userOpposeArticle(submitData).then((response) => {
           this.agreeArticleButtonBool = response.data.agreeBool
           this.article_approvalNumber = response.data.approval_number
-        })
-      } else {
-        Message.success({
-          message: '请登录哦~',
-          center: true
         })
       }
     },
@@ -170,11 +160,6 @@ export default {
             message: '操作成功',
             center: true
           })
-        })
-      } else {
-        Message.error({
-          message: '未登录，请登录重试',
-          center: true
         })
       }
     }

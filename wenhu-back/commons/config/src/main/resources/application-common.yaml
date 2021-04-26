@@ -22,6 +22,9 @@ spring:
         group: wenhu
         file-extension: yaml
         prefix: wenhu-config
+  elasticsearch:
+    rest:
+      uris: http://${server.host}:9200
 mybatis-plus:
   global-config:
     db-config:

@@ -12,6 +12,7 @@ import org.wenhu.common.util.Result;
 import org.wenhu.common.util.ResultCode;
 import org.wenhu.common.util.SnowflakeUtils;
 import org.wenhu.creation.answer.service.AnswerService;
+import org.wenhu.creation.util.FilterSensitivity;
 import org.wenhu.database.dao.*;
 
 import java.time.LocalDateTime;
@@ -37,7 +38,8 @@ public class AnswerServiceImpl implements AnswerService {
     private AgreeOpposeDao agreeOpposeDao;
     @Autowired
     private CollectDao collectDao;
-
+    @Autowired
+    private FilterSensitivity filterSensitivity;
 
     @Override
     public Result<Integer> countAnswerByQuestionId(String questionId) {
@@ -50,6 +52,7 @@ public class AnswerServiceImpl implements AnswerService {
         return Result.succeed(integer);
     }
 
+
     @Override
     public Result<String> saveAnswer(String userId, String questionId, String content) {
         String code;
@@ -59,7 +62,7 @@ public class AnswerServiceImpl implements AnswerService {
         answerDO.setId(String.valueOf(SnowflakeUtils.genId()));
         answerDO.setQuestionId(questionId);
         answerDO.setUserId(userId);
-        answerDO.setContent(content);
+        answerDO.setContent(filterSensitivity.filterSensitiveWord(content));
         answerDO.setApprovalNumber(0);
         answerDO.setOpposeNumber(0);
         answerDO.setCreateTime(LocalDateTime.now());

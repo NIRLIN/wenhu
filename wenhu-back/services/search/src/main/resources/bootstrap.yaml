@@ -1,0 +1,12 @@
+server:
+  host: 192.168.228.66
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: ${server.host}:8848 # 作为配置中心，必须优先加载
+        group: wenhu
+        file-extension: yaml
+        prefix: wenhu-config
+        username: nacos
+        password: 123456
