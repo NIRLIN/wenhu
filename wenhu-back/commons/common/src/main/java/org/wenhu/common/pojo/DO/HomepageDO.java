@@ -35,11 +35,6 @@ public class HomepageDO {
     private Integer question;
 
     /**
-     * 文章
-     */
-    private Integer article;
-
-    /**
      * 收藏
      */
     private Integer collect;

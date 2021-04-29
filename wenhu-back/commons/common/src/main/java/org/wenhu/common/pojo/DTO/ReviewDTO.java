@@ -22,9 +22,9 @@ public class ReviewDTO {
     private String id;
 
     /**
-     * 文章或回答，1为回答，0为文章
+     * 回答id
      */
-    private String answerArticleId;
+    private String answerId;
 
     /**
      * 父评论id，默认为0，无父评论

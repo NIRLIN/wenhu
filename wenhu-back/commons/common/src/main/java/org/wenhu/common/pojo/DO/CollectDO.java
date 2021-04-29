@@ -29,15 +29,9 @@ public class CollectDO {
     private String userId;
 
     /**
-     * 收藏回答或文章id
+     * 收藏回答id
      */
-    private String answerArticleId;
-
-    /**
-     * 文章或回答，1为回答，0为文章
-     */
-    private Integer answerArticle;
-
+    private String answerId;
 
     /**
      * 创建时间

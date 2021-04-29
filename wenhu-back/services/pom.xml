@@ -16,7 +16,6 @@
         <module>message</module>
         <module>search</module>
         <module>recommend</module>
-        <module>report</module>
         <module>hot</module>
         <module>creation</module>
         <module>admin</module>

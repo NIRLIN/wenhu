@@ -2,10 +2,10 @@ package org.wenhu.people.user.service;
 
 
 import org.springframework.web.multipart.MultipartFile;
+import org.wenhu.common.pojo.DO.HomepageDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
-import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
-import org.wenhu.common.pojo.DTO.HomepageDTO;
+import org.wenhu.common.pojo.DTO.AnswerDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.util.Result;
 
@@ -32,11 +32,9 @@ public interface UserService {
 
     Result<UserDTO> getUserInfo(UserDTO userDTO);
 
-    Result<HomepageDTO> getHomepageByUserId(UserDTO userDTO);
+    Result<HomepageDO> getHomepageByUserId(UserDTO userDTO);
 
-    Result<List<AnswerArticleDTO>> listAnswerByUserId(String userId, String type);
-
-    Result<List<AnswerArticleDTO>> listArticleByUserId(String userId, String type);
+    Result<List<AnswerDTO>> listAnswerByUserId(String userId, String type);
 
     Result<List<QuestionDO>> listQuestionByUserId(String userId);
 
@@ -50,7 +48,7 @@ public interface UserService {
 
     Result<UserDO> changeNewPhoneNumber(String userId, String phoneNumber);
 
-    Result<HomepageDTO> saveChangeHomepage(HomepageDTO homepageDTO);
+    Result<HomepageDO> saveChangeHomepage(HomepageDO homepageDO);
 
     Result<String> getResumeByUserId(String userId);
 

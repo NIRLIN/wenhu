@@ -21,7 +21,7 @@ import java.util.List;
 public interface ReviewDao extends BaseMapper<ReviewDO> {
     @Select("SELECT\n" +
             "\treview.id,\n" +
-            "\tanswer_article_id,\n" +
+            "\tanswer_id,\n" +
             "\treviewer_id,\n" +
             "\t`user`.username as reviewerName,\n" +
             "\t`user`.head_image as reviewerImage,\n" +
@@ -32,7 +32,7 @@ public interface ReviewDao extends BaseMapper<ReviewDO> {
             "\treview\n" +
             "\tLEFT JOIN `user` ON `user`.id = review.reviewer_id \n" +
             "WHERE\n" +
-            "\tanswer_article_id = #{id}" +
+            "\tanswer_id = #{id}" +
             "\tORDER BY review.update_time ASC")
     List<ReviewDTO> listReviewById(@Param("id") String id);
 }

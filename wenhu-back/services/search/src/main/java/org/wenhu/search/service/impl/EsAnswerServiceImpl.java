@@ -29,7 +29,7 @@ public class EsAnswerServiceImpl implements EsAnswerService {
     @Autowired
     private EsAnswerDao esAnswerDao;
     @Autowired
-    private ElasticsearchRestTemplate  elasticsearchRestTemplate;
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
     @Autowired
     private AnswerDao answerDao;
 
@@ -37,15 +37,15 @@ public class EsAnswerServiceImpl implements EsAnswerService {
     public Iterable<EsAnswer> search(String search) {
         //根据一个值查询多个字段  并高亮显示  这里的查询是取并集，即多个字段只需要有一个字段满足即可
         //需要查询的字段
-        BoolQueryBuilder boolQueryBuilder= QueryBuilders.boolQuery()
-                .should(QueryBuilders.matchQuery("title",search))
-                .should(QueryBuilders.matchQuery("content",search));
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .should(QueryBuilders.matchQuery("title", search))
+                .should(QueryBuilders.matchQuery("content", search));
         //构建高亮查询
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(boolQueryBuilder)
                 .withHighlightFields(
                         new HighlightBuilder.Field("title")
-                        ,new HighlightBuilder.Field("content"))
+                        , new HighlightBuilder.Field("content"))
                 .withHighlightBuilder(new HighlightBuilder().preTags("<span style='color:red'>").postTags("</span>"))
                 .build();
         //查询
@@ -55,12 +55,12 @@ public class EsAnswerServiceImpl implements EsAnswerService {
         //设置一个最后需要返回的实体类集合
         List<EsAnswer> esAnswerList = new ArrayList<>();
         //遍历返回的内容进行处理
-        for(SearchHit<EsAnswer> searchHit:searchHits){
+        for (SearchHit<EsAnswer> searchHit : searchHits) {
             //高亮的内容
             Map<String, List<String>> highlightFields = searchHit.getHighlightFields();
             //将高亮的内容填充到content中
-            searchHit.getContent().setTitle(highlightFields.get("title")==null ? searchHit.getContent().getTitle():highlightFields.get("title").get(0));
-            searchHit.getContent().setContent(highlightFields.get("content")==null ? searchHit.getContent().getContent():highlightFields.get("content").get(0));
+            searchHit.getContent().setTitle(highlightFields.get("title") == null ? searchHit.getContent().getTitle() : highlightFields.get("title").get(0));
+            searchHit.getContent().setContent(highlightFields.get("content") == null ? searchHit.getContent().getContent() : highlightFields.get("content").get(0));
             //放到实体类中
             esAnswerList.add(searchHit.getContent());
         }

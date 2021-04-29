@@ -1,8 +1,6 @@
-package org.wenhu.common.pojo.DO;
+package org.wenhu.common.pojo.DTO;
 
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,16 +9,14 @@ import java.time.LocalDateTime;
 /**
  * @author NIRLIN
  * @version 1.0
- * @date 2021/04/04
- * @Accessors(chain = true) 开启链式
+ * @date 2021/3/15
  */
 @Data
 @Accessors(chain = true)
-@TableName("answer_article")
-public class AnswerArticleDO {
+public class AnswerDTO {
 
     /**
-     * 回答id
+     * 赞同id
      */
     private String id;
 
@@ -30,14 +26,29 @@ public class AnswerArticleDO {
     private String questionId;
 
     /**
-     * 赞同或反对，1为回答，0为文章
+     * 问题标题
      */
-    private Integer answerArticle;
+    private String title;
 
     /**
      * 用户id
      */
     private String userId;
+
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 个人简介
+     */
+    private String resume;
+
+    /**
+     * 个人头像
+     */
+    private String headImage;
 
     /**
      * 内容
@@ -67,7 +78,6 @@ public class AnswerArticleDO {
     /**
      * 是否删除
      */
-    @TableLogic
     private Integer isDeleted;
 
 }

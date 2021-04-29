@@ -19,10 +19,10 @@ public class FilterSensitivity {
     @Autowired
     private SensitivityDao sensitivityDao;
 
-    public String filterSensitiveWord(String checkContent){
+    public String filterSensitiveWord(String checkContent) {
         List<SensitivityDO> sensitivityList = sensitivityDao.selectList(new QueryWrapper<>());
         for (SensitivityDO sensitivityDO : sensitivityList) {
-            checkContent=checkContent.replaceAll(sensitivityDO.getValue(),sensitivityDO.getSubstitute());
+            checkContent = checkContent.replaceAll(sensitivityDO.getValue(), sensitivityDO.getSubstitute());
         }
         return checkContent;
     }

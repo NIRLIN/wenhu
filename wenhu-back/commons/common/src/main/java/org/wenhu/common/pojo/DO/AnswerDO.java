@@ -16,48 +16,38 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-@TableName("report_answer")
-public class ReportAnswerArticleDO {
-
-    /**
-     * 举报id
-     */
-    private String id;
-
-    /**
-     * 举报者id
-     */
-    private String reporterId;
+@TableName("answer")
+public class AnswerDO {
 
     /**
      * 回答id
      */
-    private String answerArticleId;
+    private String id;
 
     /**
-     * 举报理由
+     * 问题id
      */
-    private String reportReason;
+    private String questionId;
 
     /**
-     * 举报详情
+     * 用户id
      */
-    private String reportDetails;
+    private String userId;
 
     /**
-     * 是否处理
+     * 内容
      */
-    private Integer isDispose;
+    private String content;
 
     /**
-     * 处理者id
+     * 赞同数
      */
-    private String disposerId;
+    private Integer approvalNumber;
 
     /**
-     * 处理结果
+     * 反对数
      */
-    private String disposeResult;
+    private Integer opposeNumber;
 
     /**
      * 创建时间

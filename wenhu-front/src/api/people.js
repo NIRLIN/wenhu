@@ -32,13 +32,6 @@ export function listAnswerByUserId(data) {
   })
 }
 
-export function listArticleByUserId(data) {
-  return request({
-    url: '/people/user/listArticleByUserId',
-    method: 'post',
-    data
-  })
-}
 export function listQuestionByUserId(data) {
   return request({
     url: '/people/user/listQuestionByUserId',

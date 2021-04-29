@@ -4,10 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.wenhu.common.pojo.DO.HomepageDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
-import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
-import org.wenhu.common.pojo.DTO.HomepageDTO;
+import org.wenhu.common.pojo.DTO.AnswerDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.util.Result;
 import org.wenhu.common.util.ResultCode;
@@ -101,7 +101,7 @@ public class UserController {
     }
 
     @PostMapping(name = "getHomepageByUserId", value = "getHomepageByUserId")
-    Result<HomepageDTO> getHomepageByUserId(@RequestBody Map<String, Object> objectMap) {
+    Result<HomepageDO> getHomepageByUserId(@RequestBody Map<String, Object> objectMap) {
         String id = (String) objectMap.get("id");
         UserDTO userDTO = new UserDTO();
         userDTO.setId(id);
@@ -110,7 +110,7 @@ public class UserController {
 
 
     @PostMapping(name = "listAnswerByUserId", value = "listAnswerByUserId")
-    public Result<List<AnswerArticleDTO>> listAnswerByUserId(@RequestBody Map<String, Object> objectMap) {
+    public Result<List<AnswerDTO>> listAnswerByUserId(@RequestBody Map<String, Object> objectMap) {
         //用户id
         String userId = (String) objectMap.get("id");
         //获取方式
@@ -118,15 +118,6 @@ public class UserController {
         return userService.listAnswerByUserId(userId, type);
     }
 
-
-    @PostMapping(name = "listArticleByUserId", value = "listArticleByUserId")
-    public Result<List<AnswerArticleDTO>> listArticleByUserId(@RequestBody Map<String, Object> objectMap) {
-        //用户id
-        String userId = (String) objectMap.get("id");
-        //获取方式
-        String type = (String) objectMap.get("type");
-        return userService.listArticleByUserId(userId, type);
-    }
 
     @PostMapping(name = "listQuestionByUserId", value = "listQuestionByUserId")
     public Result<List<QuestionDO>> listQuestionByUserId(@RequestBody Map<String, Object> objectMap) {
@@ -187,8 +178,8 @@ public class UserController {
     }
 
     @PostMapping(name = "saveChangeHomepage", value = "saveChangeHomepage")
-    public Result<HomepageDTO> saveChangeHomepage(@RequestBody HomepageDTO homepageDTO) {
-        return userService.saveChangeHomepage(homepageDTO);
+    public Result<HomepageDO> saveChangeHomepage(@RequestBody HomepageDO homepageDO) {
+        return userService.saveChangeHomepage(homepageDO);
     }
 
     @PostMapping(name = "getResumeByUserId", value = "getResumeByUserId")

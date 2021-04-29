@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class PageController {
+
     @RequestMapping({"login", "login.html"})
     public String login(Model model) {
         return "view/login";
@@ -52,10 +53,6 @@ public class PageController {
         return "view/listAnswer";
     }
 
-    @GetMapping("listArticle.html")
-    public String listArticle() {
-        return "view/listArticle";
-    }
 
     @GetMapping("listSensitivity.html")
     public String listSensitivity() {

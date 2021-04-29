@@ -25,9 +25,9 @@ public class ReviewDO {
     private String id;
 
     /**
-     * 文章或回答，1为回答，0为文章
+     * 回答id
      */
-    private String answerArticleId;
+    private String answerId;
 
     /**
      * 评论者id

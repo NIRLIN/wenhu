@@ -6,11 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.wenhu.common.pojo.DO.AnswerArticleDO;
+import org.wenhu.common.pojo.DO.AnswerDO;
 import org.wenhu.common.pojo.DO.HotDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.util.SnowflakeUtils;
-import org.wenhu.database.dao.AnswerArticleDao;
+import org.wenhu.database.dao.AnswerDao;
 import org.wenhu.database.dao.HotDao;
 import org.wenhu.database.dao.QuestionDao;
 import org.wenhu.hot.service.HotService;
@@ -39,7 +39,7 @@ public class HotServiceImpl implements HotService {
 
 
     @Autowired
-    private AnswerArticleDao answerArticleDao;
+    private AnswerDao answerDao;
 
 
     @Override
@@ -64,13 +64,13 @@ public class HotServiceImpl implements HotService {
 
     @Override
     public void countQuestionHeat() {
-        QueryWrapper<QuestionDO> questionDOQueryWrapper = new QueryWrapper<>();
-        List<QuestionDO> questionDOList = questionDao.selectList(questionDOQueryWrapper);
-        QueryWrapper<HotDO> hotDOQueryWrapper = new QueryWrapper<>();
-        int delete = hotDao.delete(hotDOQueryWrapper);
+        QueryWrapper<QuestionDO> questionQueryWrapper = new QueryWrapper<>();
+        List<QuestionDO> questionDOList = questionDao.selectList(questionQueryWrapper);
+        QueryWrapper<HotDO> hotQueryWrapper = new QueryWrapper<>();
+        int delete = hotDao.delete(hotQueryWrapper);
         for (QuestionDO questionDO : questionDOList) {
-            QueryWrapper<AnswerArticleDO> answerArticleDOQueryWrapper = new QueryWrapper<>();
-            Integer hotCount = answerArticleDao.selectCount(answerArticleDOQueryWrapper);
+            QueryWrapper<AnswerDO> answerQueryWrapper = new QueryWrapper<>();
+            Integer hotCount = answerDao.selectCount(answerQueryWrapper);
             HotDO hotDO = new HotDO()
                     .setId(String.valueOf(SnowflakeUtils.genId()))
                     .setQuestionId(questionDO.getId())

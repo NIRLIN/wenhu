@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.wenhu.common.pojo.DO.QuestionDO;
-import org.wenhu.common.pojo.DTO.QuestionDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.util.Result;
 import org.wenhu.creation.question.service.impl.QuestionServiceImpl;
@@ -32,16 +31,16 @@ public class QuestionController {
         String title = (String) objectMap.get("title");
         String description = (String) objectMap.get("description");
         String menderId = (String) objectMap.get("mender_id");
-        QuestionDTO questionDTO = new QuestionDTO();
-        questionDTO.setTitle(title);
-        questionDTO.setDescription(description);
-        Result<String> stringResult = questionService.saveQuestion(questionDTO, menderId);
+        QuestionDO questionDO = new QuestionDO();
+        questionDO.setTitle(title);
+        questionDO.setDescription(description);
+        Result<String> stringResult = questionService.saveQuestion(questionDO, menderId);
         System.out.println(stringResult);
         return stringResult;
     }
 
     @PostMapping(name = "getQuestionById", value = "getQuestionById")
-    public Result<QuestionDTO> getQuestionById(@RequestBody Map<String, Object> objectMap) {
+    public Result<QuestionDO> getQuestionById(@RequestBody Map<String, Object> objectMap) {
         String id = (String) objectMap.get("id");
         return questionService.getQuestionById(id);
     }

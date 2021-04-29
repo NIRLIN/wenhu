@@ -32,7 +32,7 @@ public class BrowsingDO {
     /**
      * 浏览id
      */
-    private String answerArticleId;
+    private String answerId;
 
     /**
      * 创建时间

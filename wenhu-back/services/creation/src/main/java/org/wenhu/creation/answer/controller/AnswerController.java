@@ -2,7 +2,7 @@ package org.wenhu.creation.answer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
+import org.wenhu.common.pojo.DTO.AnswerDTO;
 import org.wenhu.common.util.Result;
 import org.wenhu.creation.answer.service.impl.AnswerServiceImpl;
 
@@ -30,14 +30,14 @@ public class AnswerController {
 
 
     @PostMapping(name = "listAnswerByHeat", value = "listAnswerByHeat")
-    Result<List<AnswerArticleDTO>> listAnswerByHeat(@RequestBody Map<String, Object> objectMap) {
+    Result<List<AnswerDTO>> listAnswerByHeat(@RequestBody Map<String, Object> objectMap) {
         String questionId = (String) objectMap.get("questionId");
         Integer page = (Integer) objectMap.get("page");
         return answerService.listAnswerByHeat(questionId, String.valueOf(page));
     }
 
     @PostMapping(name = "listAnswerByTime", value = "listAnswerByTime")
-    Result<List<AnswerArticleDTO>> listAnswerByTime(@RequestBody Map<String, Object> objectMap) {
+    Result<List<AnswerDTO>> listAnswerByTime(@RequestBody Map<String, Object> objectMap) {
         String questionId = (String) objectMap.get("questionId");
         Integer page = (Integer) objectMap.get("page");
         return answerService.listAnswerByTime(questionId, String.valueOf(page));
@@ -60,7 +60,7 @@ public class AnswerController {
 
 
     @PostMapping(name = "listAnswerByUserId", value = "listAnswerByUserId")
-    Result<List<AnswerArticleDTO>> listAnswerByUserId(@RequestParam String userId, @RequestParam String type) {
+    Result<List<AnswerDTO>> listAnswerByUserId(@RequestParam String userId, @RequestParam String type) {
         return answerService.listAnswerByUserId(userId, type);
     }
 

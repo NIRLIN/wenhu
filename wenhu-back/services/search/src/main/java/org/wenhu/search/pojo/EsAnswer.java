@@ -37,12 +37,6 @@ public class EsAnswer {
     private String title;
 
     /**
-     * 回答OR文章id,1为回答，0为文章
-     */
-    private Integer answerArticle;
-
-
-    /**
      * 用户id
      */
     private String userId;

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.QuestionLogDO;
-import org.wenhu.common.pojo.DTO.QuestionDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.util.Result;
 import org.wenhu.common.util.ResultCode;
@@ -35,23 +34,19 @@ public class QuestionServiceImpl implements QuestionService {
     private FilterSensitivity filterSensitivity;
 
     @Override
-    public Result<String> saveQuestion(QuestionDTO questionDTO, String menderId) {
+    public Result<String> saveQuestion(QuestionDO questionDO, String menderId) {
         String code;
         String message;
         String data = null;
         //插入问题
-        QuestionDO questionDO = new QuestionDO();
         questionDO.setId(String.valueOf(SnowflakeUtils.genId()));
         questionDO.setUserId(menderId);
-        questionDO.setTitle(filterSensitivity.filterSensitiveWord(questionDTO.getTitle()));
-        questionDO.setDescription(filterSensitivity.filterSensitiveWord(questionDTO.getDescription()));
+        questionDO.setTitle(filterSensitivity.filterSensitiveWord(questionDO.getTitle()));
+        questionDO.setDescription(filterSensitivity.filterSensitiveWord(questionDO.getDescription()));
         questionDO.setFollowNumber(0);
-        questionDO.setBrowseNumber(0);
         questionDO.setCreateTime(LocalDateTime.now());
         questionDO.setUpdateTime(LocalDateTime.now());
         questionDO.setIsDeleted(0);
-        System.out.println("questionDTO" + questionDTO);
-        System.out.println("questionDO" + questionDO);
         int insertQuestionDO = questionDao.insert(questionDO);
         //插入问题日志
         QuestionLogDO questionLogDO = new QuestionLogDO();
@@ -77,22 +72,15 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Result<QuestionDTO> getQuestionById(String id) {
+    public Result<QuestionDO> getQuestionById(String id) {
         String code;
         String message;
-        QuestionDTO data = null;
+        QuestionDO data = null;
         QuestionDO questionDO = questionDao.selectById(id);
         if (questionDO != null) {
-            QuestionDTO questionDTO = new QuestionDTO();
-            questionDTO.setId(questionDO.getId());
-            questionDTO.setUserId(questionDO.getUserId());
-            questionDTO.setTitle(questionDO.getTitle());
-            questionDTO.setDescription(questionDO.getDescription());
-            questionDTO.setBrowseNumber(questionDO.getBrowseNumber());
-            questionDTO.setFollowNumber(questionDO.getFollowNumber());
             code = ResultCode.SUCCESS.getCode();
             message = ResultCode.SUCCESS.getMessage();
-            data = questionDTO;
+            data = questionDO;
         } else {
             code = ResultCode.NO_FOUND_DATA.getCode();
             message = ResultCode.NO_FOUND_DATA.getMessage();

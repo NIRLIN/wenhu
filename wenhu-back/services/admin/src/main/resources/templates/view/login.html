@@ -21,10 +21,10 @@
 <body>
 <div id="app">
     <el-row style="margin-top: 150px;">
-        <el-col :span="6" :offset="9">
+        <el-col :offset="9" :span="6">
             <div class="grid-content">
-                <el-form status-icon id="loginForm" action="user/userLogin" method="post" label-width="100px"
-                         class="demo-ruleForm">
+                <el-form action="user/userLogin" class="demo-ruleForm" id="loginForm" label-width="100px" method="post"
+                         status-icon>
                     <el-row>
                         <el-col :span="24">
                             <div class="grid-content" style="font-size: 25px;text-align: center;">
@@ -37,27 +37,27 @@
                     <el-row>
                         <el-col :span="24">
                             <div class="grid-content">
-                                <el-input v-model="phoneNumber" name="phoneNumber" placeholder="手机号"
-                                          prefix-icon="el-icon-user"></el-input>
+                                <el-input name="phoneNumber" placeholder="手机号" prefix-icon="el-icon-user"
+                                          v-model="phoneNumber"></el-input>
                             </div>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="24">
                             <div class="grid-content">
-                                <el-input placeholder="密码" v-model="password" name="password" show-password
-                                          prefix-icon="el-icon-lock"></el-input>
+                                <el-input name="password" placeholder="密码" prefix-icon="el-icon-lock" show-password
+                                          v-model="password"></el-input>
                             </div>
                         </el-col>
                     </el-row>
                     <div style="text-align: center;margin-top: 10px;">
-                        <span th:text="${loginInfo}" style="color: red;"></span>
-                        <span th:text="${changePasswordInfo}" style="color: red;"></span>
+                        <span style="color: red;" th:text="${loginInfo}"></span>
+                        <span style="color: red;" th:text="${changePasswordInfo}"></span>
                     </div>
                     <el-row>
                         <el-col :span="24">
                             <div class="grid-content">
-                                <el-button style="width: 100%;" @click="submitLoginMethod" type="primary">登录
+                                <el-button @click="submitLoginMethod" style="width: 100%;" type="primary">登录
                                 </el-button>
                             </div>
                         </el-col>

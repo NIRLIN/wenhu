@@ -1,15 +1,13 @@
 package org.wenhu.people.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.wenhu.common.pojo.DO.HomepageDO;
 import org.wenhu.common.pojo.DO.QuestionDO;
 import org.wenhu.common.pojo.DO.UserDO;
-import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
-import org.wenhu.common.pojo.DTO.HomepageDTO;
+import org.wenhu.common.pojo.DTO.AnswerDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.util.*;
 import org.wenhu.database.dao.HomepageDao;
@@ -120,14 +118,14 @@ public class UserServiceImpl implements UserService {
                     .eq("password", userDTO.getPassword());
             UserDO userDO = userDao.selectOne(queryWrapper);
             if (userDO != null) {
-                if (LocalDateTime.now().compareTo(userDO.getDeadlineDate()) > 0){
+                if (LocalDateTime.now().compareTo(userDO.getDeadlineDate()) > 0) {
                     code = ResultCode.SUCCESS.getCode();
                     message = ResultCode.SUCCESS.getMessage();
                     //构造id数据进行返回
                     data = "{\"id\":\"" + userDO.getId() + "\"}";
-                }else {
+                } else {
                     code = ResultCode.USER_ERROR_A0202.getCode();
-                    message = ResultCode.USER_ERROR_A0202.getMessage()+"截止"+userDO.getDeadlineDate();
+                    message = ResultCode.USER_ERROR_A0202.getMessage() + "截止" + userDO.getDeadlineDate();
                 }
 
                 //避免数据错误
@@ -220,10 +218,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result<HomepageDTO> getHomepageByUserId(UserDTO userDTO) {
+    public Result<HomepageDO> getHomepageByUserId(UserDTO userDTO) {
         String code;
         String message;
-        HomepageDTO data = null;
+        HomepageDO data = null;
         //数据不存在时默认homepage全部展示
         if (userDTO.getId() == null || "".equals(userDTO.getId())) {
             code = ResultCode.SUCCESS.getCode();
@@ -233,14 +231,12 @@ public class UserServiceImpl implements UserService {
             if (homepageDO != null) {
                 code = ResultCode.SUCCESS.getCode();
                 message = ResultCode.SUCCESS.getMessage();
-                HomepageDTO homepageDTO = new HomepageDTO();
-                homepageDTO.setId(homepageDO.getId());
-                homepageDTO.setAnswer(homepageDO.getAnswer());
-                homepageDTO.setQuestion(homepageDO.getQuestion());
-                homepageDTO.setArticle(homepageDO.getArticle());
-                homepageDTO.setCollect(homepageDO.getCollect());
-                homepageDTO.setFollow(homepageDO.getFollow());
-                data = homepageDTO;
+                homepageDO.setId(homepageDO.getId());
+                homepageDO.setAnswer(homepageDO.getAnswer());
+                homepageDO.setQuestion(homepageDO.getQuestion());
+                homepageDO.setCollect(homepageDO.getCollect());
+                homepageDO.setFollow(homepageDO.getFollow());
+                data = homepageDO;
             } else {
                 //数据不存在时默认homepage全部展示
                 code = ResultCode.SUCCESS.getCode();
@@ -253,15 +249,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Result<List<AnswerArticleDTO>> listAnswerByUserId(String userId, String type) {
+    public Result<List<AnswerDTO>> listAnswerByUserId(String userId, String type) {
         return creationFeignClient.listAnswerByUserId(userId, type);
     }
 
-
-    @Override
-    public Result<List<AnswerArticleDTO>> listArticleByUserId(String userId, String type) {
-        return creationFeignClient.listArticleByUserId(userId, type);
-    }
 
     @Override
     public Result<List<QuestionDO>> listQuestionByUserId(String userId) {
@@ -327,12 +318,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result<HomepageDTO> saveChangeHomepage(HomepageDTO homepageDTO) {
+    public Result<HomepageDO> saveChangeHomepage(HomepageDO homepageDO) {
         QueryWrapper<HomepageDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(homepageDTO.getId() != null, "id", homepageDTO.getId());
+        queryWrapper.eq(homepageDO.getId() != null, "id", homepageDO.getId());
         HomepageDO homepageDoDao = homepageDao.selectOne(queryWrapper);
-        HomepageDO homepageDO = new HomepageDO();
-        BeanUtils.copyProperties(homepageDTO, homepageDO);
         homepageDO.setUpdateTime(LocalDateTime.now());
         if (homepageDoDao == null) {
             homepageDO.setCreateTime(LocalDateTime.now());
@@ -341,8 +330,7 @@ public class UserServiceImpl implements UserService {
         if (homepageDoDao != null) {
             homepageDao.updateById(homepageDO);
         }
-        BeanUtils.copyProperties(homepageDao.selectOne(queryWrapper), homepageDTO);
-        return Result.succeed(homepageDTO);
+        return Result.succeed(homepageDO);
     }
 
 

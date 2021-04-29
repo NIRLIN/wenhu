@@ -7,7 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.common.pojo.DO.*;
-import org.wenhu.common.pojo.DTO.AnswerArticleDTO;
+import org.wenhu.common.pojo.DTO.AnswerDTO;
 import org.wenhu.common.util.Result;
 import org.wenhu.common.util.ResultCode;
 import org.wenhu.common.util.SnowflakeUtils;
@@ -29,7 +29,7 @@ import java.util.List;
 public class AnswerServiceImpl implements AnswerService {
 
     @Autowired
-    private AnswerArticleDao answerArticleDao;
+    private AnswerDao answerDao;
     @Autowired
     private QuestionDao questionDao;
     @Autowired
@@ -43,12 +43,11 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Result<Integer> countAnswerByQuestionId(String questionId) {
-        QueryWrapper<AnswerArticleDO> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .select("id")
-                .eq("answer_article", 1)
                 .eq(questionId != null, "question_id", questionId);
-        Integer integer = answerArticleDao.selectCount(queryWrapper);
+        Integer integer = answerDao.selectCount(queryWrapper);
         return Result.succeed(integer);
     }
 
@@ -58,7 +57,7 @@ public class AnswerServiceImpl implements AnswerService {
         String code;
         String message;
         String data = null;
-        AnswerArticleDO answerDO = new AnswerArticleDO();
+        AnswerDO answerDO = new AnswerDO();
         answerDO.setId(String.valueOf(SnowflakeUtils.genId()));
         answerDO.setQuestionId(questionId);
         answerDO.setUserId(userId);
@@ -68,7 +67,7 @@ public class AnswerServiceImpl implements AnswerService {
         answerDO.setCreateTime(LocalDateTime.now());
         answerDO.setUpdateTime(LocalDateTime.now());
         answerDO.setIsDeleted(0);
-        int insert = answerArticleDao.insert(answerDO);
+        int insert = answerDao.insert(answerDO);
         if (insert == 1) {
             code = ResultCode.SUCCESS.getCode();
             message = ResultCode.SUCCESS.getMessage();
@@ -84,25 +83,22 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Result<List<AnswerArticleDTO>> listAnswerByHeat(String questionId, String page) {
-        QueryWrapper<AnswerArticleDO> queryWrapper = new QueryWrapper<>();
+    public Result<List<AnswerDTO>> listAnswerByHeat(String questionId, String page) {
+        QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
         //查询对应问题id的回答、根据赞同数排序--降序
         queryWrapper
                 .eq(questionId != null, "question_id", questionId)
-                .eq("answer_article", 1)
-
                 .orderByDesc("approval_number");
         //不传入userId
         return listAnswer(page, queryWrapper);
     }
 
     @Override
-    public Result<List<AnswerArticleDTO>> listAnswerByTime(String questionId, String page) {
-        QueryWrapper<AnswerArticleDO> queryWrapper = new QueryWrapper<>();
+    public Result<List<AnswerDTO>> listAnswerByTime(String questionId, String page) {
+        QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
         //查询对应问题id的回答、根据时间排序--降序
         queryWrapper
                 .eq("question_id", questionId)
-                .eq("answer_article", 1)
                 .orderByDesc("update_time");
         //不传入userId
         return listAnswer(page, queryWrapper);
@@ -110,24 +106,23 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Result<List<AnswerArticleDTO>> listAnswer(String page, QueryWrapper<AnswerArticleDO> queryWrapper) {
+    public Result<List<AnswerDTO>> listAnswer(String page, QueryWrapper<AnswerDO> queryWrapper) {
         String code;
         String message;
-        Page<AnswerArticleDO> doPage = new Page<>(Integer.parseInt(page), 10);
-        Page<AnswerArticleDO> selectPage = answerArticleDao.selectPage(doPage, queryWrapper);
+        Page<AnswerDO> doPage = new Page<>(Integer.parseInt(page), 10);
+        Page<AnswerDO> selectPage = answerDao.selectPage(doPage, queryWrapper);
         if (selectPage == null) {
             //没有查询到回答时返回
             code = ResultCode.NO_FOUND_DATA.getCode();
             message = ResultCode.NO_FOUND_DATA.getMessage();
             return Result.succeed(code, message);
         }
-        List<AnswerArticleDTO> answerVOList = new ArrayList<>();
+        List<AnswerDTO> answerVOList = new ArrayList<>();
 
         //数据遍历
-        for (AnswerArticleDO answerDO : selectPage.getRecords()) {
-            AnswerArticleDTO answerVO = new AnswerArticleDTO();
+        for (AnswerDO answerDO : selectPage.getRecords()) {
+            AnswerDTO answerVO = new AnswerDTO();
             answerVO.setId(answerDO.getId());
-            answerVO.setAnswerArticle(answerDO.getAnswerArticle());
             answerVO.setQuestionId(answerDO.getQuestionId());
             answerVO.setUserId(answerDO.getUserId());
             answerVO.setContent(answerDO.getContent());
@@ -147,25 +142,25 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Result<List<AnswerArticleDTO>> listAnswerByUserId(String userId, String type) {
+    public Result<List<AnswerDTO>> listAnswerByUserId(String userId, String type) {
         //查询最近发布回答
         String queryByTime = "time";
         //查询热度最高回答
         String queryByHeat = "heat";
-        List<AnswerArticleDTO> articleDTOList = null;
+        List<AnswerDTO> answerDTOList = null;
         if (type == null) {
             //查询对应用户id的回答、根据时间排序--降序
-            articleDTOList = answerArticleDao.listAnswerByTime(userId);
+            answerDTOList = answerDao.listAnswerByTime(userId);
         }
         if (queryByTime.equals(type)) {
             //查询对应用户id的回答、根据时间排序--降序
-            articleDTOList = answerArticleDao.listAnswerByTime(userId);
+            answerDTOList = answerDao.listAnswerByTime(userId);
         }
         if (queryByHeat.equals(type)) {
             //查询对应用户id的回答、根据赞同排序--降序
-            articleDTOList = answerArticleDao.listAnswerByApproval(userId);
+            answerDTOList = answerDao.listAnswerByApproval(userId);
         }
-        return Result.succeed(articleDTOList);
+        return Result.succeed(answerDTOList);
     }
 
     @Override
@@ -177,15 +172,14 @@ public class AnswerServiceImpl implements AnswerService {
                 .eq("user_id", userId)
                 .eq("agree_oppose", 1)
                 .eq("is_deleted", 0)
-                .eq("answer_article_id", answerId);
+                .eq("answer_id", answerId);
         AgreeOpposeDO agreeOpposeDO = agreeOpposeDao.selectOne(queryWrapper);
 
         QueryWrapper<CollectDO> collectQueryWrapper = new QueryWrapper<>();
         collectQueryWrapper
                 .eq("user_id", userId)
-                .eq("answer_article", 1)
                 .eq("is_deleted", 0)
-                .eq("answer_article_id", answerId);
+                .eq("answer_id", answerId);
         CollectDO collectDO = collectDao.selectOne(collectQueryWrapper);
 
         //返回查询结果
@@ -212,13 +206,12 @@ public class AnswerServiceImpl implements AnswerService {
         queryWrapper
                 .eq("user_id", userId)
                 .eq("agree_oppose", 1)
-                .eq("answer_article_id", answerId);
+                .eq("answer_id", answerId);
         AgreeOpposeDO agreeOpposeDO = agreeOpposeDao.selectOne(queryWrapper);
-        QueryWrapper<AnswerArticleDO> doQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<AnswerDO> doQueryWrapper = new QueryWrapper<>();
         doQueryWrapper
-                .eq("id", answerId)
-                .eq("answer_article", 1);
-        AnswerArticleDO answerArticleDO = answerArticleDao.selectOne(doQueryWrapper);
+                .eq("id", answerId);
+        AnswerDO answerDO = answerDao.selectOne(doQueryWrapper);
 
         //存在相应数据情况下进行修改
         if (agreeOpposeDO != null) {
@@ -228,20 +221,19 @@ public class AnswerServiceImpl implements AnswerService {
                 agreeOpposeDO.setIsDeleted(1);
 
                 //修改赞同数，减少
-                answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() - 1);
+                answerDO.setApprovalNumber(answerDO.getApprovalNumber() - 1);
             } else {
                 agreeOpposeDO.setIsDeleted(0);
 
                 //修改赞同数，增加
 
-                answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() + 1);
+                answerDO.setApprovalNumber(answerDO.getApprovalNumber() + 1);
             }
             agreeOpposeDO.setUpdateTime(LocalDateTime.now());
             agreeOpposeDao.updateById(agreeOpposeDO);
         } else {
             agreeOpposeDO = new AgreeOpposeDO()
                     .setId(String.valueOf(SnowflakeUtils.genId()))
-                    .setAnswerArticleId(answerId)
                     .setUserId(userId)
                     .setAgreeOppose(1)
                     .setUpdateTime(LocalDateTime.now())
@@ -249,9 +241,9 @@ public class AnswerServiceImpl implements AnswerService {
                     .setIsDeleted(0);
             agreeOpposeDao.insert(agreeOpposeDO);
             //新插入赞同时，同时修改赞同数
-            answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() + 1);
+            answerDO.setApprovalNumber(answerDO.getApprovalNumber() + 1);
         }
-        answerArticleDao.updateById(answerArticleDO);
+        answerDao.updateById(answerDO);
         HashMap<String, Object> hashMap = new HashMap<>(3);
         //为0，代表赞同，为1，代表无赞同数据
         if (agreeOpposeDO.getIsDeleted() == 0) {
@@ -259,7 +251,7 @@ public class AnswerServiceImpl implements AnswerService {
         } else if (agreeOpposeDO.getIsDeleted() == 1) {
             hashMap.put("agreeBool", false);
         }
-        hashMap.put("approval_number", answerArticleDO.getApprovalNumber());
+        hashMap.put("approval_number", answerDO.getApprovalNumber());
         return Result.succeed(hashMap);
     }
 
@@ -269,50 +261,48 @@ public class AnswerServiceImpl implements AnswerService {
         queryWrapper
                 .eq("user_id", userId)
                 .eq("agree_oppose", 1)
-                .eq("answer_article_id", answerId);
+                .eq("answer_id", answerId);
         AgreeOpposeDO agreeOpposeDO = agreeOpposeDao.selectOne(queryWrapper);
         HashMap<String, Object> hashMap = new HashMap<>(3);
-        QueryWrapper<AnswerArticleDO> doQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<AnswerDO> doQueryWrapper = new QueryWrapper<>();
         doQueryWrapper
-                .eq("id", answerId)
-                .eq("answer_article", 1);
-        AnswerArticleDO answerArticleDO = answerArticleDao.selectOne(doQueryWrapper);
+                .eq("id", answerId);
+        AnswerDO answerDO = answerDao.selectOne(doQueryWrapper);
         if (agreeOpposeDO != null && agreeOpposeDO.getIsDeleted() == 0) {
             agreeOpposeDO.setIsDeleted(1);
             agreeOpposeDO.setUpdateTime(LocalDateTime.now());
             agreeOpposeDao.updateById(agreeOpposeDO);
 
-            answerArticleDO.setApprovalNumber(answerArticleDO.getApprovalNumber() - 1);
-            answerArticleDao.updateById(answerArticleDO);
+            answerDO.setApprovalNumber(answerDO.getApprovalNumber() - 1);
+            answerDao.updateById(answerDO);
         }
-        hashMap.put("approval_number", answerArticleDO.getApprovalNumber());
+        hashMap.put("approval_number", answerDO.getApprovalNumber());
         hashMap.put("agreeBool", false);
         return Result.succeed(hashMap);
     }
 
     @Override
     public Result<HashMap<String, Object>> getAnswerByAnswerId(String answerId) {
-        QueryWrapper<AnswerArticleDO> articleDoQueryWrapper = new QueryWrapper<>();
-        articleDoQueryWrapper
-                .eq("id", answerId)
-                .eq("answer_article", 1);
-        AnswerArticleDO answerArticleDO = answerArticleDao.selectOne(articleDoQueryWrapper);
+        QueryWrapper<AnswerDO> answerDOQueryWrapper = new QueryWrapper<>();
+        answerDOQueryWrapper
+                .eq("id", answerId);
+        AnswerDO answerDO = answerDao.selectOne(answerDOQueryWrapper);
         QueryWrapper<QuestionDO> questionDoQueryWrapper = new QueryWrapper<>();
         questionDoQueryWrapper
-                .eq("id", answerArticleDO.getQuestionId());
+                .eq("id", answerDO.getQuestionId());
         QuestionDO questionDO = questionDao.selectOne(questionDoQueryWrapper);
 
         QueryWrapper<UserDO> userDoQueryWrapper = new QueryWrapper<>();
         userDoQueryWrapper
-                .eq("id", answerArticleDO.getUserId());
+                .eq("id", answerDO.getUserId());
         UserDO userDO = userDao.selectOne(userDoQueryWrapper);
-        AnswerArticleDTO answerArticleDTO = new AnswerArticleDTO();
-        BeanUtils.copyProperties(answerArticleDO, answerArticleDTO);
-        answerArticleDTO.setUsername(userDO.getUsername());
-        answerArticleDTO.setHeadImage(userDO.getHeadImage());
-        answerArticleDTO.setResume(userDO.getResume());
+        AnswerDTO answerDTO = new AnswerDTO();
+        BeanUtils.copyProperties(answerDO, answerDTO);
+        answerDTO.setUsername(userDO.getUsername());
+        answerDTO.setHeadImage(userDO.getHeadImage());
+        answerDTO.setResume(userDO.getResume());
         HashMap<String, Object> hashMap = new HashMap<>(2);
-        hashMap.put("answer", answerArticleDTO);
+        hashMap.put("answer", answerDTO);
         hashMap.put("question", questionDO);
         return Result.succeed(hashMap);
     }

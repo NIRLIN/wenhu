@@ -24,9 +24,9 @@ public class AgreeOpposeDO {
     private String id;
 
     /**
-     * 回答OR文章id
+     * 回答id
      */
-    private String answerArticleId;
+    private String answerId;
 
     /**
      * 赞同或反对，1为赞同，0为反对

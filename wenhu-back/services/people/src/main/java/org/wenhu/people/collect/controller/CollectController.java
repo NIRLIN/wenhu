@@ -33,11 +33,4 @@ public class CollectController {
         String answerId = (String) objectMap.get("answerId");
         return collectService.userCollectAnswer(userId, answerId);
     }
-
-    @PostMapping(name = "userCollectArticle", value = "userCollectArticle")
-    Result<HashMap<String, Object>> userCollectArticle(@RequestBody Map<String, Object> objectMap) {
-        String userId = (String) objectMap.get("userId");
-        String answerId = (String) objectMap.get("answerId");
-        return collectService.userCollectArticle(userId, answerId);
-    }
 }

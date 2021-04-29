@@ -30,6 +30,11 @@ public class QuestionDO {
     private String userId;
 
     /**
+     * 分类id
+     */
+    private String classifyId;
+
+    /**
      * 问题标题
      */
     private String title;
@@ -43,11 +48,6 @@ public class QuestionDO {
      * 关注数
      */
     private Integer followNumber;
-
-    /**
-     * 浏览数
-     */
-    private Integer browseNumber;
 
     /**
      * 创建时间

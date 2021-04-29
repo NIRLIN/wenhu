@@ -38,7 +38,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Result<Integer> getReviewCount(String id) {
         QueryWrapper<ReviewDO> reviewQueryWrapper = new QueryWrapper<>();
-        reviewQueryWrapper.eq("answer_article_id", id);
+        reviewQueryWrapper.eq("answer_id", id);
         Integer integer = reviewDao.selectCount(reviewQueryWrapper);
 
         return Result.succeed(integer);
@@ -48,7 +48,6 @@ public class ReviewServiceImpl implements ReviewService {
     public Result<List<ReviewDTO>> saveReview(String id, String userId, String reviewContent) {
         ReviewDO reviewDO = new ReviewDO()
                 .setId(String.valueOf(SnowflakeUtils.genId()))
-                .setAnswerArticleId(id)
                 .setReviewerId(userId)
                 .setReviewContent(reviewContent)
                 .setCreateTime(LocalDateTime.now())

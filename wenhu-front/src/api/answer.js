@@ -55,14 +55,6 @@ export function userOpposeAnswer(data) {
   })
 }
 
-export function userCollectArticle(data) {
-  return request({
-    url: '/people/collect/userCollectArticle',
-    method: 'post',
-    data
-  })
-}
-
 export function userCollectAnswer(data) {
   return request({
     url: '/people/collect/userCollectAnswer',
@@ -79,42 +71,6 @@ export function getUserAgreeAndCollectAnswer(data) {
   })
 }
 
-export function userAgreeArticle(data) {
-  return request({
-    url: '/creation/article/userAgreeArticle',
-    method: 'post',
-    data
-  })
-}
-export function userOpposeArticle(data) {
-  return request({
-    url: '/creation/article/userOpposeArticle',
-    method: 'post',
-    data
-  })
-}
-
-export function getUserAgreeArticle(data) {
-  return request({
-    url: '/creation/article/getUserAgreeArticle',
-    method: 'post',
-    data
-  })
-}
-export function getUserCollectArticle(data) {
-  return request({
-    url: '/creation/article/getUserCollectArticle',
-    method: 'post',
-    data
-  })
-}
-export function getArticleByArticleId(data) {
-  return request({
-    url: '/creation/article/getArticleByArticleId',
-    method: 'post',
-    data
-  })
-}
 export function getReviewById(data) {
   return request({
     url: '/creation/review/getReviewById',

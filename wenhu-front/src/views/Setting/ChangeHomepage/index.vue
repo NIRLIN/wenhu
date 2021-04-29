@@ -35,19 +35,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6" :offset="6">
-        <div class="grid-content ">
-          <el-switch
-            v-model="homepage.article"
-            active-text="展示文章"
-            inactive-text="隐藏文章"
-            :active-value="1"
-            :inactive-value="0"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-          />
-        </div>
-      </el-col>
+
       <el-col :span="6" :offset="1">
         <div class="grid-content ">
           <el-switch
@@ -61,8 +49,6 @@
           />
         </div>
       </el-col>
-    </el-row>
-    <el-row>
       <el-col :span="6" :offset="6">
         <div class="grid-content ">
           <el-switch
@@ -77,9 +63,6 @@
 
         </div>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="12" :offset="6"><div class="grid-content " /> </el-col>
     </el-row>
     <el-row>
       <el-col :span="12" :offset="6">
@@ -107,7 +90,6 @@ export default {
     return {
       homepage: {
         answer: 1,
-        article: 1,
         question: 1,
         collect: 1,
         follow: 1
@@ -132,7 +114,6 @@ export default {
         const submitData = {
           'id': getCookie(),
           'answer': this.homepage.answer,
-          'article': this.homepage.article,
           'question': this.homepage.question,
           'collect': this.homepage.collect,
           'follow': this.homepage.follow

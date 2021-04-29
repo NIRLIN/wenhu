@@ -18,12 +18,13 @@ public class CountQuestionHeatCron {
 
     @Autowired
     private HotServiceImpl hotService;
+
     /**
-     *  运行开始计算，每日执行一次，每日6点0 0 6 * * ?
-     *  每分钟一次0 0/1 0/1 * *  ?
+     * 运行开始计算，每日执行一次，每日6点0 0 6 * * ?
+     * 每分钟一次0 0/1 0/1 * *  ?
      */
     @Scheduled(cron = "0 0/1 0/1 * *  ?")
-    private void countQuestionHeat(){
+    private void countQuestionHeat() {
         hotService.countQuestionHeat();
     }
 

@@ -11,8 +11,11 @@ import java.util.List;
  * @date 2021/4/25
  */
 public interface EsAnswerDao extends ElasticsearchRepository<EsAnswer, Long> {
-    List<EsAnswer> findAllByTitleContainsOrContentContains(String title,String content);
+    List<EsAnswer> findAllByTitleContainsOrContentContains(String title, String content);
+
     List<EsAnswer> findAllByTitleContains(String title);
+
     List<EsAnswer> findAllByTitle(String title);
+
     int deleteAllBy();
 }
