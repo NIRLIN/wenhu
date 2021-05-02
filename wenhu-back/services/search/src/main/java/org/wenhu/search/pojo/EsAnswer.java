@@ -1,6 +1,5 @@
 package org.wenhu.search.pojo;
 
-
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.elasticsearch.annotations.DateFormat;

@@ -18,7 +18,7 @@
     <el-container>
         <el-container>
             <el-aside width="240px">
-                <el-menu class="el-menu-vertical-demo" default-active="5-3">
+                <el-menu class="el-menu-vertical-demo" default-active="5-2">
                     <div th:replace="~{common/menuMain :: menuMain}"></div>
                 </el-menu>
             </el-aside>
@@ -27,68 +27,63 @@
                 <div th:html>
                     <el-breadcrumb separator="/">
                         <el-breadcrumb-item><a>功能中心</a></el-breadcrumb-item>
-                        <el-breadcrumb-item>敏感词管理</el-breadcrumb-item>
+                        <el-breadcrumb-item>分类管理</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
-                <div style="margin-top: 20px;">
-                    <el-input class="input-with-select" placeholder="请输入内容" style="width: 95%;float: left;"
+                <el-row style="margin-top: 20px;">
+                    <el-col :span="23">
+                    <el-input class="input-with-select" placeholder="请输入内容" style="float: left;"
                               v-model="searchInput">
                         <el-select placeholder="请选择" slot="prepend" style="width: 90px;" v-model="searchSelect">
                             <el-option label="id" value="1"></el-option>
-                            <el-option label="值" value="2"></el-option>
-                            <el-option label="替换值" value="3"></el-option>
+                            <el-option label="分类名" value="2"></el-option>
                         </el-select>
-                        <el-button @click="listSensitivityBySearch" icon="el-icon-search" slot="append"></el-button>
+                        <el-button @click="listClassifyBySearch" icon="el-icon-search" slot="append"></el-button>
                     </el-input>
-                    <el-button @click="dialogAddValueVisible = true" icon="el-icon-circle-plus" slot="append"
-                               style="margin-left: 1%;" type="primary"></el-button>
+                    </el-col>
+                    <el-col :span="1">
+                    <el-button @click="dialogAddValueVisible = true" icon="el-icon-circle-plus"
+                               style="float: right" type="primary">
+                    </el-button>
+                    </el-col>
                     <el-dialog :visible.sync="dialogAddValueVisible" title="添加数据" width="40%">
-                        <el-input placeholder="值" v-model="addValue"></el-input>
-                        <el-input placeholder="替换值" style="margin-top: 10px;" v-model="addSubstitute"></el-input>
+                        <el-input placeholder="分类名" style="margin-top: 10px;" v-model="addClassifyName"></el-input>
                         <div class="dialog-footer" slot="footer">
                             <el-button @click="dialogAddValueVisible = false">取 消</el-button>
-                            <el-button @click="saveSensitivityMethod" type="primary">确 定</el-button>
+                            <el-button @click="saveClassifyMethod" type="primary">确 定</el-button>
                         </div>
                     </el-dialog>
 
-                </div>
+                </el-row>
                 <div style="margin-top: 10px;">
 
-                    <el-table :data="listSensitivity" border fit highlight-current-row v-loading="">
-                        <el-table-column align="center" label="序号" type="index" width="150">
+                    <el-table :data="listClassify" border fit highlight-current-row v-loading="">
+                        <el-table-column align="center" label="序号" type="index" width="250">
                         </el-table-column>
-                        <el-table-column align="center" label="id" width="300">
+                        <el-table-column align="center" label="id" width="350">
                             <template slot-scope="{row}">
                                 <span>{{ row.id }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" label="值" width="300">
+                        <el-table-column align="center" label="分类名" width="350">
                             <template slot-scope="{$index,row}">
                                 <span v-if="isEditList[$index]">
-                                    <el-input class="edit-input" size="small" v-model="row.value"/>
+                                    <el-input class="edit-input" size="small" v-model="row.classifyName"/>
                                 </span>
-                                <span v-else>{{ row.value }}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="center" label="替换值" width="300">
-                            <template slot-scope="{$index,row}">
-                                <span v-if="isEditList[$index]">
-                                    <el-input class="edit-input" size="small" v-model="row.substitute"/>
-                                </span>
-                                <span v-else>{{ row.substitute }}</span>
+                                <span v-else>{{ row.classifyName }}</span>
                             </template>
                         </el-table-column>
 
-                        <el-table-column align="center" label="修改时间" width="300">
+                        <el-table-column align="center" label="修改时间" width="350">
                             <template slot-scope="{$index,row}">
                                 <span>{{ row.updateTime | formatTimer(true) }}</span>
                             </template>
                         </el-table-column>
 
-                        <el-table-column align="center" label="操作" width="300">
+                        <el-table-column align="center" label="操作" width="350">
                             <template slot-scope="{$index,row}">
                                 <el-button
-                                        @click="abandonEditSensitivity($index, row)"
+                                        @click="abandonEditClassify($index, row)"
                                         icon="el-icon-error"
                                         size="small"
                                         type="warning"
@@ -97,7 +92,7 @@
                                     放弃
                                 </el-button>
                                 <el-button
-                                        @click="updateSensitivityMethod($index, row)"
+                                        @click="updateClassifyMethod($index, row)"
                                         icon="el-icon-document-checked"
                                         size="small"
                                         type="success"
@@ -106,7 +101,7 @@
                                     保存
                                 </el-button>
                                 <el-button
-                                        @click="editSensitivityMethod($index, row)"
+                                        @click="editClassifyMethod($index, row)"
                                         icon="el-icon-edit"
                                         size="small"
                                         type="primary"
@@ -118,7 +113,7 @@
                         </el-table-column>
                     </el-table>
                     <div style="width: 100%;background-color: #ffffff;">
-                        <el-pagination :hide-on-single-page="true" :page-size="10" :total="listSensitivityCount"
+                        <el-pagination :hide-on-single-page="true" :page-size="10" :total="listClassifyCount"
                                        @current-change="current_change"
                                        layout="total, prev, pager, next" style="text-align:center;"/>
                     </div>
@@ -160,42 +155,41 @@
                 datetime: new Date(),
                 searchSelect: '',
                 searchInput: '',
-                listSensitivity: [],
-                listSensitivityCount: 0,
-                searchSensitivity: 0,
+                listClassify: [],
+                listClassifyCount: 0,
+                searchClassify: 0,
                 isEditList: [],
                 dialogAddValueVisible: false,
-                addValue: '',
-                addSubstitute: ''
+                addClassifyName: ''
             }
         },
         created() {
-            this.listSensitivityMethod(1)
+            this.listClassifyMethod(1)
         },
         methods: {
-            listSensitivityMethod(page) {
-                this.searchSensitivity = 0
+            listClassifyMethod(page) {
+                this.searchClassify = 0
                 const submitData = {'page': page}
-                axios.post('/sensitivity/listSensitivity', submitData,
+                axios.post('/classify/listClassify', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
-                    this.listSensitivity = response.data.listSensitivity
-                    this.listSensitivityCount = response.data.listSensitivityCount
-                    for (let i = 0; i < this.listSensitivity.length; i++) {
+                    this.listClassify = response.data.listClassify
+                    this.listClassifyCount = response.data.listClassifyCount
+                    for (let i = 0; i < this.listClassify.length; i++) {
                         this.isEditList.push(false)
                     }
                 })
             },
             current_change(page) {
-                if (this.searchSensitivity === 0) {
-                    this.listSensitivityMethod(page)
+                if (this.searchClassify === 0) {
+                    this.listClassifyMethod(page)
                 }
-                if (this.searchSensitivity === 1) {
-                    this.listSensitivityBySearchMethod(page)
+                if (this.searchClassify === 1) {
+                    this.listClassifyBySearchMethod(page)
                 }
             },
-            saveSensitivityMethod() {
-                if (this.addValue === '' || this.addSubstitute === '') {
+            saveClassifyMethod() {
+                if (this.addClassifyName === '') {
                     this.$message({
                         message: '请输入哦~',
                         type: 'warning',
@@ -203,8 +197,8 @@
                     })
                     return
                 }
-                const submitData = {'value': this.addValue, 'substitute': this.addSubstitute}
-                axios.post('/sensitivity/saveSensitivity', submitData,
+                const submitData = {'classifyName': this.addClassifyName}
+                axios.post('/classify/saveClassify', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
                     this.$message({
@@ -212,7 +206,7 @@
                         type: 'success',
                         center: true
                     })
-                    this.listSensitivityMethod(1)
+                    this.listClassifyMethod(1)
                     this.dialogAddValueVisible = false
                     this.addValue = ''
                     this.addSubstitute = ''
@@ -224,12 +218,12 @@
                     })
                 })
             },
-            updateSensitivityMethod(index, row) {
-                this.abandonEditSensitivity(index, row)
-                axios.post('/sensitivity/updateSensitivity', JSON.stringify(row),
+            updateClassifyMethod(index, row) {
+                this.abandonEditClassify(index, row)
+                axios.post('/classify/updateClassify', JSON.stringify(row),
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
-                    if (response.data.updateSensitivityResult) {
+                    if (response.data.updateClassifyResult) {
                         this.$message({
                             message: '修改成功',
                             type: 'success',
@@ -250,17 +244,17 @@
                     })
                 })
             },
-            editSensitivityMethod(index, row) {
+            editClassifyMethod(index, row) {
                 Vue.set(this.isEditList, index, true)
             },
-            abandonEditSensitivity(index, row) {
+            abandonEditClassify(index, row) {
                 Vue.set(this.isEditList, index, false)
             },
 
-            listSensitivityBySearch() {
-                this.listSensitivityBySearchMethod(1)
+            listClassifyBySearch() {
+                this.listClassifyBySearchMethod(1)
             },
-            listSensitivityBySearchMethod(page) {
+            listClassifyBySearchMethod(page) {
                 if (this.searchInput === '' || this.searchSelect === '') {
                     this.$message({
                         message: '请选择并输入哦~',
@@ -271,23 +265,22 @@
                 }
                 let submitData = ''
                 if (this.searchSelect === '1') {
-                    submitData = {'page': page, 'sensitivityId': this.searchInput}
+                    submitData = {'page': page, 'id': this.searchInput}
                 }
                 if (this.searchSelect === '2') {
-                    submitData = {'page': page, 'value': this.searchInput}
+                    submitData = {'page': page, 'classifyName': this.searchInput}
                 }
                 if (this.searchSelect === '3') {
-                    submitData = {'page': page, 'substitute': this.searchInput}
                 }
                 console.log(submitData)
-                axios.post('/sensitivity/listSensitivitySearch', submitData,
+                axios.post('/classify/listClassifySearch', submitData,
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
                     //标记属于搜索页面
-                    this.searchSensitivity = 1
-                    this.listSensitivity = response.data.listSensitivitySearch
-                    this.listSensitivityCount = response.data.listSensitivitySearchCount
-                    for (let i = 0; i < this.listSensitivity.length; i++) {
+                    this.searchClassify = 1
+                    this.listClassify = response.data.listClassifySearch
+                    this.listClassifyCount = response.data.listClassifySearchCount
+                    for (let i = 0; i < this.listClassify.length; i++) {
                         this.isEditList.push(false)
                     }
                 })

@@ -85,8 +85,8 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping("saveUser")
-    public Boolean saveUser(@RequestBody UserDO userDO) {
-        return userService.saveUser(userDO);
+    @PostMapping("updateUser")
+    public Boolean updateUser(@RequestBody UserDO userDO) {
+        return userService.updateUser(userDO);
     }
 }

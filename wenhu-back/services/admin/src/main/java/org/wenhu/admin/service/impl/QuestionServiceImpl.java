@@ -55,7 +55,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public HashMap<String, Object> saveQuestion(QuestionDO questionDO) {
+    public HashMap<String, Object> updateQuestion(QuestionDO questionDO) {
         questionDO.setUpdateTime(LocalDateTime.now());
         int i = questionDao.updateById(questionDO);
         HashMap<String, Object> hashMap = new HashMap<>(1);

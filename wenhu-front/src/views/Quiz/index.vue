@@ -7,7 +7,11 @@
             v-model="question_title"
             placeholder="请输入问题"
             clearable
-          />
+          >
+            <el-select slot="prepend" v-model="question_select_id" style="width: 80px;" placeholder="分类">
+              <el-option v-for="(item,index) in listClassify" :key="index" :label="item.classifyName" :value="item.id" />
+            </el-select>
+          </el-input>
         </div></el-col>
       </el-row>
       <el-row>
@@ -26,7 +30,7 @@
 
 <script>
 import MavonEditor from '@/components/Markdown'
-import { saveQuestion } from '@/api/question'
+import { saveQuestion, listClassify } from '@/api/creation'
 import { getCookie } from '@/utils/login-status'
 import { Message } from 'element-ui'
 export default {
@@ -38,7 +42,9 @@ export default {
     return {
       question_id: '',
       question_title: '',
-      question_description: ''
+      question_description: '',
+      question_select_id: '',
+      listClassify: []
     }
   },
   watch: {
@@ -46,6 +52,9 @@ export default {
       console.log(this.question_id)
       this.$router.push('question/' + this.question_id)
     }
+  },
+  created() {
+    this.getClassifyMethod()
   },
   methods: {
     getMsgFromChild: function(listenToChildEvent) {
@@ -55,17 +64,27 @@ export default {
     },
     sendQuiz() {
       if (getCookie() === undefined) {
-        Message.error({
+        this.$message.error({
           message: '未登录，请登录重试',
           center: true
         })
         return
       }
-      if (this.question_title === '' || this.question_description === '') {
-        this.$message.error('错了哦，填写信息不完整')
+      if (this.question_select_id === '') {
+        this.$message.error({
+          message: '请选择分类',
+          center: true
+        })
         return
       }
-      const submitData = { 'title': this.question_title, 'description': this.question_description, 'mender_id': getCookie() }
+      if (this.question_title === '' || this.question_description === '') {
+        this.$message.error({
+          message: '错了哦，填写信息不完整',
+          center: true
+        })
+        return
+      }
+      const submitData = { 'classifyId': this.question_select_id, 'title': this.question_title, 'description': this.question_description, 'menderId': getCookie() }
       // console.log(submitData)
       saveQuestion(submitData).then((response) => {
         Message.success({
@@ -73,6 +92,11 @@ export default {
           center: true
         })
         this.question_id = JSON.parse(response.data).id
+      })
+    },
+    getClassifyMethod() {
+      listClassify().then((response) => {
+        this.listClassify = response.data
       })
     }
   }

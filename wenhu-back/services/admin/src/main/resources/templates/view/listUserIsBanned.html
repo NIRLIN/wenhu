@@ -31,7 +31,8 @@
                 </div>
                 <div style="margin-top: 20px;">
                     <el-input class="input-with-select" placeholder="请输入内容" v-model="searchInput">
-                        <el-select placeholder="请选择" slot="prepend" v-model="searchSelect">
+                        <el-select placeholder="请选择" slot="prepend" style="width: 90px;" v-model="searchSelect">
+
                             <el-option label="id" value="1"></el-option>
                             <el-option label="用户名" value="2"></el-option>
                             <el-option label="手机号" value="3"></el-option>
@@ -108,7 +109,7 @@
                                     放弃
                                 </el-button>
                                 <el-button
-                                        @click="saveUserMethod($index, row)"
+                                        @click="updateUserMethod($index, row)"
                                         icon="el-icon-document-checked"
                                         size="small"
                                         type="success"
@@ -225,7 +226,7 @@
                     this.listUserBySearchMethod(page)
                 }
             },
-            saveUserMethod(index, row) {
+            updateUserMethod(index, row) {
                 if ((typeof row.deadlineDate) === 'string') {
                     row.deadlineDate = new Date(row.deadlineDate)
                 }
@@ -233,7 +234,7 @@
 
                 row.deadlineDate = this.dateFormatMethod(row.deadlineDate)
                 Vue.set(this.isEditList, index, false)
-                axios.post('/user/saveUser', JSON.stringify(row),
+                axios.post('/user/updateUser', JSON.stringify(row),
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
                     if (response.data) {

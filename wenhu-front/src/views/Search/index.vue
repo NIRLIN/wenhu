@@ -23,7 +23,7 @@
 
 <script>
 import Answer from '@/components/Answer'
-import { getBySearch } from '@/api/answer'
+import { getBySearch } from '@/api/creation'
 export default {
   name: 'Search',
   components: { Answer },

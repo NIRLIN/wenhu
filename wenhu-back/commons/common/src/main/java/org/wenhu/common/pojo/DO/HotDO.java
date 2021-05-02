@@ -29,6 +29,11 @@ public class HotDO {
     private String questionId;
 
     /**
+     * 分类id
+     */
+    private String classifyId;
+
+    /**
      * 问题热度
      */
     private Integer questionHeat;

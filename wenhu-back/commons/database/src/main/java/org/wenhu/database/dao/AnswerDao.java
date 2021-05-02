@@ -38,8 +38,7 @@ public interface AnswerDao extends BaseMapper<AnswerDO> {
             "  LEFT JOIN `user` ON `user`.id = answer.user_id \n" +
             "\tLEFT JOIN question ON question.id = answer.question_id\n" +
             "  WHERE\n" +
-            "  answer.answer = 1\n" +
-            "  AND answer.user_id=#{userId}\n" +
+            "  answer.user_id=#{userId}\n" +
             "\tORDER BY answer.update_time DESC")
     List<AnswerDTO> listAnswerByTime(@Param("userId") String userId);
 
@@ -61,8 +60,7 @@ public interface AnswerDao extends BaseMapper<AnswerDO> {
             "  LEFT JOIN `user` ON `user`.id = answer.user_id \n" +
             "\tLEFT JOIN question ON question.id = answer.question_id\n" +
             "  WHERE\n" +
-            "  answer.answer = 1\n" +
-            "  AND answer.user_id=#{userId}\n" +
+            "  answer.user_id=#{userId}\n" +
             "\tORDER BY answer.approval_number DESC")
     List<AnswerDTO> listAnswerByApproval(@Param("userId") String userId);
 }

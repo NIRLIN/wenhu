@@ -74,7 +74,7 @@
 
 <script>
 import ReviewReviewItem from '@/components/Review/ReviewItem/ReviewReviewItem'
-import { getReplyByReviewId, saveReply } from '@/api/answer'
+import { getReplyByReviewId, saveReply } from '@/api/creation'
 import { Message } from 'element-ui'
 import { getCookie } from '@/utils/login-status'
 export default {

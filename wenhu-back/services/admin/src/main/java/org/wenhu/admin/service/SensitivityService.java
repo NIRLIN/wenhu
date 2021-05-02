@@ -1,6 +1,7 @@
 package org.wenhu.admin.service;
 
 import org.wenhu.common.pojo.DO.SensitivityDO;
+import org.wenhu.common.util.Result;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,5 +16,7 @@ public interface SensitivityService {
 
     HashMap<String, Object> listSensitivitySearch(Map<String, Object> objectMap);
 
-    HashMap<String, Object> saveSensitivity(SensitivityDO sensitivityDO);
+    HashMap<String, Object> updateSensitivity(SensitivityDO sensitivityDO);
+
+    Result<Object> saveSensitivity(SensitivityDO sensitivityDO);
 }

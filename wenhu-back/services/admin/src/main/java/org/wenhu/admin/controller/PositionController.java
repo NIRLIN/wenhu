@@ -30,9 +30,9 @@ public class PositionController {
     }
 
     @ResponseBody
-    @PostMapping("savePosition")
-    public HashMap<String, Object> savePosition(@RequestBody PositionDO positionDO) {
-        return positionService.savePosition(positionDO);
+    @PostMapping("updatePosition")
+    public HashMap<String, Object> updatePosition(@RequestBody PositionDO positionDO) {
+        return positionService.updatePosition(positionDO);
     }
 
 }

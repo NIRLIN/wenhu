@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.admin.service.SensitivityService;
 import org.wenhu.common.pojo.DO.SensitivityDO;
+import org.wenhu.common.util.Result;
+import org.wenhu.common.util.SnowflakeUtils;
 import org.wenhu.database.dao.SensitivityDao;
 
 import java.time.LocalDateTime;
@@ -64,18 +66,31 @@ public class SensitivityServiceImpl implements SensitivityService {
     }
 
     @Override
-    public HashMap<String, Object> saveSensitivity(SensitivityDO sensitivityDO) {
+    public HashMap<String, Object> updateSensitivity(SensitivityDO sensitivityDO) {
         sensitivityDO.setUpdateTime(LocalDateTime.now());
         int i = sensitivityDao.updateById(sensitivityDO);
         HashMap<String, Object> hashMap = new HashMap<>(1);
         if (i == 1) {
-            hashMap.put("saveSensitivityResult", true);
+            hashMap.put("updateSensitivityResult", true);
         } else {
-            hashMap.put("saveSensitivityResult", false);
+            hashMap.put("updateSensitivityResult", false);
         }
         return hashMap;
     }
 
+    @Override
+    public Result<Object> saveSensitivity(SensitivityDO sensitivityDO) {
+        sensitivityDO
+                .setId(String.valueOf(SnowflakeUtils.genId()))
+                .setUpdateTime(LocalDateTime.now())
+                .setIsDeleted(0);
+        int insert = sensitivityDao.insert(sensitivityDO);
+        if (insert == 1) {
+            return Result.succeed();
+        } else {
+            return Result.failed();
+        }
+    }
 
     private List<SensitivityDO> listSensitivityByPage(Integer page, QueryWrapper<SensitivityDO> queryWrapper) {
         //分页查询

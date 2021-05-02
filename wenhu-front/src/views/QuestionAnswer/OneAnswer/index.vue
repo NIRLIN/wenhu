@@ -64,7 +64,7 @@
 import Question from '@/components/Question'
 import Answer from '@/components/Answer'
 
-import { getAnswerByAnswerId } from '@/api/answer'
+import { getAnswerByAnswerId } from '@/api/creation'
 // eslint-disable-next-line no-unused-vars
 import { Message } from 'element-ui'
 

@@ -37,14 +37,14 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
-    public HashMap<String, Object> savePosition(PositionDO positionDO) {
+    public HashMap<String, Object> updatePosition(PositionDO positionDO) {
         positionDO.setUpdateTime(LocalDateTime.now());
         int i = positionDao.updateById(positionDO);
         HashMap<String, Object> hashMap = new HashMap<>(1);
         if (i == 1) {
-            hashMap.put("savePositionResult", true);
+            hashMap.put("updatePositionResult", true);
         } else {
-            hashMap.put("savePositionResult", false);
+            hashMap.put("updatePositionResult", false);
         }
         return hashMap;
     }

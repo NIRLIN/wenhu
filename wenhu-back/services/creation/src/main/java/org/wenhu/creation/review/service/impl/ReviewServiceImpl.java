@@ -48,6 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
     public Result<List<ReviewDTO>> saveReview(String id, String userId, String reviewContent) {
         ReviewDO reviewDO = new ReviewDO()
                 .setId(String.valueOf(SnowflakeUtils.genId()))
+                .setAnswerId(id)
                 .setReviewerId(userId)
                 .setReviewContent(reviewContent)
                 .setCreateTime(LocalDateTime.now())

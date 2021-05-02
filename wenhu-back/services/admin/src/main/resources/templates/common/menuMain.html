@@ -7,8 +7,10 @@
 <div id="menuMain" th:fragment="menuMain">
     <el-menu-item index="0">
         <template slot="title">
-            <el-link :underline="false" href="index.html"><i class="el-icon-s-home"></i></el-link>
-            <span><el-link :underline="false" href="index.html">系统主页</el-link></span>
+            <el-link :underline="false" href="index.html">
+                <i class="el-icon-s-home"></i>
+                <span>系统主页</span>
+            </el-link>
         </template>
     </el-menu-item>
     <el-submenu index="1">
@@ -38,17 +40,6 @@
             <el-link :underline="false" href="listAnswer.html">回答管理</el-link>
         </el-menu-item>
     </el-submenu>
-    <el-submenu index="3">
-        <template slot="title">
-            <i class="el-icon-warning"></i>
-            <span slot="title">举报中心</span>
-        </template>
-        <el-menu-item index="3-1">问题举报</el-menu-item>
-        <el-menu-item index="3-2">回答举报</el-menu-item>
-        <el-menu-item index="3-3">文章举报</el-menu-item>
-        <el-menu-item index="3-4">评论举报</el-menu-item>
-        <el-menu-item index="3-5">私信举报</el-menu-item>
-    </el-submenu>
     <el-submenu index="4">
         <template slot="title">
             <i class="el-icon-user-solid"></i>
@@ -68,6 +59,9 @@
         </template>
         <el-menu-item index="5-1">热榜管理</el-menu-item>
         <el-menu-item index="5-2">
+            <el-link :underline="false" href="listClassify.html">分类管理</el-link>
+        </el-menu-item>
+        <el-menu-item index="5-3">
             <el-link :underline="false" href="listSensitivity.html">敏感词管理</el-link>
         </el-menu-item>
     </el-submenu>

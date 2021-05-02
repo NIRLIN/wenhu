@@ -42,7 +42,7 @@
 
 <script>
 import ReviewItem from '@/components/Review/ReviewItem'
-import { getReviewById, getReviewCount, saveReview } from '@/api/answer'
+import { getReviewById, getReviewCount, saveReview } from '@/api/creation'
 import { Message } from 'element-ui'
 import { getCookie } from '@/utils/login-status.js'
 
@@ -92,6 +92,7 @@ export default {
       }
       if (getCookie() !== undefined) {
         const submitData = { 'id': this.answer_id, 'userId': getCookie(), 'reviewContent': this.review.reviewContent }
+        console.log(submitData)
         saveReview(submitData).then((response) => {
           this.reviewList = response.data
           // console.log(this.reviewList)

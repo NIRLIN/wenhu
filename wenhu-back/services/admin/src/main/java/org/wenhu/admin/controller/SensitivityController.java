@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wenhu.admin.service.impl.SensitivityServiceImpl;
 import org.wenhu.common.pojo.DO.SensitivityDO;
+import org.wenhu.common.util.Result;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +39,14 @@ public class SensitivityController {
     }
 
     @ResponseBody
+    @PostMapping("updateSensitivity")
+    public HashMap<String, Object> updateSensitivity(@RequestBody SensitivityDO sensitivityDO) {
+        return sensitivityService.updateSensitivity(sensitivityDO);
+    }
+
+    @ResponseBody
     @PostMapping("saveSensitivity")
-    public HashMap<String, Object> saveSensitivity(@RequestBody SensitivityDO sensitivityDO) {
+    public Result<Object> saveSensitivity(@RequestBody SensitivityDO sensitivityDO) {
         return sensitivityService.saveSensitivity(sensitivityDO);
     }
 

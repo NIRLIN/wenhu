@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { changePassword } from '@/api/password'
+import { changePassword } from '@/api/people'
 import { getCookie } from '@/utils/login-status.js'
 import { Message } from 'element-ui'
 

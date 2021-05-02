@@ -37,7 +37,7 @@ export const constantRoutes = [
   },
   {
     path: '/hot',
-    component: () => import('@/views/Home/Hot')
+    component: () => import('@/views/Hot')
   },
   {
     path: '/follow',

@@ -15,6 +15,6 @@ public interface AnswerService {
 
     HashMap<String, Object> listAnswerBySearch(Map<String, Object> objectMap);
 
-    HashMap<String, Object> saveAnswer(AnswerDO answerDO);
+    HashMap<String, Object> updateAnswer(AnswerDO answerDO);
 
 }

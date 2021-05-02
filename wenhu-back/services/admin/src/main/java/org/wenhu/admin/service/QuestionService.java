@@ -13,7 +13,7 @@ import java.util.Map;
 public interface QuestionService {
     HashMap<String, Object> listQuestion(Map<String, Object> objectMap);
 
-    HashMap<String, Object> saveQuestion(QuestionDO questionDO);
+    HashMap<String, Object> updateQuestion(QuestionDO questionDO);
 
     HashMap<String, Object> listQuestionSearch(Map<String, Object> objectMap);
 }

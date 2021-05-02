@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean saveUser(UserDO userDO) {
+    public Boolean updateUser(UserDO userDO) {
         //修改时间
         userDO.setUpdateTime(LocalDateTime.now());
         int i = userDao.updateById(userDO);

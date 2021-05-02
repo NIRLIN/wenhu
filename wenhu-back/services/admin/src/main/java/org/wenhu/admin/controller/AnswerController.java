@@ -37,8 +37,8 @@ public class AnswerController {
     }
 
     @ResponseBody
-    @PostMapping("saveAnswer")
-    public HashMap<String, Object> saveAnswer(@RequestBody AnswerDO answerDO) {
-        return answerService.saveAnswer(answerDO);
+    @PostMapping("updateAnswer")
+    public HashMap<String, Object> updateAnswer(@RequestBody AnswerDO answerDO) {
+        return answerService.updateAnswer(answerDO);
     }
 }

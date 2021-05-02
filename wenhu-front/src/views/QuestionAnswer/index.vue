@@ -102,8 +102,7 @@ import Answer from '@/components/Answer'
 import MavonEditor from '@/components/Markdown'
 import { getCookie } from '@/utils/login-status'
 
-import { getQuestionById } from '@/api/question'
-import { listAnswerByHeat, listAnswerByTime, countAnswerByQuestionId, saveAnswer } from '@/api/answer'
+import { getQuestionById, listAnswerByHeat, listAnswerByTime, countAnswerByQuestionId, saveAnswer } from '@/api/creation'
 // eslint-disable-next-line no-unused-vars
 import { Message } from 'element-ui'
 

@@ -18,6 +18,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private LoginHandlerInterceptor loginHandlerInterceptor;
 
+    /**
+     * 导致资源过滤出问题
+     */
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //静态资源过滤器
@@ -28,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginHandlerInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/login.html", "/user/userLogin");
+                .excludePathPatterns("/login", "/login.html", "/user/userLogin", "/static/**");
     }
 
     @Override

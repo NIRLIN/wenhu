@@ -75,14 +75,14 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public HashMap<String, Object> saveAnswer(AnswerDO answerDO) {
+    public HashMap<String, Object> updateAnswer(AnswerDO answerDO) {
         answerDO.setUpdateTime(LocalDateTime.now());
         int i = answerDao.updateById(answerDO);
         HashMap<String, Object> hashMap = new HashMap<>(2);
         if (i == 1) {
-            hashMap.put("saveAnswerResult", true);
+            hashMap.put("updateAnswerResult", true);
         } else {
-            hashMap.put("saveAnswerResult", true);
+            hashMap.put("updateAnswerResult", true);
         }
         return hashMap;
     }

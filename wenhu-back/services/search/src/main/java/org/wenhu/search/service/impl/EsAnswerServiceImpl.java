@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
-import org.wenhu.search.dao.AnswerDao;
+import org.wenhu.search.dao.AnswerDaoForEsAnswer;
 import org.wenhu.search.dao.EsAnswerDao;
 import org.wenhu.search.pojo.EsAnswer;
 import org.wenhu.search.service.EsAnswerService;
@@ -31,7 +31,7 @@ public class EsAnswerServiceImpl implements EsAnswerService {
     @Autowired
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
     @Autowired
-    private AnswerDao answerDao;
+    private AnswerDaoForEsAnswer answerDaoForEsAnswer;
 
     @Override
     public Iterable<EsAnswer> search(String search) {
@@ -76,9 +76,9 @@ public class EsAnswerServiceImpl implements EsAnswerService {
 
     @Override
     public int saveAllEsAnswer() {
-        List<EsAnswer> answerList = answerDao.listAnswer();
+        List<EsAnswer> answerList = answerDaoForEsAnswer.listAnswer();
         for (EsAnswer esAnswer : answerList) {
-            EsAnswer save = esAnswerDao.save(esAnswer);
+            esAnswerDao.save(esAnswer);
         }
         return 1;
     }

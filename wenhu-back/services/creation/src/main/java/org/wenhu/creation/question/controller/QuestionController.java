@@ -28,12 +28,14 @@ public class QuestionController {
 
     @PostMapping(name = "saveQuestion", value = "saveQuestion")
     public Result<String> saveQuestion(@RequestBody Map<String, Object> objectMap) {
+        String classifyId = (String) objectMap.get("classifyId");
         String title = (String) objectMap.get("title");
         String description = (String) objectMap.get("description");
-        String menderId = (String) objectMap.get("mender_id");
-        QuestionDO questionDO = new QuestionDO();
-        questionDO.setTitle(title);
-        questionDO.setDescription(description);
+        String menderId = (String) objectMap.get("menderId");
+        QuestionDO questionDO = new QuestionDO()
+                .setClassifyId(classifyId)
+                .setTitle(title)
+                .setDescription(description);
         Result<String> stringResult = questionService.saveQuestion(questionDO, menderId);
         System.out.println(stringResult);
         return stringResult;

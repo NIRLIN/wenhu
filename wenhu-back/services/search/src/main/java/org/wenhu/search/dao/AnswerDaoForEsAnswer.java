@@ -17,7 +17,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface AnswerDao extends BaseMapper<AnswerDO> {
+public interface AnswerDaoForEsAnswer extends BaseMapper<AnswerDO> {
 
     @Select("  SELECT DISTINCT\n" +
             "  answer.id,\n" +
@@ -38,5 +38,6 @@ public interface AnswerDao extends BaseMapper<AnswerDO> {
             "  WHERE\n" +
             "\tORDER BY answer.update_time DESC")
     List<EsAnswer> listAnswer();
+
 
 }

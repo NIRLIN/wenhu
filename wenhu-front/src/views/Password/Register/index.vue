@@ -134,13 +134,12 @@
 
 <script>
 
-import SlideVerify from '@/components/SlideVerify'
-import { checkPhoneExistAndSendSms, userRegister } from '@/api/password'
+import { checkPhoneExistAndSendSms, userRegister } from '@/api/people'
 import { Message } from 'element-ui'
 
 export default {
   name: 'Register',
-  components: { SlideVerify },
+  components: { },
   data() {
     return {
       user_name: '',

@@ -128,7 +128,7 @@ export default {
       this.register_method()
     },
     register_method: function() {
-      // const people = require('@/api/password.js')
+      // const people = require('@/api/people')
       const people = 'aaa'
       console.log('people.register=' + people.register)
       const register_json = axios.post(people.login, {

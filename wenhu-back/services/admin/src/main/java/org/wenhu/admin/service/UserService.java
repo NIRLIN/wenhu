@@ -43,7 +43,7 @@ public interface UserService {
      * @param userDO 用户信息
      * @return 操作结果
      */
-    Boolean saveUser(UserDO userDO);
+    Boolean updateUser(UserDO userDO);
 
     /**
      * 未封禁用户信息搜索

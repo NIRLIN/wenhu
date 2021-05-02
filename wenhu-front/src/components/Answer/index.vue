@@ -79,7 +79,7 @@
 
 <script>
 import { getCookie } from '@/utils/login-status'
-import { userOpposeAnswer, userCollectAnswer, userAgreeAnswer, getUserAgreeAndCollectAnswer } from '@/api/answer'
+import { userOpposeAnswer, userCollectAnswer, userAgreeAnswer, getUserAgreeAndCollectAnswer } from '@/api/creation'
 import { Message } from 'element-ui'
 import Review from '@/components/Review'
 
@@ -168,6 +168,7 @@ export default {
     agreeAnswerButton() {
       if (getCookie() !== undefined) {
         const submitData = { 'userId': getCookie(), 'answerId': this.answer.id }
+        console.log(submitData)
         userAgreeAnswer(submitData).then((response) => {
           // console.log(response.data)
           this.agreeButtonBool = response.data.agreeBool

@@ -107,7 +107,7 @@
 
 <script>
 import { Message } from 'element-ui'
-import { userLoginByPassword, userLoginByPhoneVerify } from '@/api/password'
+import { userLoginByPassword, userLoginByPhoneVerify } from '@/api/people'
 import SlideVerify from '@/components/SlideVerify'
 // eslint-disable-next-line no-unused-vars
 import { getCookie, setCookie, removeCookie } from '@/utils/login-status'

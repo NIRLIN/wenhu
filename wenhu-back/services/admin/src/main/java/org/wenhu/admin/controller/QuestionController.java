@@ -38,9 +38,9 @@ public class QuestionController {
     }
 
     @ResponseBody
-    @PostMapping("saveQuestion")
-    public HashMap<String, Object> saveQuestion(@RequestBody QuestionDO questionDO) {
-        return questionService.saveQuestion(questionDO);
+    @PostMapping("updateQuestion")
+    public HashMap<String, Object> updateQuestion(@RequestBody QuestionDO questionDO) {
+        return questionService.updateQuestion(questionDO);
     }
 
 

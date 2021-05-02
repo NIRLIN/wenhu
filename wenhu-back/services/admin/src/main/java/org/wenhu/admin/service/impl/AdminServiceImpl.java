@@ -81,14 +81,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public HashMap<String, Object> saveAdmin(AdminDO adminDO) {
+    public HashMap<String, Object> updateAdmin(AdminDO adminDO) {
         adminDO.setUpdateTime(LocalDateTime.now());
         int i = adminDao.updateById(adminDO);
         HashMap<String, Object> hashMap = new HashMap<>(1);
         if (i == 1) {
-            hashMap.put("saveAdminResult", true);
+            hashMap.put("updateAdminResult", true);
         } else {
-            hashMap.put("saveAdminResult", false);
+            hashMap.put("updateAdminResult", false);
         }
         return hashMap;
     }
@@ -108,7 +108,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public AdminDO people(String userId) {
+    public AdminDO peopleInfo(String userId) {
         QueryWrapper<AdminDO> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper.eq("id", userId);
         return adminDao.selectOne(userQueryWrapper);

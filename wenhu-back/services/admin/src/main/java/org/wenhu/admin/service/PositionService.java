@@ -12,5 +12,5 @@ import java.util.HashMap;
 public interface PositionService {
     HashMap<String, Object> listPosition();
 
-    HashMap<String, Object> savePosition(PositionDO positionDO);
+    HashMap<String, Object> updatePosition(PositionDO positionDO);
 }

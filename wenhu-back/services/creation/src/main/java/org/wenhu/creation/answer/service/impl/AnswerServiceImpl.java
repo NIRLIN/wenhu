@@ -235,6 +235,7 @@ public class AnswerServiceImpl implements AnswerService {
             agreeOpposeDO = new AgreeOpposeDO()
                     .setId(String.valueOf(SnowflakeUtils.genId()))
                     .setUserId(userId)
+                    .setAnswerId(answerId)
                     .setAgreeOppose(1)
                     .setUpdateTime(LocalDateTime.now())
                     .setCreateTime(LocalDateTime.now())
@@ -283,10 +284,10 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Result<HashMap<String, Object>> getAnswerByAnswerId(String answerId) {
-        QueryWrapper<AnswerDO> answerDOQueryWrapper = new QueryWrapper<>();
-        answerDOQueryWrapper
+        QueryWrapper<AnswerDO> answerQueryWrapper = new QueryWrapper<>();
+        answerQueryWrapper
                 .eq("id", answerId);
-        AnswerDO answerDO = answerDao.selectOne(answerDOQueryWrapper);
+        AnswerDO answerDO = answerDao.selectOne(answerQueryWrapper);
         QueryWrapper<QuestionDO> questionDoQueryWrapper = new QueryWrapper<>();
         questionDoQueryWrapper
                 .eq("id", answerDO.getQuestionId());

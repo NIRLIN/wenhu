@@ -2,7 +2,7 @@
   <div id="register">
     <el-row>
       <el-col :span="7">
-        <div class="grid-content"/>
+        <div class="grid-content" />
       </el-col>
       <el-col :span="10">
         <div class="grid-content">
@@ -10,9 +10,9 @@
             <el-row>
               <el-col :span="24">
                 <div class="grid-content bg-purple register_font">
-                <span class="register_font">
-                  重置密码
-                </span>
+                  <span class="register_font">
+                    重置密码
+                  </span>
                 </div>
               </el-col>
             </el-row>
@@ -31,8 +31,12 @@
             <el-row>
               <el-col :span="24">
                 <div class="grid-content input_margin">
-                  <el-input v-model="user_password" :show-password="true" placeholder="密码（6-16位字母的组合，区分大小写）"
-                            type="password"/>
+                  <el-input
+                    v-model="user_password"
+                    :show-password="true"
+                    placeholder="密码（6-16位字母的组合，区分大小写）"
+                    type="password"
+                  />
                 </div>
               </el-col>
             </el-row>
@@ -52,7 +56,7 @@
         </div>
       </el-col>
       <el-col :span="7">
-        <div class="grid-content"/>
+        <div class="grid-content" />
       </el-col>
     </el-row>
 
@@ -61,8 +65,8 @@
 </template>
 
 <script>
-import {resetPassword} from '@/api/password'
-import {Message} from 'element-ui'
+import { resetPassword } from '@/api/people'
+import { Message } from 'element-ui'
 
 export default {
   name: 'ResetPassword',
@@ -76,7 +80,7 @@ export default {
     }
   },
   created() {
-    // const people = require('@/api/password.js')
+    // const people = require('@/api/people')
     // console.log(people.login)
   },
 
@@ -96,13 +100,13 @@ export default {
       formData.append('email', 'this.loginForm.email')
       formData.append('password', 'this.loginForm.password')
 
-      resetPassword(formData).then(function (response) {
+      resetPassword(formData).then(function(response) {
         Message.success(response.data)
         return response.data
       })
-          .catch(function (error) {
-            console.log(error)
-          })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
 
   }

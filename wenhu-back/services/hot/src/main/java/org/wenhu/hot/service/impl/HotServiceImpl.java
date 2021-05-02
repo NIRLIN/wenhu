@@ -74,6 +74,7 @@ public class HotServiceImpl implements HotService {
             HotDO hotDO = new HotDO()
                     .setId(String.valueOf(SnowflakeUtils.genId()))
                     .setQuestionId(questionDO.getId())
+                    .setClassifyId(questionDO.getClassifyId())
                     .setQuestionTitle(questionDO.getTitle())
                     .setQuestionDescription(questionDO.getDescription())
                     .setQuestionHeat(hotCount * 100)

@@ -11,7 +11,9 @@
               <el-col :span="24">
                 <div class="grid-content bg-purple">
                   <nav>
-                    <el-link :underline="false" class="nav_font change_font_color" href="#/hot">热榜</el-link>
+                    <el-tag class="tag_margin" @click="aaa('全站')">全站</el-tag>
+                    <el-tag class="tag_margin" type="info">分类1</el-tag>
+                    <el-tag class="tag_margin" type="info">分类2</el-tag>
                   </nav>
                 </div>
               </el-col>
@@ -49,7 +51,7 @@
 
 <script>
 
-import HotQuestion from '@/views/Home/Hot/HotQuestion'
+import HotQuestion from '@/views/Hot/HotQuestion'
 import { getHotList } from '@/api/hot'
 // eslint-disable-next-line no-unused-vars
 import { Message } from 'element-ui'
@@ -74,6 +76,11 @@ export default {
   mounted() {
     if (this.hotList === null) {
       // alert('aaa')
+    }
+  },
+  methods: {
+    aaa(a) {
+      alert('aaa' + a)
     }
   }
 }
@@ -101,5 +108,8 @@ export default {
 
 .change_font_color {
   color: #0066FF;
+}
+.tag_margin{
+  margin-left: 20px;
 }
 </style>

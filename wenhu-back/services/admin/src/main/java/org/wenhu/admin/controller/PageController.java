@@ -54,6 +54,11 @@ public class PageController {
     }
 
 
+    @GetMapping("listClassify.html")
+    public String listClassify() {
+        return "view/listClassify";
+    }
+
     @GetMapping("listSensitivity.html")
     public String listSensitivity() {
         return "view/listSensitivity";

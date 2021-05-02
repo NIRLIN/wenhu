@@ -45,7 +45,7 @@
                                     <el-input name="resume" type="text" v-model="people.resume"></el-input>
                                 </el-form-item>
                                 <el-form-item>
-                                    <el-button @click="saveAdminMethod" style="width: 100%;" type="primary">提交
+                                    <el-button @click="updateAdminMethod" style="width: 100%;" type="primary">提交
                                     </el-button>
                                 </el-form-item>
                             </el-form>
@@ -85,8 +85,8 @@
                     this.people = response.data
                 })
             },
-            saveAdminMethod() {
-                axios.post('/admin/saveAdmin', JSON.stringify(this.people),
+            updateAdminMethod() {
+                axios.post('/admin/updateAdmin', JSON.stringify(this.people),
                     {headers: {'Content-Type': 'application/json;charset=utf-8'}}
                 ).then(response => {
                     if (response.data) {

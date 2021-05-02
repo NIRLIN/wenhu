@@ -37,16 +37,15 @@ public class AdminController {
     }
 
     @ResponseBody
-    @PostMapping("saveAdmin")
-    public HashMap<String, Object> saveAdmin(@RequestBody AdminDO adminDO) {
-        return adminService.saveAdmin(adminDO);
+    @PostMapping("updateAdmin")
+    public HashMap<String, Object> updateAdmin(@RequestBody AdminDO adminDO) {
+        return adminService.updateAdmin(adminDO);
     }
 
     @ResponseBody
     @GetMapping("peopleInfo")
-    public AdminDO people(HttpSession httpSession) {
+    public AdminDO peopleInfo(HttpSession httpSession) {
         String userId = (String) httpSession.getAttribute("userId");
-        AdminDO adminDO = adminService.people(userId);
-        return adminDO;
+        return adminService.peopleInfo(userId);
     }
 }

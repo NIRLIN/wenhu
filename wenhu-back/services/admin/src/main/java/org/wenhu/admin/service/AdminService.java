@@ -15,8 +15,8 @@ public interface AdminService {
 
     HashMap<String, Object> listAdminSearch(Map<String, Object> objectMap);
 
-    HashMap<String, Object> saveAdmin(AdminDO adminDO);
+    HashMap<String, Object> updateAdmin(AdminDO adminDO);
 
-    AdminDO people(String userId);
+    AdminDO peopleInfo(String userId);
 
 }
