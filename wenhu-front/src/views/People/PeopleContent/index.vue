@@ -1,5 +1,5 @@
 <template>
-  <div id="peopleContent" v-loading.fullscreen.lock="fullscreenLoading">
+  <div id="peopleContent">
     <el-card class="two-el-card-css">
       <el-tabs v-model="activeNameHome" @tab-click="getHomeData">
         <el-tab-pane v-if="homepage.answer" label="回答" name="first">
@@ -141,7 +141,7 @@
                               <el-avatar :size="40" :src="item.headImage" shape="square" />
                             </el-link>
                           </div>
-                          <div style="float: left;">
+                          <div style="">
                             <div>
                               <el-link :underline="false">
                                 <span class="answer_font_name">{{ item.username }}</span>
@@ -174,7 +174,7 @@
                               <el-avatar :size="40" :src="item.headImage" shape="square" />
                             </el-link>
                           </div>
-                          <div style="float: left;">
+                          <div style="">
                             <div>
                               <el-link :underline="false">
                                 <span class="answer_font_name">{{ item.username }}</span>
@@ -190,10 +190,82 @@
                       <div v-if="homeData.follow.fans.length===0">
                         <div class="answer_item" style="margin-left: 40%;">
                           <div>
-                            <svg width="250" height="220" viewBox="20 0 150 120" fill="currentColor"><g fill="none" fill-rule="evenodd"><path fill="#EBEEF5" d="M67.757 83H45c-1.66 0-3-1.338-3-2.998V37.998A3.003 3.003 0 0145 35h53.42v-3H45c-3.31 0-6 2.686-6 5.998v42.004A5.994 5.994 0 0045 86h21.515l6.853 6.854a2.99 2.99 0 004.234 0L84.456 86H105c3.31 0 6-2.686 6-5.998v-36.54h-3v36.54A3.003 3.003 0 01105 83H83.214l-7.728 7.728L67.756 83z" fill-rule="nonzero" /><path fill="#F7F8FA" d="M55 48.5c0-.828.67-1.5 1.508-1.5h26.984a1.5 1.5 0 110 3H56.508A1.5 1.5 0 0155 48.5zm0 11c0-.828.677-1.5 1.495-1.5h37.01c.826 0 1.495.666 1.495 1.5 0 .828-.677 1.5-1.495 1.5h-37.01A1.494 1.494 0 0155 59.5zm0 11c0-.828.677-1.5 1.495-1.5h37.01c.826 0 1.495.666 1.495 1.5 0 .828-.677 1.5-1.495 1.5h-37.01A1.494 1.494 0 0155 70.5z" /><path fill="#EBEEF5" d="M94.868 50.46l18.92-18.92-2.83-2.827-18.918 18.92-2.12-2.123 18.917-18.918a3.005 3.005 0 014.245-.002l2.828 2.828a3.004 3.004 0 01-.002 4.245L96.99 52.58l-2.122-2.12zm-7.193 2.377l2.244-7.327 7.07 7.07-7.328 2.245c-1.575.482-2.473-.405-1.988-1.988z" fill-rule="nonzero" /></g></svg>
+                            <svg width="250" height="220" viewBox="20 0 150 120" fill="currentColor">
+                              <g fill="none" fill-rule="evenodd">
+                                <path
+                                  fill="#EBEEF5"
+                                  d="M67.757 83H45c-1.66 0-3-1.338-3-2.998V37.998A3.003 3.003 0 0145 35h53.42v-3H45c-3.31 0-6 2.686-6 5.998v42.004A5.994 5.994 0 0045 86h21.515l6.853 6.854a2.99 2.99 0 004.234 0L84.456 86H105c3.31 0 6-2.686 6-5.998v-36.54h-3v36.54A3.003 3.003 0 01105 83H83.214l-7.728 7.728L67.756 83z"
+                                  fill-rule="nonzero"
+                                />
+                                <path
+                                  fill="#F7F8FA"
+                                  d="M55 48.5c0-.828.67-1.5 1.508-1.5h26.984a1.5 1.5 0 110 3H56.508A1.5 1.5 0 0155 48.5zm0 11c0-.828.677-1.5 1.495-1.5h37.01c.826 0 1.495.666 1.495 1.5 0 .828-.677 1.5-1.495 1.5h-37.01A1.494 1.494 0 0155 59.5zm0 11c0-.828.677-1.5 1.495-1.5h37.01c.826 0 1.495.666 1.495 1.5 0 .828-.677 1.5-1.495 1.5h-37.01A1.494 1.494 0 0155 70.5z"
+                                />
+                                <path
+                                  fill="#EBEEF5"
+                                  d="M94.868 50.46l18.92-18.92-2.83-2.827-18.918 18.92-2.12-2.123 18.917-18.918a3.005 3.005 0 014.245-.002l2.828 2.828a3.004 3.004 0 01-.002 4.245L96.99 52.58l-2.122-2.12zm-7.193 2.377l2.244-7.327 7.07 7.07-7.328 2.245c-1.575.482-2.473-.405-1.988-1.988z"
+                                  fill-rule="nonzero"
+                                />
+                              </g>
+                            </svg>
                           </div>
                           <div>
                             <span style="color: rgb(133,144,166);font-size: 15px;">暂时还没有关注用户的人哦~</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </el-tab-pane>
+                  <el-tab-pane label="共同关注" name="third">
+                    <div>
+                      <div
+                        v-for="(item,index) in homeData.follow.commonFollow"
+                        :key="index"
+                        class="people_content_list "
+                      >
+                        <div class="answer_item">
+                          <div style="width: 50px; float:left">
+                            <el-link :underline="false">
+                              <el-avatar :size="40" :src="item.headImage" shape="square" />
+                            </el-link>
+                          </div>
+                          <div style="">
+                            <div>
+                              <el-link :underline="false">
+                                <span class="answer_font_name">{{ item.username }}</span>
+                              </el-link>
+                            </div>
+                            <div>
+                              <span class="answer_font_resume">{{ item.resume }}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div v-if="homeData.follow.commonFollow.length===0">
+                        <div class="answer_item" style="margin-left: 40%;">
+                          <div>
+                            <svg width="250" height="220" viewBox="20 0 150 120" fill="currentColor">
+                              <g fill="none" fill-rule="evenodd">
+                                <path
+                                  fill="#EBEEF5"
+                                  d="M67.757 83H45c-1.66 0-3-1.338-3-2.998V37.998A3.003 3.003 0 0145 35h53.42v-3H45c-3.31 0-6 2.686-6 5.998v42.004A5.994 5.994 0 0045 86h21.515l6.853 6.854a2.99 2.99 0 004.234 0L84.456 86H105c3.31 0 6-2.686 6-5.998v-36.54h-3v36.54A3.003 3.003 0 01105 83H83.214l-7.728 7.728L67.756 83z"
+                                  fill-rule="nonzero"
+                                />
+                                <path
+                                  fill="#F7F8FA"
+                                  d="M55 48.5c0-.828.67-1.5 1.508-1.5h26.984a1.5 1.5 0 110 3H56.508A1.5 1.5 0 0155 48.5zm0 11c0-.828.677-1.5 1.495-1.5h37.01c.826 0 1.495.666 1.495 1.5 0 .828-.677 1.5-1.495 1.5h-37.01A1.494 1.494 0 0155 59.5zm0 11c0-.828.677-1.5 1.495-1.5h37.01c.826 0 1.495.666 1.495 1.5 0 .828-.677 1.5-1.495 1.5h-37.01A1.494 1.494 0 0155 70.5z"
+                                />
+                                <path
+                                  fill="#EBEEF5"
+                                  d="M94.868 50.46l18.92-18.92-2.83-2.827-18.918 18.92-2.12-2.123 18.917-18.918a3.005 3.005 0 014.245-.002l2.828 2.828a3.004 3.004 0 01-.002 4.245L96.99 52.58l-2.122-2.12zm-7.193 2.377l2.244-7.327 7.07 7.07-7.328 2.245c-1.575.482-2.473-.405-1.988-1.988z"
+                                  fill-rule="nonzero"
+                                />
+                              </g>
+                            </svg>
+                          </div>
+                          <div>
+                            <span style="color: rgb(133,144,166);font-size: 15px;">没有共同关注或是未登录哦~</span>
                           </div>
                         </div>
                       </div>
@@ -212,7 +284,15 @@
 <script>
 import QuestionTitle from '@/views/People/PeopleContent/QuestionTitle'
 import Answer from '@/components/Answer'
-import { getHomepageByUserId, listAnswerByUserId, listQuestionByUserId, listCollectByUserId, listFollowByUserId } from '@/api/people'
+import {
+  getHomepageByUserId,
+  listAnswerByUserId,
+  listCollectByUserId,
+  listCommonFollow,
+  listFollowByUserId,
+  listQuestionByUserId
+} from '@/api/people'
+import { getCookie } from '@/utils/login-status'
 
 export default {
   name: 'PeopleContent',
@@ -237,26 +317,23 @@ export default {
         },
         follow: {
           follows: [],
-          fans: []
+          fans: [],
+          commonFollow: []
         }
-      },
-      fullscreenLoading: false
+      }
     }
   },
   created() {
-    this.fullscreenLoading = true
     const submitData = { 'id': this.$route.params.id }
     getHomepageByUserId(submitData).then((response) => {
       if (response.data != null) {
         this.homepage = response.data
       }
-      this.fullscreenLoading = false
     })
     // 默认时间排序
     const submitData1 = { 'id': this.$route.params.id, 'type': 'time' }
     listAnswerByUserId(submitData1).then((response) => {
       this.homeData.answer = response.data
-      this.fullscreenLoading = false
     })
   },
   methods: {
@@ -272,45 +349,48 @@ export default {
       }
       if (this.activeNameHome === 'fourth') {
         this.getUserFollowByUserId()
+        this.getUserCommonFollow()
       }
     },
     getUserCollectByUserId() {
-      this.fullscreenLoading = true
       const submitData = { 'id': this.$route.params.id }
       listCollectByUserId(submitData).then((response) => {
         this.homeData.collect.answer = response.data.answer
         // console.log(response.data)
-        this.fullscreenLoading = false
       })
     },
     getUserFollowByUserId() {
-      this.fullscreenLoading = true
       const submitData = { 'id': this.$route.params.id }
       listFollowByUserId(submitData).then((response) => {
         this.homeData.follow.follows = response.data.follows
         this.homeData.follow.fans = response.data.fans
         // console.log(response.data)
-        this.fullscreenLoading = false
       })
     },
+    getUserCommonFollow() {
+      if (getCookie() !== undefined) {
+        // homeUserid为主用户id，loginUserId为自己的用户id
+        const submitData = { 'homeUserid': this.$route.params.id, 'loginUserId': getCookie() }
+        listCommonFollow(submitData).then((response) => {
+          this.homeData.follow.commonFollow = response.data.commonFollow
+          // console.log(response.data)
+        })
+      }
+    },
     getUserQuestionByUserId() {
-      this.fullscreenLoading = true
       const submitData = { 'id': this.$route.params.id }
       listQuestionByUserId(submitData).then((response) => {
         this.homeData.question = response.data
         // console.log(response.data)
-        this.fullscreenLoading = false
       })
     },
     getUserAnswerByUserId() {
-      this.fullscreenLoading = true
       if (this.sort_button_value === '时间排序') {
         this.sort_button_value = '赞同排序'
         const submitData = { 'id': this.$route.params.id, 'type': 'heat' }
         listAnswerByUserId(submitData).then((response) => {
           this.homeData.answer = response.data
           // console.log(response.data)
-          this.fullscreenLoading = false
         })
 
         return
@@ -320,7 +400,6 @@ export default {
         const submitData = { 'id': this.$route.params.id, 'type': 'time' }
         listAnswerByUserId(submitData).then((response) => {
           this.homeData.answer = response.data
-          this.fullscreenLoading = false
         })
       }
     },

@@ -16,4 +16,6 @@ public interface FollowService {
     Result<HashMap<String, Object>> followUserOperation(String userId, String byFollowerId);
 
     Result<HashMap<String, Object>> getUserFollow(String userId, String byFollowerId);
+
+    Result<HashMap<String, Object>> listCommonFollow(String homeUserid, String loginUserId);
 }

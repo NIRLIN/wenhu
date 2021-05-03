@@ -144,3 +144,18 @@ export function listClassify(data) {
     data
   })
 }
+
+export function getHotList() {
+  return request({
+    url: '/hot/hot/listHotQuestion',
+    method: 'get'
+  })
+}
+
+export function listHotByClassify(data) {
+  return request({
+    url: '/hot/hot/listHotByClassify',
+    method: 'post',
+    data
+  })
+}

@@ -69,6 +69,13 @@ export function listFollowByUserId(data) {
     data
   })
 }
+export function listCommonFollow(data) {
+  return request({
+    url: '/people/follow/listCommonFollow',
+    method: 'post',
+    data
+  })
+}
 
 export function checkOldPhoneNumber(data) {
   return request({

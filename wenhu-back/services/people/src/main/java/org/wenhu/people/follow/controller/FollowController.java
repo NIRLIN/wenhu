@@ -40,4 +40,12 @@ public class FollowController {
         String byFollowerId = (String) objectMap.get("byFollowerId");
         return followService.getUserFollow(userId, byFollowerId);
     }
+
+    @PostMapping(name = "listCommonFollow", value = "listCommonFollow")
+    public Result<HashMap<String, Object>> listCommonFollow(@RequestBody Map<String, Object> objectMap) {
+        // homeUserid为主用户id，loginUserId为自己的用户id
+        String loginUserId = (String) objectMap.get("loginUserId");
+        String homeUserid = (String) objectMap.get("homeUserid");
+        return followService.listCommonFollow(homeUserid, loginUserId);
+    }
 }

@@ -11,9 +11,12 @@
               <el-col :span="24">
                 <div class="grid-content bg-purple">
                   <nav>
-                    <el-tag class="tag_margin" @click="aaa('全站')">全站</el-tag>
-                    <el-tag class="tag_margin" type="info">分类1</el-tag>
-                    <el-tag class="tag_margin" type="info">分类2</el-tag>
+                    <div v-for="(item,index) in listClassify" :key="index" style="float: left;">
+                      <el-link :href="'/#/hot?classify='+item.classifyName" :underline="false">
+                        <el-tag :class="[index!==0 ? 'tag_margin':'',item.classifyName===chooseTagValue? 'tag_background_yes':'tag_background_no']">{{ item.classifyName }}
+                        </el-tag>
+                      </el-link>
+                    </div>
                   </nav>
                 </div>
               </el-col>
@@ -52,9 +55,8 @@
 <script>
 
 import HotQuestion from '@/views/Hot/HotQuestion'
-import { getHotList } from '@/api/hot'
 // eslint-disable-next-line no-unused-vars
-import { Message } from 'element-ui'
+import { listClassify, getHotList, listHotByClassify } from '@/api/creation'
 
 export default {
   name: 'Hot',
@@ -62,25 +64,43 @@ export default {
   data() {
     return {
       items: ['a', 'b', 'c'],
-      hotList: []
+      hotList: [],
+      listClassify: [],
+      chooseTagValue: '全站'
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.chooseTagValue = this.$route.query.classify
+      if (this.$route.query.classify === undefined) {
+        this.chooseTagValue = '全站'
+      }
+      this.listHotByClassifyMethod()
     }
   },
   created() {
-    getHotList().then((response) => {
-      for (let i = 0; i < response.data.length; i++) {
-        this.hotList.push(JSON.parse(response.data[i]))
-      }
-      // console.log(this.hotList)
+    if (this.$route.query.classify === undefined) {
+      getHotList().then((response) => {
+        for (let i = 0; i < response.data.length; i++) {
+          this.hotList.push(JSON.parse(response.data[i]))
+        }
+        // console.log(this.hotList)
+      })
+    } else {
+      this.chooseTagValue = this.$route.query.classify
+      console.log(this.chooseTagValue)
+      this.listHotByClassifyMethod()
+    }
+    listClassify().then((response) => {
+      this.listClassify = response.data
     })
   },
-  mounted() {
-    if (this.hotList === null) {
-      // alert('aaa')
-    }
-  },
   methods: {
-    aaa(a) {
-      alert('aaa' + a)
+    listHotByClassifyMethod() {
+      const submitData = { 'classifyName': this.chooseTagValue }
+      listHotByClassify(submitData).then((response) => {
+        this.hotList = response.data
+      })
     }
   }
 }
@@ -109,7 +129,20 @@ export default {
 .change_font_color {
   color: #0066FF;
 }
-.tag_margin{
-  margin-left: 20px;
+
+.tag_margin {
+  margin-left: 10px;
 }
+
+.tag_background_yes {
+  background-color: rgb(229, 239, 255);
+  color: rgb(0, 102, 255);
+}
+
+.tag_background_no {
+  background-color: rgb(246, 246, 246);
+  color: rgb(100, 100, 100);
+
+}
+
 </style>

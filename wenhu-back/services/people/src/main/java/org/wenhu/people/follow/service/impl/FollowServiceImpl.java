@@ -13,6 +13,7 @@ import org.wenhu.people.follow.service.FollowService;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author NIRLIN
@@ -92,6 +93,22 @@ public class FollowServiceImpl implements FollowService {
         } else {
             hashMap.put("followResult", false);
         }
+        return Result.succeed(hashMap);
+    }
+
+
+    @Override
+    public Result<HashMap<String, Object>> listCommonFollow(String homeUserid, String loginUserId) {
+        List<FollowUserDTO> otherFollowList = followUserDao.listFollow(homeUserid);
+        List<FollowUserDTO> myFollowList = followUserDao.listFollow(loginUserId);
+
+        //交集查询
+        List<FollowUserDTO> commonFollowList = myFollowList.stream()
+                .filter(item -> otherFollowList.stream()
+                        .map(FollowUserDTO::getByFollowerId).collect(Collectors.toList()).contains(item.getByFollowerId()))
+                .collect(Collectors.toList());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("commonFollow", commonFollowList);
         return Result.succeed(hashMap);
     }
 }

@@ -1,11 +1,12 @@
 package org.wenhu.hot.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.wenhu.common.pojo.DO.HotDO;
 import org.wenhu.common.util.Result;
 import org.wenhu.hot.service.impl.HotServiceImpl;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,6 +32,11 @@ public class HotController {
     public Result<Set<String>> listHotQuestion() {
         Set<String> stringSet = hotService.listHotQuestion();
         return Result.succeed(stringSet);
+    }
+
+    @PostMapping(name = "listHotByClassify", path = "listHotByClassify")
+    public Result<List<HotDO>> listHotByClassify(@RequestBody Map<String, Object> objectMap) {
+        return hotService.listHotByClassify(objectMap);
     }
 
 

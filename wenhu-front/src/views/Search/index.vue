@@ -36,7 +36,7 @@ export default {
   watch: {
     $route(to, from) {
       this.search = this.$route.query.search
-      console.log(this.$route.query.search)
+      // console.log(this.$route.query.search)
       this.getSearchMethod()
     }
   },
