@@ -1,10 +1,10 @@
 <template>
   <div id="Hot">
     <el-row class="margin_nav_size">
-      <el-col :span="4">
+      <el-col :span="2">
         <div class="grid-content " />
       </el-col>
-      <el-col :span="16">
+      <el-col :span="20">
         <div class="grid-content ">
           <el-card>
             <el-row>

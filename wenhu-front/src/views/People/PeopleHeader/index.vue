@@ -79,7 +79,7 @@ export default {
     })
     if (getCookie() !== undefined) {
       const submitData = { 'userId': getCookie(), 'byFollowerId': this.$route.params.id }
-      console.log(submitData)
+      // console.log(submitData)
       getUserFollow(submitData).then((response) => {
         this.isFollow = response.data.followResult
       })

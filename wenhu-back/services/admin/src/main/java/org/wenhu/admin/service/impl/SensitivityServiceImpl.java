@@ -2,6 +2,7 @@ package org.wenhu.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.admin.service.SensitivityService;
@@ -26,6 +27,7 @@ public class SensitivityServiceImpl implements SensitivityService {
     @Autowired
     private SensitivityDao sensitivityDao;
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listSensitivity(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
@@ -42,6 +44,7 @@ public class SensitivityServiceImpl implements SensitivityService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listSensitivitySearch(Map<String, Object> objectMap) {
 
@@ -65,6 +68,7 @@ public class SensitivityServiceImpl implements SensitivityService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> updateSensitivity(SensitivityDO sensitivityDO) {
         sensitivityDO.setUpdateTime(LocalDateTime.now());
@@ -78,6 +82,7 @@ public class SensitivityServiceImpl implements SensitivityService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public Result<Object> saveSensitivity(SensitivityDO sensitivityDO) {
         sensitivityDO

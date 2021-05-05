@@ -1,5 +1,6 @@
 package org.wenhu.search.service.impl;
 
+import io.seata.spring.annotation.GlobalTransactional;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -33,6 +34,7 @@ public class EsAnswerServiceImpl implements EsAnswerService {
     @Autowired
     private AnswerDaoForEsAnswer answerDaoForEsAnswer;
 
+    @GlobalTransactional
     @Override
     public Iterable<EsAnswer> search(String search) {
         //根据一个值查询多个字段  并高亮显示  这里的查询是取并集，即多个字段只需要有一个字段满足即可
@@ -68,12 +70,13 @@ public class EsAnswerServiceImpl implements EsAnswerService {
 
     }
 
-
+    @GlobalTransactional
     @Override
     public int deleteAllEsAnswer() {
         return esAnswerDao.deleteAllBy();
     }
 
+    @GlobalTransactional
     @Override
     public int saveAllEsAnswer() {
         List<EsAnswer> answerList = answerDaoForEsAnswer.listAnswer();
@@ -83,6 +86,7 @@ public class EsAnswerServiceImpl implements EsAnswerService {
         return 1;
     }
 
+    @GlobalTransactional
     @Override
     public int checkRecentEsAnswer() {
         return 0;

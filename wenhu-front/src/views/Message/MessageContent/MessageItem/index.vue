@@ -88,7 +88,6 @@ export default {
 }
 
 .messageItem_content {
-  background: #f6f6f6;
   width: 400px;
   border-radius: 5px;
 }
@@ -103,7 +102,6 @@ export default {
 .bubble {
   width: 350px;
   border-radius: 10px;
-  background-color: #f6f6f6;
   position: relative;
   margin-left: 20px;
 }

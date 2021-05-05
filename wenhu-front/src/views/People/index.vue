@@ -35,7 +35,6 @@ export default {
 
 <style scoped>
 #people {
-  background: rgb(246, 246, 246);
   min-height: 800px;
 }
 

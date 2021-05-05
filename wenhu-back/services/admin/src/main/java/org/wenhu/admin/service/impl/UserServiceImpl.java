@@ -2,6 +2,7 @@ package org.wenhu.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.admin.service.UserService;
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @GlobalTransactional
     @Override
     public UserDO userLogin(String phoneNumber, String password) {
         //手机号或密码为空不允许登录验证
@@ -37,7 +39,7 @@ public class UserServiceImpl implements UserService {
         return userDao.selectOne(queryWrapper);
     }
 
-
+    @GlobalTransactional
     @Override
     public String changePassword(String userId, String oldPassword, String oneNewPassword) {
         if (userId == null) {
@@ -61,6 +63,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listUserNoBanned(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
@@ -81,6 +84,7 @@ public class UserServiceImpl implements UserService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listUserIsBanned(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
@@ -100,6 +104,7 @@ public class UserServiceImpl implements UserService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listUserNoBanedSearch(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
@@ -117,6 +122,7 @@ public class UserServiceImpl implements UserService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listUserIsBanedSearch(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
@@ -162,6 +168,7 @@ public class UserServiceImpl implements UserService {
         return userDao.selectCount(queryWrapper);
     }
 
+    @GlobalTransactional
     @Override
     public Boolean updateUser(UserDO userDO) {
         //修改时间

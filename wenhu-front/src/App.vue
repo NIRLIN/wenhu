@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppMain />
+    <AppMain style="background-color: #f6f6f6;" />
   </div>
 </template>
 
@@ -18,5 +18,6 @@ export default {
 <style>
 #app {
   background-color: #f6f6f6;
+  min-height: calc(100vh);
 }
 </style>

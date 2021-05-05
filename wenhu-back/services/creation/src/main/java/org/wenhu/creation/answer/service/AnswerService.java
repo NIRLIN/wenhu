@@ -7,6 +7,7 @@ import org.wenhu.common.util.Result;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author NIRLIN
@@ -34,4 +35,6 @@ public interface AnswerService {
     Result<HashMap<String, Object>> userOpposeAnswer(String userId, String answerId);
 
     Result<HashMap<String, Object>> getAnswerByAnswerId(String answerId);
+
+    Result<Integer> updateAnswer(Map<String, Object> objectMap);
 }

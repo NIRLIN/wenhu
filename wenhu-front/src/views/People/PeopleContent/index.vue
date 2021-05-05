@@ -31,12 +31,30 @@
                   <div>
                     <div v-for="(item,index) in homeData.answer" :key="index" class="people_content_list ">
                       <div class="answer_item">
-                        <el-link :href="'#/question/'+item.questionId" :underline="false">
-                          <span style="font-size: 16px;font-weight: bold;margin:5px;">
-                            {{ item.title }}
-                          </span>
-                        </el-link>
-                        <Answer :answer_item="item" style="margin-top: 10px;" />
+                        <el-row>
+                          <el-col :span="20">
+                            <el-link :href="'#/question/'+item.questionId" :underline="false">
+                              <span style="font-size: 16px;font-weight: bold;margin:5px;">
+                                {{ item.title }}
+                              </span>
+                            </el-link>
+                          </el-col>
+                          <el-col :span="2" :offset="1">
+                            <div class="grid-content">
+                              <div v-if="item.userId===loginUserId">
+                                <el-link :href="'#/editAnswer/'+item.id" :underline="false">
+                                  <el-button type="primary" size="mini" plain>修改回答</el-button>
+                                </el-link>
+                              </div>
+                            </div>
+                          </el-col>
+                        </el-row>
+                        <el-row>
+                          <el-col>
+                            <Answer :answer_item="item" style="margin-top: 10px;" />
+                          </el-col>
+                        </el-row>
+
                       </div>
                     </div>
                     <div v-if="homeData.answer.length===0" class="people_content_list ">
@@ -303,6 +321,7 @@ export default {
       activeNameFollow: 'first',
       items: ['a', 'b', 'c'],
       sort_button_value: '时间排序',
+      loginUserId: '',
       homepage: {
         answer: 1,
         question: 1,
@@ -335,6 +354,11 @@ export default {
     listAnswerByUserId(submitData1).then((response) => {
       this.homeData.answer = response.data
     })
+  },
+  mounted() {
+    if (getCookie() !== undefined) {
+      this.loginUserId = getCookie()
+    }
   },
   methods: {
     getHomeData(tab, event) {

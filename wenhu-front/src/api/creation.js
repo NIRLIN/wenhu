@@ -23,6 +23,15 @@ export function getQuestionById(data) {
     data
   })
 }
+
+export function listQuestionLog(data) {
+  return request({
+    url: '/creation/question/listQuestionLog',
+    method: 'post',
+    data
+  })
+}
+
 export function getAnswerListByQuestionId(data) {
   return request({
     url: '/creation/question/getQuestionAndAnswerListByQuestionId',
@@ -58,6 +67,13 @@ export function getAnswerByAnswerId(data) {
 export function saveAnswer(data) {
   return request({
     url: '/creation/answer/saveAnswer',
+    method: 'post',
+    data
+  })
+}
+export function updateAnswer(data) {
+  return request({
+    url: '/creation/answer/updateAnswer',
     method: 'post',
     data
   })
@@ -145,6 +161,14 @@ export function listClassify(data) {
   })
 }
 
+export function updateQuestion(data) {
+  return request({
+    url: '/creation/question/updateQuestion',
+    method: 'post',
+    data
+  })
+}
+
 export function getHotList() {
   return request({
     url: '/hot/hot/listHotQuestion',
@@ -155,6 +179,22 @@ export function getHotList() {
 export function listHotByClassify(data) {
   return request({
     url: '/hot/hot/listHotByClassify',
+    method: 'post',
+    data
+  })
+}
+
+export function userFollowQuestion(data) {
+  return request({
+    url: '/creation/question/userFollowQuestion',
+    method: 'post',
+    data
+  })
+}
+
+export function followQuestion(data) {
+  return request({
+    url: '/creation/question/followQuestion',
     method: 'post',
     data
   })

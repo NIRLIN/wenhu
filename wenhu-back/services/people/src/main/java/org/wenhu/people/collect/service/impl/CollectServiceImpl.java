@@ -1,6 +1,7 @@
 package org.wenhu.people.collect.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.common.pojo.DO.CollectDO;
@@ -25,6 +26,7 @@ public class CollectServiceImpl implements CollectService {
     @Autowired
     private CollectDao collectDao;
 
+    @GlobalTransactional
     @Override
     public Result<HashMap<String, Object>> collectService(String userId) {
         List<AnswerDTO> collectAnswer = collectDao.listCollect(userId);
@@ -33,6 +35,7 @@ public class CollectServiceImpl implements CollectService {
         return Result.succeed(hashMap);
     }
 
+    @GlobalTransactional
     @Override
     public Result<HashMap<String, Object>> userCollectAnswer(String userId, String answerId) {
         QueryWrapper<CollectDO> collectQueryWrapper = new QueryWrapper<>();

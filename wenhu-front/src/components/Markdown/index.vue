@@ -1,6 +1,6 @@
 <template>
   <div id="markdown">
-    <mavon-editor ref="md" v-model="content" :toolbars="toolbars" :box-shadow-style="'0 2px 12px 0 rgba(1, 0, 0, 0.1)'" :box-shadow="false" :default-open="'edit'" @imgAdd="$imgAdd" @change="change" />
+    <mavon-editor ref="md" :toolbars="toolbars" :box-shadow-style="'0 2px 12px 0 rgba(1, 0, 0, 0.1)'" :box-shadow="false" :default-open="'edit'" @imgAdd="$imgAdd" @change="change" />
   </div>
 
 </template>
@@ -10,11 +10,18 @@ import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { imageUpload } from '@/api/util'
 import { getCookie } from '@/utils/login-status.js'
+import TurndownService from 'turndown'
 
 export default {
   name: 'Markdown',
   components: {
     mavonEditor
+  },
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
@@ -56,6 +63,10 @@ export default {
         preview: true // 预览
       }
     }
+  },
+  mounted() {
+    const turndownService = new TurndownService()
+    this.$refs.md.d_value = turndownService.turndown(this.value)
   },
   methods: {
     change(value, html) {

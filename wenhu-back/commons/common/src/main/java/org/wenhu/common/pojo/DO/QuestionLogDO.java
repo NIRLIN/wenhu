@@ -35,19 +35,14 @@ public class QuestionLogDO {
     private String questionId;
 
     /**
-     * 题目或描述,0为题目，1为描述
+     * 问题标题
      */
-    private Integer isTitle;
+    private String title;
 
     /**
-     * 修改前内容
+     * 问题描述
      */
-    private String updateBeforeContent;
-
-    /**
-     * 修改后内容
-     */
-    private String updateAfterContent;
+    private String description;
 
     /**
      * 创建时间

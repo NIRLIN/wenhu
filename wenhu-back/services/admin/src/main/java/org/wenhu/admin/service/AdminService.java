@@ -11,6 +11,12 @@ import java.util.Map;
  * @date 2021/4/17
  */
 public interface AdminService {
+    /**
+     * 查询管理员列表
+     *
+     * @param objectMap 传入数据
+     * @return 操作结果
+     */
     HashMap<String, Object> listAdmin(Map<String, Object> objectMap);
 
     HashMap<String, Object> listAdminSearch(Map<String, Object> objectMap);

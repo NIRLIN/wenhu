@@ -1,7 +1,7 @@
 <template>
   <div v-if="answer_item" class="class_margin">
     <el-row>
-      <el-col :span="22">
+      <el-col :span="20">
         <el-link :href="'#/people/'+answer.userId" :underline="false">
           <div class="grid-content" style="min-width: 100px;">
             <div style="width: 50px; float:left">
@@ -19,7 +19,6 @@
             </div>
           </div>
         </el-link>
-
       </el-col>
 
     </el-row>
@@ -54,16 +53,6 @@
           <el-button class="no_border_outline button_margin_left button_color" type="text" @click="shareButton"><i class="el-icon-s-promotion icon_size" />分享</el-button>
           <el-button v-if="collectButtonBool" class="no_border_outline button_margin_left button_color" type="text" @click="collectAnswerButton"><i class="el-icon-star-on icon_size" style="font-size: 18px;" />收藏</el-button>
           <el-button v-if="!collectButtonBool" class="no_border_outline button_margin_left button_color" type="text" @click="collectAnswerButton"><i class="el-icon-star-off icon_size" style="font-size: 18px;" />收藏</el-button>
-          <el-button class="no_border_outline button_margin_left button_color" type="text">
-            <el-dropdown trigger="click" :placement="'bottom'">
-              <span class="el-dropdown-link">
-                <i class="el-icon-more question_more button_color " />
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>举报</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </el-button>
         </div>
       </el-col>
     </el-row>

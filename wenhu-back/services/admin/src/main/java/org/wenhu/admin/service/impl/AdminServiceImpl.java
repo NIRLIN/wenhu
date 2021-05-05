@@ -2,6 +2,7 @@ package org.wenhu.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.admin.service.AdminService;
@@ -24,7 +25,7 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminDao adminDao;
 
-
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listAdmin(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
@@ -48,6 +49,7 @@ public class AdminServiceImpl implements AdminService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listAdminSearch(Map<String, Object> objectMap) {
         Integer adminBaned = (Integer) objectMap.get("adminBaned");
@@ -80,6 +82,7 @@ public class AdminServiceImpl implements AdminService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> updateAdmin(AdminDO adminDO) {
         adminDO.setUpdateTime(LocalDateTime.now());
@@ -106,7 +109,7 @@ public class AdminServiceImpl implements AdminService {
         return adminDao.selectCount(queryWrapper);
     }
 
-
+    @GlobalTransactional
     @Override
     public AdminDO peopleInfo(String userId) {
         QueryWrapper<AdminDO> userQueryWrapper = new QueryWrapper<>();

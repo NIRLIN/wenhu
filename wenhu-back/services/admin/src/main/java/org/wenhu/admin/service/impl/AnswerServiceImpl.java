@@ -2,6 +2,7 @@ package org.wenhu.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.admin.service.AnswerService;
@@ -24,6 +25,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Autowired
     private AnswerDao answerDao;
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listAnswer(Map<String, Object> objectMap) {
         //获取分页信息
@@ -41,6 +43,7 @@ public class AnswerServiceImpl implements AnswerService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listAnswerBySearch(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
@@ -74,6 +77,7 @@ public class AnswerServiceImpl implements AnswerService {
         return answerDao.selectCount(queryWrapper);
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> updateAnswer(AnswerDO answerDO) {
         answerDO.setUpdateTime(LocalDateTime.now());

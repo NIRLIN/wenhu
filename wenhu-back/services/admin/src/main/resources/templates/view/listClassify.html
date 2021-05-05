@@ -32,19 +32,19 @@
                 </div>
                 <el-row style="margin-top: 20px;">
                     <el-col :span="23">
-                    <el-input class="input-with-select" placeholder="请输入内容" style="float: left;"
-                              v-model="searchInput">
-                        <el-select placeholder="请选择" slot="prepend" style="width: 90px;" v-model="searchSelect">
-                            <el-option label="id" value="1"></el-option>
-                            <el-option label="分类名" value="2"></el-option>
-                        </el-select>
-                        <el-button @click="listClassifyBySearch" icon="el-icon-search" slot="append"></el-button>
-                    </el-input>
+                        <el-input class="input-with-select" placeholder="请输入内容" style="float: left;"
+                                  v-model="searchInput">
+                            <el-select placeholder="请选择" slot="prepend" style="width: 90px;" v-model="searchSelect">
+                                <el-option label="id" value="1"></el-option>
+                                <el-option label="分类名" value="2"></el-option>
+                            </el-select>
+                            <el-button @click="listClassifyBySearch" icon="el-icon-search" slot="append"></el-button>
+                        </el-input>
                     </el-col>
                     <el-col :span="1">
-                    <el-button @click="dialogAddValueVisible = true" icon="el-icon-circle-plus"
-                               style="float: right" type="primary">
-                    </el-button>
+                        <el-button @click="dialogAddValueVisible = true" icon="el-icon-circle-plus"
+                                   style="float: right" type="primary">
+                        </el-button>
                     </el-col>
                     <el-dialog :visible.sync="dialogAddValueVisible" title="添加数据" width="40%">
                         <el-input placeholder="分类名" style="margin-top: 10px;" v-model="addClassifyName"></el-input>

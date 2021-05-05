@@ -61,7 +61,7 @@
         </div>
 
       </el-col>
-      <el-col v-if="answer_number===0" :span="6" :offset="7" class="no_question_div">
+      <el-col v-if="answer_number===0" :span="7" :offset="7" class="no_question_div">
         <div>
 
           <div class="grid-content ">

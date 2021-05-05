@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.wenhu.common.pojo.DO.QuestionDO;
+import org.wenhu.common.pojo.DTO.QuestionLogDTO;
 import org.wenhu.common.pojo.DTO.UserDTO;
 import org.wenhu.common.util.Result;
 import org.wenhu.creation.question.service.impl.QuestionServiceImpl;
@@ -41,6 +42,11 @@ public class QuestionController {
         return stringResult;
     }
 
+    @PostMapping(name = "updateQuestion", value = "updateQuestion")
+    public Result<Integer> updateQuestion(@RequestBody Map<String, Object> objectMap) {
+        return questionService.updateQuestion(objectMap);
+    }
+
     @PostMapping(name = "getQuestionById", value = "getQuestionById")
     public Result<QuestionDO> getQuestionById(@RequestBody Map<String, Object> objectMap) {
         String id = (String) objectMap.get("id");
@@ -50,6 +56,21 @@ public class QuestionController {
     @PostMapping(name = "listQuestionByUserId", value = "listQuestionByUserId")
     public Result<List<QuestionDO>> listQuestionByUserId(@RequestBody UserDTO userDTO) {
         return questionService.listQuestionByUserId(userDTO);
+    }
+
+    @PostMapping(name = "listQuestionLog", value = "listQuestionLog")
+    public Result<List<QuestionLogDTO>> listQuestionLog(@RequestBody Map<String, Object> objectMap) {
+        return questionService.listQuestionLog(objectMap);
+    }
+
+    @PostMapping(name = "userFollowQuestion", value = "userFollowQuestion")
+    public Result<Integer> userFollowQuestion(@RequestBody Map<String, Object> objectMap) {
+        return questionService.userFollowQuestion(objectMap);
+    }
+
+    @PostMapping(name = "followQuestion", value = "followQuestion")
+    public Result<Integer> followQuestion(@RequestBody Map<String, Object> objectMap) {
+        return questionService.followQuestion(objectMap);
     }
 
 

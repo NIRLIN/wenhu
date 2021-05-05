@@ -62,7 +62,6 @@
                   <el-link :href="'#/people/'+user_id" :underline="false">我的主页</el-link>
                 </el-dropdown-item>
               </el-link>
-              <el-dropdown-item>创作中心</el-dropdown-item>
               <el-link :underline="false">
                 <el-dropdown-item>
                   <el-link :underline="false" href="#/setting">设置</el-link>

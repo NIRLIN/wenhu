@@ -16,7 +16,7 @@
       </el-row>
       <el-row>
         <el-col :span="24"><div class="grid-content">
-          <MavonEditor @listenToChildEvent="getMsgFromChild" />
+          <Markdown @listenToChildEvent="getMsgFromChild" />
         </div></el-col>
       </el-row>
       <el-row>
@@ -29,14 +29,14 @@
 </template>
 
 <script>
-import MavonEditor from '@/components/Markdown'
+import Markdown from '@/components/Markdown'
 import { saveQuestion, listClassify } from '@/api/creation'
 import { getCookie } from '@/utils/login-status'
 import { Message } from 'element-ui'
 export default {
   name: 'Quiz',
   components: {
-    MavonEditor
+    Markdown
   },
   data: function() {
     return {

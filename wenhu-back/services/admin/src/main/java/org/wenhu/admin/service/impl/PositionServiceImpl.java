@@ -1,6 +1,7 @@
 package org.wenhu.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.admin.service.PositionService;
@@ -22,7 +23,7 @@ public class PositionServiceImpl implements PositionService {
     @Autowired
     private PositionDao positionDao;
 
-
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listPosition() {
         QueryWrapper<PositionDO> queryWrapper = new QueryWrapper<>();
@@ -36,6 +37,7 @@ public class PositionServiceImpl implements PositionService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> updatePosition(PositionDO positionDO) {
         positionDO.setUpdateTime(LocalDateTime.now());

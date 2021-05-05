@@ -4,12 +4,11 @@
       <el-col :span="1">
         <div class="grid-content " />
       </el-col>
-      <el-col :span="18">
+      <el-col :span="20">
         <div class="grid-content ">
           <div>
             <h1 class="question_title"> {{ question_item.title }} </h1>
           </div>
-
         </div>
       </el-col>
       <el-col :span="1">
@@ -25,21 +24,6 @@
               <br>
               <span class="follow_number_count">
                 {{ question_item.followNumber }}
-              </span>
-            </el-link>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="2">
-        <div class="grid-content ">
-          <div class=" div_divider_left follow_browsing">
-            <el-link :underline="false" style="margin-left: 20px;">
-              <span class="follow_number_font">
-                浏览数
-              </span>
-              <br>
-              <span class="follow_number_count">
-                {{ question_item.browseNumber }}
               </span>
             </el-link>
           </div>
@@ -65,17 +49,27 @@
       </el-col>
       <el-col :span="18">
         <div class="grid-content  ">
-          <el-button size="small" type="primary">关注问题</el-button>
-          <el-button size="small" icon="el-icon-edit" plain type="primary" @click="childSendEditAnswerStatus">写回答</el-button>
-          <el-button class="no_border_outline button_color button_margin_left" type="text" icon="el-icon-s-promotion " @click="shareButton">分享</el-button>
+          <el-button size="small" :type="question_is_follow===0? 'primary':'info'" @click="followQuestionMethod">
+            {{ question_is_follow === 0 ? '关注问题' : '取消关注' }}
+          </el-button>
+          <el-button size="small" icon="el-icon-edit" plain type="primary" @click="childSendEditAnswerStatus">写回答
+          </el-button>
+          <el-button
+            class="no_border_outline button_color button_margin_left"
+            type="text"
+            icon="el-icon-s-promotion "
+            @click="shareButton"
+          >分享
+          </el-button>
           <el-button class="no_border_outline button_color button_margin_left" type="text">
             <el-dropdown trigger="click" :placement="'bottom'">
               <span class="el-dropdown-link">
                 <i class="el-icon-more question_more button_color " />
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>问题日志</el-dropdown-item>
-                <el-dropdown-item>举报问题</el-dropdown-item>
+                <el-link :underline="false" :href="'/#/questionLog/'+question_item.id">
+                  <el-dropdown-item>问题日志</el-dropdown-item>
+                </el-link>
               </el-dropdown-menu>
             </el-dropdown>
           </el-button>
@@ -88,6 +82,8 @@
 
 <script>
 import { Message } from 'element-ui'
+import { getCookie } from '@/utils/login-status'
+import { followQuestion, userFollowQuestion } from '@/api/creation'
 
 export default {
   name: 'Question',
@@ -100,11 +96,32 @@ export default {
       question_name: '这里是问题',
       question_description: '这里是描述；这里是描述；这里是描述；这里是描述；这里是描述；这里是描述；这里是描述；',
       question_follow_number: 666,
-      question_browse_number: 6666,
-      childSendEditAnswerStatusNumber: 0
+      childSendEditAnswerStatusNumber: 0,
+      question_is_follow: 1
+    }
+  },
+  watch: {
+    question_item() {
+      this.userFollowQuestionMethod()
     }
   },
   methods: {
+    userFollowQuestionMethod() {
+      const submitData = { 'userId': getCookie(), 'questionId': this.question_item.id }
+      // console.log(this.question_item)
+      // console.log(this.question_item.id)
+      userFollowQuestion(submitData).then((response) => {
+        this.question_is_follow = response.data
+        // console.log(response.data)
+      })
+    },
+    followQuestionMethod() {
+      const submitData = { 'userId': getCookie(), 'questionId': this.question_item.id }
+      followQuestion(submitData).then((response) => {
+        this.question_is_follow = response.data
+        // console.log(response.data)
+      })
+    },
     childSendEditAnswerStatus() {
       this.childSendEditAnswerStatusNumber = !this.childSendEditAnswerStatusNumber
       this.$emit('listenToChildEvent', this.childSendEditAnswerStatusNumber)
@@ -149,6 +166,7 @@ export default {
   font-size: 18px;
   font-weight: bold;
   color: #121212;
+  text-align: center;
 }
 
 .div_divider_left {
@@ -175,5 +193,6 @@ export default {
 
 .follow_browsing {
   margin-top: 10px;
+  text-align: center;
 }
 </style>

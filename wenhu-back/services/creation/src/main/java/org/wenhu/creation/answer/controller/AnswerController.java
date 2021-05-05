@@ -52,6 +52,11 @@ public class AnswerController {
         return answerService.saveAnswer(userId, questionId, content);
     }
 
+    @PostMapping(name = "updateAnswer", value = "updateAnswer")
+    Result<Integer> updateAnswer(@RequestBody Map<String, Object> objectMap) {
+        return answerService.updateAnswer(objectMap);
+    }
+
     @PostMapping(name = "getAnswerByAnswerId", value = "getAnswerByAnswerId")
     Result<HashMap<String, Object>> getAnswerByAnswerId(@RequestBody Map<String, Object> objectMap) {
         String answerId = (String) objectMap.get("answerId");

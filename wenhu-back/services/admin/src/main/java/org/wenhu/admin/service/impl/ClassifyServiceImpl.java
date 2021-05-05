@@ -2,6 +2,7 @@ package org.wenhu.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.admin.service.ClassifyService;
@@ -26,6 +27,7 @@ public class ClassifyServiceImpl implements ClassifyService {
     @Autowired
     private ClassifyDao classifyDao;
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listClassify(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
@@ -42,6 +44,7 @@ public class ClassifyServiceImpl implements ClassifyService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> listClassifySearch(Map<String, Object> objectMap) {
 
@@ -63,6 +66,7 @@ public class ClassifyServiceImpl implements ClassifyService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public HashMap<String, Object> updateClassify(ClassifyDO classifyDO) {
         classifyDO.setUpdateTime(LocalDateTime.now());
@@ -76,6 +80,7 @@ public class ClassifyServiceImpl implements ClassifyService {
         return hashMap;
     }
 
+    @GlobalTransactional
     @Override
     public Result<Object> saveClassify(ClassifyDO classifyDO) {
         classifyDO

@@ -1,7 +1,6 @@
-package org.wenhu.common.pojo.DO;
+package org.wenhu.common.pojo.DTO;
 
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,13 +14,22 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-@TableName("follow_question")
-public class FollowQuestionDO {
+public class QuestionLogDTO {
 
     /**
-     * 热榜id
+     * 日志id
      */
     private String id;
+
+    /**
+     * 修改者id
+     */
+    private String menderId;
+
+    /**
+     * 修改者用户名
+     */
+    private String menderUsername;
 
     /**
      * 问题id
@@ -29,9 +37,14 @@ public class FollowQuestionDO {
     private String questionId;
 
     /**
-     * 关注者id
+     * 问题标题
      */
-    private String followerId;
+    private String title;
+
+    /**
+     * 问题描述
+     */
+    private String description;
 
     /**
      * 创建时间
