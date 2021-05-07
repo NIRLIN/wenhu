@@ -20,6 +20,12 @@ import java.util.List;
 @Repository
 public interface AnswerDao extends BaseMapper<AnswerDO> {
 
+    /**
+     * 查询回答，用户信息，通过时间排序
+     *
+     * @param userId 用户id
+     * @return AnswerDTO
+     */
     @Select("  SELECT DISTINCT\n" +
             "  answer.id,\n" +
             "  answer.question_id,\n" +
@@ -42,6 +48,12 @@ public interface AnswerDao extends BaseMapper<AnswerDO> {
             "\tORDER BY answer.update_time DESC")
     List<AnswerDTO> listAnswerByTime(@Param("userId") String userId);
 
+    /**
+     * 查询回答，用户信息，通过赞同数排序
+     *
+     * @param userId 用户id
+     * @return AnswerDTO
+     */
     @Select("  SELECT DISTINCT\n" +
             "  answer.id,\n" +
             "  answer.question_id,\n" +

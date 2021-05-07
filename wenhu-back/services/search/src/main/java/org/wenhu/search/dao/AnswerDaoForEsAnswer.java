@@ -18,7 +18,11 @@ import java.util.List;
 @Mapper
 @Repository
 public interface AnswerDaoForEsAnswer extends BaseMapper<AnswerDO> {
-
+    /**
+     * 回答列表
+     *
+     * @return 操作结果
+     */
     @Select("  SELECT DISTINCT\n" +
             "  answer.id,\n" +
             "  answer.question_id,\n" +

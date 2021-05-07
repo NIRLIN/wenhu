@@ -22,11 +22,22 @@ import java.util.List;
 @FeignClient(name = "creation")
 public interface CreationFeignClient {
 
-
+    /**
+     * 查询问题
+     *
+     * @param userDTO 用户信息
+     * @return List<QuestionDO>
+     */
     @PostMapping(name = "question/listQuestionByUserId", value = "question/listQuestionByUserId")
     Result<List<QuestionDO>> listQuestionByUserId(@RequestBody UserDTO userDTO);
 
-
+    /**
+     * 查询回答
+     *
+     * @param userId 用户id
+     * @param type   回答类型
+     * @return List<AnswerDTO>
+     */
     @PostMapping(name = "answer/listAnswerByUserId", value = "answer/listAnswerByUserId")
     Result<List<AnswerDTO>> listAnswerByUserId(@RequestParam("userId") String userId, @RequestParam("type") String type);
 }

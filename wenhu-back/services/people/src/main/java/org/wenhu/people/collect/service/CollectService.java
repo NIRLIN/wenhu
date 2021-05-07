@@ -11,8 +11,21 @@ import java.util.HashMap;
  */
 public interface CollectService {
 
+    /**
+     * 收藏操作
+     *
+     * @param userId 用户id
+     * @return 操作结果
+     */
     Result<HashMap<String, Object>> collectService(String userId);
 
+    /**
+     * 收藏操作
+     *
+     * @param userId   用户id
+     * @param answerId 回答id
+     * @return 操作结果
+     */
     Result<HashMap<String, Object>> userCollectAnswer(String userId, String answerId);
 
 }

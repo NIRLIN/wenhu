@@ -19,7 +19,12 @@ import java.util.List;
 @Mapper
 @Repository
 public interface FollowUserDao extends BaseMapper<FollowUserDO> {
-
+    /**
+     * 连表查询关注列表
+     *
+     * @param userId 用户id
+     * @return List<FollowUserDTO>
+     */
     @Select("SELECT DISTINCT\n" +
             "\tfollow_user.id,\n" +
             "\tfollow_user.follower_id,\n" +
@@ -35,6 +40,12 @@ public interface FollowUserDao extends BaseMapper<FollowUserDO> {
             "\tAND follow_user.is_deleted = 0")
     List<FollowUserDTO> listFollow(@Param("userId") String userId);
 
+    /**
+     * 连表查询被关注列表
+     *
+     * @param userId 用户id
+     * @return List<FollowUserDTO>
+     */
     @Select("SELECT DISTINCT\n" +
             "\tfollow_user.id,\n" +
             "\tfollow_user.follower_id,\n" +

@@ -19,6 +19,12 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ReviewDao extends BaseMapper<ReviewDO> {
+    /**
+     * 查询评论
+     *
+     * @param id 回答id
+     * @return List<ReviewDTO>
+     */
     @Select("SELECT\n" +
             "\treview.id,\n" +
             "\tanswer_id,\n" +

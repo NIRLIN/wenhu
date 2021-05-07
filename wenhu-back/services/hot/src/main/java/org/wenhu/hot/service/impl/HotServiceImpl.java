@@ -70,7 +70,8 @@ public class HotServiceImpl implements HotService {
                 .orderByDesc("question_heat")
                 .eq("is_deleted", 0);
         String classifyId = classifyDO.getId();
-        if (!"全站".equals(classifyName)) {
+        String all = "全站";
+        if (!all.equals(classifyName)) {
             queryWrapper.eq("classify_id", classifyId);
         }
         Page<HotDO> hotPage = new Page<>();

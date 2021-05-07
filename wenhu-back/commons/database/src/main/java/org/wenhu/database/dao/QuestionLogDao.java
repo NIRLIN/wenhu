@@ -19,6 +19,12 @@ import java.util.List;
 @Mapper
 @Repository
 public interface QuestionLogDao extends BaseMapper<QuestionLogDO> {
+    /**
+     * 连表查询问题日志
+     *
+     * @param questionId 问题id
+     * @return List<QuestionLogDTO>
+     */
     @Select("SELECT\n" +
             "\tquestion_log.id AS id,\n" +
             "\tquestion_id,\n" +

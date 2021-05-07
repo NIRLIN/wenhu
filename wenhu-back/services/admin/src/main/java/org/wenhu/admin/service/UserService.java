@@ -61,6 +61,14 @@ public interface UserService {
      */
     HashMap<String, Object> listUserIsBanedSearch(Map<String, Object> objectMap);
 
+    /**
+     * 修改个人密码
+     *
+     * @param userId         用户id
+     * @param oldPassword    旧密码
+     * @param oneNewPassword 新密码
+     * @return
+     */
     String changePassword(String userId, String oldPassword, String oneNewPassword);
 
 }

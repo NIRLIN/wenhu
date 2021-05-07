@@ -19,6 +19,12 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ReplyDao extends BaseMapper<ReplyDO> {
+    /**
+     * 查询回复信息
+     *
+     * @param parentReviewId 回复id
+     * @return List<ReplyDTO>
+     */
     @Select("SELECT\n" +
             "\treply.id AS id,\n" +
             "\tparent_review_id,\n" +

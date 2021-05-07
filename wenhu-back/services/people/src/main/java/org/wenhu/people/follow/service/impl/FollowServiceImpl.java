@@ -34,7 +34,7 @@ public class FollowServiceImpl implements FollowService {
         List<FollowUserDTO> follows = followUserDao.listFollow(userId);
         //查询关注用户的人
         List<FollowUserDTO> fans = followUserDao.listFans(userId);
-        HashMap<String, Object> hashMap = new HashMap<>();
+        HashMap<String, Object> hashMap = new HashMap<>(2);
         hashMap.put("follows", follows);
         hashMap.put("fans", fans);
         return hashMap;
@@ -109,7 +109,7 @@ public class FollowServiceImpl implements FollowService {
                 .filter(item -> otherFollowList.stream()
                         .map(FollowUserDTO::getByFollowerId).collect(Collectors.toList()).contains(item.getByFollowerId()))
                 .collect(Collectors.toList());
-        HashMap<String, Object> hashMap = new HashMap<>();
+        HashMap<String, Object> hashMap = new HashMap<>(2);
         hashMap.put("commonFollow", commonFollowList);
         return Result.succeed(hashMap);
     }

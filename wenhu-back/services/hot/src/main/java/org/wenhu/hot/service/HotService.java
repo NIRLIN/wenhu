@@ -14,9 +14,23 @@ import java.util.Set;
  */
 public interface HotService {
 
+    /**
+     * 热榜列表
+     *
+     * @return 操作结果
+     */
     Set<String> listHotQuestion();
 
+    /**
+     * 统计问题热度
+     */
     void countQuestionHeat();
 
+    /**
+     * 获取分类问题
+     *
+     * @param objectMap 传入数据
+     * @return 操作结果
+     */
     Result<List<HotDO>> listHotByClassify(Map<String, Object> objectMap);
 }

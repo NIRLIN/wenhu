@@ -18,6 +18,12 @@ import java.util.List;
 @Mapper
 @Repository
 public interface CollectDao extends BaseMapper<CollectDO> {
+    /**
+     * 连表查询收藏
+     *
+     * @param userId 用户id
+     * @return AnswerDTO
+     */
     @Select("SELECT DISTINCT\n" +
             "\tanswer.id,\n" +
             "\tanswer.question_id,\n" +

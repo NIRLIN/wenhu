@@ -10,7 +10,18 @@ import java.util.HashMap;
  * @date 2021/4/17
  */
 public interface PositionService {
+    /**
+     * 查询职位
+     *
+     * @return 操作结果
+     */
     HashMap<String, Object> listPosition();
 
+    /**
+     * 修改职位
+     *
+     * @param positionDO 传入数据
+     * @return 操作结果
+     */
     HashMap<String, Object> updatePosition(PositionDO positionDO);
 }
