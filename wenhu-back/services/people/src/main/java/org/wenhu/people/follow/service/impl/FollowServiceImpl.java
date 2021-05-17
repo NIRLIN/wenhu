@@ -1,7 +1,6 @@
 package org.wenhu.people.follow.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.common.pojo.DO.FollowUserDO;
@@ -27,7 +26,7 @@ public class FollowServiceImpl implements FollowService {
     @Autowired
     private FollowUserDao followUserDao;
 
-    @GlobalTransactional
+
     @Override
     public HashMap<String, Object> listFollowByUserId(String userId) {
         //查询用户关注的人
@@ -40,7 +39,7 @@ public class FollowServiceImpl implements FollowService {
         return hashMap;
     }
 
-    @GlobalTransactional
+
     @Override
     public Result<HashMap<String, Object>> followUserOperation(String userId, String byFollowerId) {
         QueryWrapper<FollowUserDO> followUserQueryWrapper = new QueryWrapper<>();
@@ -79,7 +78,7 @@ public class FollowServiceImpl implements FollowService {
         return Result.succeed(hashMap);
     }
 
-    @GlobalTransactional
+
     @Override
     public Result<HashMap<String, Object>> getUserFollow(String userId, String byFollowerId) {
         QueryWrapper<FollowUserDO> followUserQueryWrapper = new QueryWrapper<>();
@@ -98,7 +97,7 @@ public class FollowServiceImpl implements FollowService {
         return Result.succeed(hashMap);
     }
 
-    @GlobalTransactional
+
     @Override
     public Result<HashMap<String, Object>> listCommonFollow(String homeUserid, String loginUserId) {
         List<FollowUserDTO> otherFollowList = followUserDao.listFollow(homeUserid);

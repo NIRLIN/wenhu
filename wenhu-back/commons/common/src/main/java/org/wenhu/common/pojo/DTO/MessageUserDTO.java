@@ -1,11 +1,11 @@
-package org.wenhu.common.pojo.DO;
+package org.wenhu.common.pojo.DTO;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author NIRLIN
@@ -14,9 +14,8 @@ import java.time.LocalDateTime;
  * @Accessors(chain = true) 开启链式
  */
 @Data
-@Accessors(chain = true)
 @TableName("message")
-public class MessageDO {
+public class MessageUserDTO {
 
     /**
      * 私信id
@@ -29,19 +28,17 @@ public class MessageDO {
     private String dialogueId;
 
     /**
-     * 发送方id
-     */
-    private String sendId;
-
-    /**
      * 接收方id
      */
     private String receiveId;
-
     /**
-     * 私信内容
+     * 接收方用户名
      */
-    private String content;
+    private String receiveUsername;
+    /**
+     * 接收方头像
+     */
+    private String receiveHeadImage;
 
     /**
      * 创建时间
@@ -53,9 +50,7 @@ public class MessageDO {
      */
     private LocalDateTime updateTime;
 
-    /**
-     * 是否删除
-     */
-    private Integer isDeleted;
+
+    private List<MessageDTO> messageList;
 
 }

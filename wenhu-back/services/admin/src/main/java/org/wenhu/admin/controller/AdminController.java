@@ -26,8 +26,8 @@ public class AdminController {
 
     @ResponseBody
     @PostMapping("listAdmin")
-    public HashMap<String, Object> listAdmin(@RequestBody Map<String, Object> objectMap) {
-        return adminService.listAdmin(objectMap);
+    public HashMap<String, Object> listAdmin(@RequestBody Map<String, Object> objectMap, HttpSession session) {
+        return adminService.listAdmin(objectMap, session);
     }
 
     @ResponseBody
@@ -40,6 +40,12 @@ public class AdminController {
     @PostMapping("updateAdmin")
     public HashMap<String, Object> updateAdmin(@RequestBody AdminDO adminDO) {
         return adminService.updateAdmin(adminDO);
+    }
+
+    @ResponseBody
+    @PostMapping("saveAdmin")
+    public Object saveAdmin(@RequestBody AdminDO adminDO) {
+        return adminService.saveAdmin(adminDO);
     }
 
     @ResponseBody

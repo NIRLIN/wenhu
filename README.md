@@ -2,22 +2,22 @@
 
 #### 介绍
 
-“闻乎”项目设计，技术采用Spring Cloud Alibab、Spring Boot、Druid、Mybits、RabbitMQ、ElaticSearch、MySQL、Redis、Vue+Element Plus
+“闻乎”项目设计，技术采用Spring Cloud Alibab、Spring Boot、MybitsPlus、ElaticSearch、MySQL、Redis、Vue+Element
 
 #### 开发文档
 
-1. [闻乎用户端开发笔记](note/开发文档/闻乎用户端开发笔记.md)
-2. [闻乎用户端数据库设计文档](note/开发文档/闻乎用户端数据库设计文档.md)
-3. [闻乎用户端接口文档](note/开发文档/闻乎用户端接口文档.md)
-4. [闻乎管理端开发笔记](note/开发文档/闻乎管理端开发笔记.md)
-5. [闻乎管理端数据库设计文档](note/开发文档/闻乎管理端数据库设计文档.md)
-6. [闻乎管理端接口文档](note/开发文档/闻乎管理端接口文档.md)
+1. [闻乎开发环境搭建笔记](开发文档/闻乎开发环境搭建笔记.md)
+2. [闻乎开发文档](开发文档/闻乎开发文档.md)
+3. [闻乎数据库设计文档](开发文档/闻乎数据库设计文档.md)
 
 #### 安装教程
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. 更据《闻乎开发环境搭建笔记》启动`nacos`，将`wenhu-back/commons/config/src/main/resources/application-common.yaml`存入nacos云配置中，适当修改其中`server.host`为自己的环境ip,`group`为`wenhu`，`file-extension`为`yaml`，`prefix`为`wenhu-config`
+2. 数据库文件存放在《闻乎数据库设计文档》中，执行创建wenhu数据库，执行SQL
+3. 启动wenhu-back模块，启动services下admin、creation、hot、message、people、search模块，然后启动网关模块gateway
+4. 启动wenhu-front模块，使用npm install安装依赖、启动package.json，启动前台。
+5. 在user数据表中添加数据可直接访问用户端，在admin数据表中添加数据访问管理端。
+6. 用户端为`127.0.0.1:6999`，管理端为`127.0.0.1:8080`
 
 #### 使用说明
 

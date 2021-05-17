@@ -2,7 +2,6 @@ package org.wenhu.creation.question.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +40,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private FilterSensitivity filterSensitivity;
 
-    @GlobalTransactional
+
     @Override
     public Result<String> saveQuestion(QuestionDO questionDO, String menderId) {
         String code;
@@ -80,7 +79,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<QuestionDO> getQuestionById(String id) {
         String code;
         String message;
@@ -98,7 +97,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<List<QuestionDO>> listQuestionByUserId(@RequestBody UserDTO userDTO) {
         HashMap<String, Object> hashMap = new HashMap<>(1);
         hashMap.put("user_id", userDTO.getId());
@@ -107,7 +106,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    @GlobalTransactional
+
     public Result<Integer> userFollowQuestion(Map<String, Object> objectMap) {
         String userId = (String) objectMap.get("userId");
         String questionId = (String) objectMap.get("questionId");
@@ -125,7 +124,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<Integer> followQuestion(Map<String, Object> objectMap) {
         String userId = (String) objectMap.get("userId");
         String questionId = (String) objectMap.get("questionId");
@@ -171,7 +170,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<List<QuestionLogDTO>> listQuestionLog(Map<String, Object> objectMap) {
         String questionId = (String) objectMap.get("id");
         List<QuestionLogDTO> listQuestionLog = questionLogDao.listQuestionLog(questionId);
@@ -179,7 +178,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<Integer> updateQuestion(Map<String, Object> objectMap) {
         String id = (String) objectMap.get("id");
         String userId = (String) objectMap.get("userId");

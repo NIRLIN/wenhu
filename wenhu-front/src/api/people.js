@@ -214,4 +214,18 @@ export function changePassword(data) {
     data
   })
 }
+export function userMessageList(data) {
+  return request({
+    url: '/message/message/userMessageList?' + data,
+    method: 'get',
+    data
+  })
+}
+export function saveMessage(data) {
+  return request({
+    url: '/message/message/saveMessage',
+    method: 'post',
+    data
+  })
+}
 

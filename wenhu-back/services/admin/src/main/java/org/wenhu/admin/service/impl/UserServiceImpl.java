@@ -2,12 +2,11 @@ package org.wenhu.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.admin.service.UserService;
-import org.wenhu.common.pojo.DO.UserDO;
-import org.wenhu.database.dao.UserDao;
+import org.wenhu.common.pojo.DO.AdminDO;
+import org.wenhu.database.dao.AdminDao;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -23,39 +22,39 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserDao userDao;
+    private AdminDao adminDao;
 
-    @GlobalTransactional
+
     @Override
-    public UserDO userLogin(String phoneNumber, String password) {
+    public AdminDO userLogin(String phoneNumber, String password) {
         //手机号或密码为空不允许登录验证
         if (phoneNumber == null || password == null) {
             return null;
         }
-        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<AdminDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .eq("phone_number", phoneNumber)
                 .eq("password", password);
-        return userDao.selectOne(queryWrapper);
+        return adminDao.selectOne(queryWrapper);
     }
 
-    @GlobalTransactional
+
     @Override
     public String changePassword(String userId, String oldPassword, String oneNewPassword) {
         if (userId == null) {
             return "未登录哦~";
         }
-        QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<AdminDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .eq("id", userId)
                 .eq("password", oldPassword);
-        UserDO userDO = userDao.selectOne(queryWrapper);
-        if (userDO == null) {
+        AdminDO adminDO = adminDao.selectOne(queryWrapper);
+        if (adminDO == null) {
             return "密码错误";
         }
-        userDO.setPassword(oneNewPassword);
-        userDO.setUpdateTime(LocalDateTime.now());
-        int i = userDao.updateById(userDO);
+        adminDO.setPassword(oneNewPassword);
+        adminDO.setUpdateTime(LocalDateTime.now());
+        int i = adminDao.updateById(adminDO);
         if (i == 1) {
             return "修改成功,请重新登录~";
         } else {
@@ -63,18 +62,18 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @GlobalTransactional
+
     @Override
     public HashMap<String, Object> listUserNoBanned(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
         //条件构造
-        QueryWrapper<UserDO> userQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<AdminDO> userQueryWrapper = new QueryWrapper<>();
         //未封禁用户
         userQueryWrapper
                 .lt("deadline_date", LocalDateTime.now())
                 .orderByDesc("update_time");
         //分页查询
-        List<UserDO> listUserNoBanned = userListByPage(page, userQueryWrapper);
+        List<AdminDO> listUserNoBanned = userListByPage(page, userQueryWrapper);
         //查询总数
         Integer listUserNoBannedCount = userListCount(userQueryWrapper);
 
@@ -84,18 +83,18 @@ public class UserServiceImpl implements UserService {
         return hashMap;
     }
 
-    @GlobalTransactional
+
     @Override
     public HashMap<String, Object> listUserIsBanned(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
         //条件构造
-        QueryWrapper<UserDO> userQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<AdminDO> userQueryWrapper = new QueryWrapper<>();
         //已封禁用户
         userQueryWrapper
                 .gt("deadline_date", LocalDateTime.now())
                 .orderByDesc("update_time");
         //分页查询
-        List<UserDO> listUserIsBanned = userListByPage(page, userQueryWrapper);
+        List<AdminDO> listUserIsBanned = userListByPage(page, userQueryWrapper);
         //查询总数
         Integer listUserIsBannedCount = userListCount(userQueryWrapper);
         HashMap<String, Object> hashMap = new HashMap<>(2);
@@ -104,16 +103,16 @@ public class UserServiceImpl implements UserService {
         return hashMap;
     }
 
-    @GlobalTransactional
+
     @Override
     public HashMap<String, Object> listUserNoBanedSearch(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
         //条件构造
-        QueryWrapper<UserDO> userQueryWrapper = searchInitQueryWrapper(objectMap);
+        QueryWrapper<AdminDO> userQueryWrapper = searchInitQueryWrapper(objectMap);
         userQueryWrapper
                 .lt("deadline_date", LocalDateTime.now());
         //分页查询
-        List<UserDO> listUserSearchNoBanned = userListByPage(page, userQueryWrapper);
+        List<AdminDO> listUserSearchNoBanned = userListByPage(page, userQueryWrapper);
         //查询总数
         Integer listUserSearchNoBannedCount = userListCount(userQueryWrapper);
         HashMap<String, Object> hashMap = new HashMap<>(2);
@@ -122,16 +121,16 @@ public class UserServiceImpl implements UserService {
         return hashMap;
     }
 
-    @GlobalTransactional
+
     @Override
     public HashMap<String, Object> listUserIsBanedSearch(Map<String, Object> objectMap) {
         Integer page = (Integer) objectMap.get("page");
         //构建条件
-        QueryWrapper<UserDO> userQueryWrapper = searchInitQueryWrapper(objectMap);
+        QueryWrapper<AdminDO> userQueryWrapper = searchInitQueryWrapper(objectMap);
         userQueryWrapper
                 .gt("deadline_date", LocalDateTime.now());
         //分页查询
-        List<UserDO> listUserSearchIsBanned = userListByPage(page, userQueryWrapper);
+        List<AdminDO> listUserSearchIsBanned = userListByPage(page, userQueryWrapper);
         //查询总数
         Integer listUserSearchIsBannedCount = userListCount(userQueryWrapper);
         HashMap<String, Object> hashMap = new HashMap<>(2);
@@ -140,13 +139,13 @@ public class UserServiceImpl implements UserService {
         return hashMap;
     }
 
-    private QueryWrapper<UserDO> searchInitQueryWrapper(Map<String, Object> objectMap) {
+    private QueryWrapper<AdminDO> searchInitQueryWrapper(Map<String, Object> objectMap) {
         String userId = (String) objectMap.get("userId");
         String username = (String) objectMap.get("username");
         String phoneNumber = (String) objectMap.get("phoneNumber");
         String resume = (String) objectMap.get("resume");
         //条件构造
-        QueryWrapper<UserDO> userQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<AdminDO> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper
                 .orderByDesc("update_time")
                 .like(userId != null, "id", userId)
@@ -156,24 +155,24 @@ public class UserServiceImpl implements UserService {
         return userQueryWrapper;
     }
 
-    private List<UserDO> userListByPage(Integer page, QueryWrapper<UserDO> queryWrapper) {
+    private List<AdminDO> userListByPage(Integer page, QueryWrapper<AdminDO> queryWrapper) {
         //分页查询
-        Page<UserDO> doPage = new Page<>(page, 10);
-        Page<UserDO> selectPage = userDao.selectPage(doPage, queryWrapper);
+        Page<AdminDO> doPage = new Page<>(page, 10);
+        Page<AdminDO> selectPage = adminDao.selectPage(doPage, queryWrapper);
         return selectPage.getRecords();
     }
 
-    private Integer userListCount(QueryWrapper<UserDO> queryWrapper) {
+    private Integer userListCount(QueryWrapper<AdminDO> queryWrapper) {
         //查询总数
-        return userDao.selectCount(queryWrapper);
+        return adminDao.selectCount(queryWrapper);
     }
 
-    @GlobalTransactional
+
     @Override
-    public Boolean updateUser(UserDO userDO) {
+    public Boolean updateUser(AdminDO AdminDO) {
         //修改时间
-        userDO.setUpdateTime(LocalDateTime.now());
-        int i = userDao.updateById(userDO);
+        AdminDO.setUpdateTime(LocalDateTime.now());
+        int i = adminDao.updateById(AdminDO);
         return i == 1;
     }
 

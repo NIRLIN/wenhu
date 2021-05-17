@@ -1,6 +1,6 @@
 package org.wenhu.admin.service;
 
-import org.wenhu.common.pojo.DO.UserDO;
+import org.wenhu.common.pojo.DO.AdminDO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ public interface UserService {
      * @param password    密码
      * @return 布尔
      */
-    UserDO userLogin(String phoneNumber, String password);
+    AdminDO userLogin(String phoneNumber, String password);
 
     /**
      * 未封禁用户
@@ -40,10 +40,10 @@ public interface UserService {
     /**
      * 保存用户信息修改
      *
-     * @param userDO 用户信息
+     * @param AdminDO 用户信息
      * @return 操作结果
      */
-    Boolean updateUser(UserDO userDO);
+    Boolean updateUser(AdminDO AdminDO);
 
     /**
      * 未封禁用户信息搜索

@@ -2,6 +2,7 @@ package org.wenhu.admin.service;
 
 import org.wenhu.common.pojo.DO.AdminDO;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public interface AdminService {
      * @param objectMap 传入数据
      * @return 操作结果
      */
-    HashMap<String, Object> listAdmin(Map<String, Object> objectMap);
+    HashMap<String, Object> listAdmin(Map<String, Object> objectMap, HttpSession session);
 
     /**
      * 搜索管理员列表
@@ -43,4 +44,5 @@ public interface AdminService {
      */
     AdminDO peopleInfo(String userId);
 
+    Object saveAdmin(AdminDO adminDO);
 }

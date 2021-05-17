@@ -36,7 +36,7 @@
     </el-row>
     <el-row>
 
-      <el-col :span="6" :offset="1">
+      <el-col :span="6" :offset="6">
         <div class="grid-content ">
           <el-switch
             v-model="homepage.collect"
@@ -49,7 +49,7 @@
           />
         </div>
       </el-col>
-      <el-col :span="6" :offset="6">
+      <el-col :span="6" :offset="1">
         <div class="grid-content ">
           <el-switch
             v-model="homepage.follow"

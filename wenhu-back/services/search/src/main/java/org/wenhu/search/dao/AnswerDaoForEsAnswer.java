@@ -38,9 +38,7 @@ public interface AnswerDaoForEsAnswer extends BaseMapper<AnswerDO> {
             "  FROM\n" +
             "  answer\n" +
             "  LEFT JOIN `user` ON `user`.id = answer.user_id \n" +
-            "\tLEFT JOIN question ON question.id = answer.question_id\n" +
-            "  WHERE\n" +
-            "\tORDER BY answer.update_time DESC")
+            "\tLEFT JOIN question ON question.id = answer.question_id")
     List<EsAnswer> listAnswer();
 
 

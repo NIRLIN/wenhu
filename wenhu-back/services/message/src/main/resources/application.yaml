@@ -1,3 +1,10 @@
 spring:
   application:
     name: message
+  rabbitmq:
+    host: ${server.host}
+    port: 5672
+    username: root
+    password: 123456
+server:
+  port: 8070

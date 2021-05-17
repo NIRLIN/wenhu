@@ -1,9 +1,8 @@
-package org.wenhu.common.pojo.DO;
+package org.wenhu.common.pojo.DTO;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -14,9 +13,8 @@ import java.time.LocalDateTime;
  * @Accessors(chain = true) 开启链式
  */
 @Data
-@Accessors(chain = true)
 @TableName("message")
-public class MessageDO {
+public class MessageDTO {
 
     /**
      * 私信id
@@ -32,11 +30,27 @@ public class MessageDO {
      * 发送方id
      */
     private String sendId;
+    /**
+     * 发送方用户名
+     */
+    private String sendUsername;
+    /**
+     * 发送方头像
+     */
+    private String sendHeadImage;
 
     /**
      * 接收方id
      */
     private String receiveId;
+    /**
+     * 接收方用户名
+     */
+    private String receiveUsername;
+    /**
+     * 接收方头像
+     */
+    private String receiveHeadImage;
 
     /**
      * 私信内容

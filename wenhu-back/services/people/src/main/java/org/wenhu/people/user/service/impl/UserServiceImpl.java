@@ -1,7 +1,6 @@
 package org.wenhu.people.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private FollowController followController;
 
-    @GlobalTransactional
+
     @Override
     public Result<String> userRegister(UserDO userDO) {
         String message;
@@ -79,7 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<String> checkPhoneExist(String phoneNumber) {
         String message = null;
         String code = null;
@@ -100,7 +99,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public String getPhoneVerifyCode(String phoneNumber, String verifyCode) {
         //发送短信
         TencentSendSms.sendSmsUtil(phoneNumber, verifyCode);
@@ -108,7 +107,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<String> userLoginByPassword(UserDTO userDTO) {
         Result<String> stringResult = checkPhoneExist(userDTO.getPhoneNumber());
         String code = null;
@@ -146,7 +145,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<String> userLoginByPhoneVerify(UserDTO userDTO, String verifyCode) {
         Result<String> stringResult = checkPhoneExist(userDTO.getPhoneNumber());
         String code = null;
@@ -172,7 +171,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<String> changePassword(String userId, String oldPassword, String newPassword) {
         String code;
         String message;
@@ -206,7 +205,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @GlobalTransactional
+
     public Result<UserDTO> getUserInfo(UserDTO userDTO) {
         String code;
         String message;
@@ -225,7 +224,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<HomepageDO> getHomepageByUserId(UserDTO userDTO) {
         String code;
         String message;
@@ -257,14 +256,14 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @GlobalTransactional
+
     public Result<List<AnswerDTO>> listAnswerByUserId(String userId, String type) {
         return creationFeignClient.listAnswerByUserId(userId, type);
     }
 
 
     @Override
-    @GlobalTransactional
+
     public Result<List<QuestionDO>> listQuestionByUserId(String userId) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userId);
@@ -272,19 +271,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<HashMap<String, Object>> listCollectByUserId(String userId) {
         return collectController.listCollectByUserId(userId);
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<HashMap<String, Object>> listFollowByUserId(String userId) {
         return followController.listFollowByUserId(userId);
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<UserDO> checkOldPhoneNumber(String userId, String code, String phoneNumber) {
         QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
@@ -299,7 +298,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<UserDO> checkNewPhoneNumber(String userId, String code, String phoneNumber) {
         QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
@@ -314,7 +313,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<UserDO> changeNewPhoneNumber(String userId, String phoneNumber) {
         QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
@@ -333,7 +332,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<HomepageDO> saveChangeHomepage(HomepageDO homepageDO) {
         QueryWrapper<HomepageDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(homepageDO.getId() != null, "id", homepageDO.getId());
@@ -351,7 +350,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @GlobalTransactional
+
     public Result<String> getResumeByUserId(String userId) {
         QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", userId);
@@ -364,7 +363,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<String> saveResumeByUserId(String userId, String resume) {
         QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(userId != null, "id", userId);
@@ -385,7 +384,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @GlobalTransactional
+
     public Result<String> getHeadImageByUserId(String userId) {
         QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", userId);
@@ -397,7 +396,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<String> saveHeadImageByUserId(MultipartFile image, String userId) {
         String data = null;
         String code;
@@ -421,7 +420,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<String> getUsernameByUserId(String userId) {
         String code;
         String message;
@@ -441,7 +440,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<String> saveUsernameByUserId(String userId, String username) {
         String code;
         String message;

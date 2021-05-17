@@ -35,4 +35,10 @@ public class PositionController {
         return positionService.updatePosition(positionDO);
     }
 
+    @ResponseBody
+    @PostMapping("savePosition")
+    public Object savePosition(@RequestBody PositionDO positionDO) {
+        return positionService.savePosition(positionDO);
+    }
+
 }

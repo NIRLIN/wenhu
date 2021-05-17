@@ -4,7 +4,6 @@ package org.wenhu.hot.service.impl;
 import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -49,7 +48,7 @@ public class HotServiceImpl implements HotService {
     @Autowired
     private AnswerDao answerDao;
 
-    @GlobalTransactional
+
     @Override
     public Set<String> listHotQuestion() {
 
@@ -58,7 +57,7 @@ public class HotServiceImpl implements HotService {
         return stringRedisTemplate.opsForZSet().reverseRangeByScore("HotQuestion", 0, 100000000, 0, 50);
     }
 
-    @GlobalTransactional
+
     @Override
     public Result<List<HotDO>> listHotByClassify(Map<String, Object> objectMap) {
         String classifyName = (String) objectMap.get("classifyName");
@@ -90,7 +89,7 @@ public class HotServiceImpl implements HotService {
         }
     }
 
-    @GlobalTransactional
+
     @Override
     public void countQuestionHeat() {
         QueryWrapper<QuestionDO> questionQueryWrapper = new QueryWrapper<>();

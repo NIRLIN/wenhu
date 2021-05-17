@@ -3,7 +3,6 @@ package org.wenhu.creation.answer.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +42,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Autowired
     private FilterSensitivity filterSensitivity;
 
-    @GlobalTransactional
+
     @Override
     public Result<Integer> countAnswerByQuestionId(String questionId) {
         QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
@@ -54,7 +53,7 @@ public class AnswerServiceImpl implements AnswerService {
         return Result.succeed(integer);
     }
 
-    @GlobalTransactional
+
     @Override
     public Result<String> saveAnswer(String userId, String questionId, String content) {
         String code;
@@ -85,7 +84,7 @@ public class AnswerServiceImpl implements AnswerService {
         return Result.succeed(code, message, data);
     }
 
-    @GlobalTransactional
+
     @Override
     public Result<List<AnswerDTO>> listAnswerByHeat(String questionId, String page) {
         QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
@@ -97,7 +96,7 @@ public class AnswerServiceImpl implements AnswerService {
         return listAnswer(page, queryWrapper);
     }
 
-    @GlobalTransactional
+
     @Override
     public Result<List<AnswerDTO>> listAnswerByTime(String questionId, String page) {
         QueryWrapper<AnswerDO> queryWrapper = new QueryWrapper<>();
@@ -111,7 +110,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<List<AnswerDTO>> listAnswer(String page, QueryWrapper<AnswerDO> queryWrapper) {
         String code;
         String message;
@@ -147,7 +146,7 @@ public class AnswerServiceImpl implements AnswerService {
         return Result.succeed(answerVOList);
     }
 
-    @GlobalTransactional
+
     @Override
     public Result<List<AnswerDTO>> listAnswerByUserId(String userId, String type) {
         //查询最近发布回答
@@ -171,7 +170,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<HashMap<String, Object>> getUserAgreeAndCollectAnswer(String userId, String answerId) {
 
         //查询是否用户赞同回答
@@ -207,7 +206,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<HashMap<String, Object>> userAgreeAnswer(String userId, String answerId) {
         //查询是否已赞同
         QueryWrapper<AgreeOpposeDO> queryWrapper = new QueryWrapper<>();
@@ -266,7 +265,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<HashMap<String, Object>> userOpposeAnswer(String userId, String answerId) {
         QueryWrapper<AgreeOpposeDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
@@ -293,7 +292,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<HashMap<String, Object>> getAnswerByAnswerId(String answerId) {
         QueryWrapper<AnswerDO> answerQueryWrapper = new QueryWrapper<>();
         answerQueryWrapper
@@ -320,7 +319,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    @GlobalTransactional
+
     public Result<Integer> updateAnswer(Map<String, Object> objectMap) {
         String id = (String) objectMap.get("id");
         String content = (String) objectMap.get("content");

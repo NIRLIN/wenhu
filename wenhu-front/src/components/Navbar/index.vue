@@ -16,7 +16,7 @@
       <el-menu-item class="hot_margin_left" index="1">
         <el-link :underline="false" href="#/hot">首页</el-link>
       </el-menu-item>
-      <el-menu-item index="2">
+      <el-menu-item v-show="false" index="2">
         <el-link :underline="false" href="#/follow">关注</el-link>
       </el-menu-item>
       <el-menu-item v-show="false" index="3" />

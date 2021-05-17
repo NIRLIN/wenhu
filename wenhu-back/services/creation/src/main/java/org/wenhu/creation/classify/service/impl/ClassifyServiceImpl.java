@@ -1,7 +1,6 @@
 package org.wenhu.creation.classify.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.common.pojo.DO.ClassifyDO;
@@ -21,7 +20,7 @@ public class ClassifyServiceImpl implements ClassifyService {
     @Autowired
     private ClassifyDao classifyDao;
 
-    @GlobalTransactional
+
     @Override
     public List<ClassifyDO> listClassify() {
         QueryWrapper<ClassifyDO> queryWrapper = new QueryWrapper<>();

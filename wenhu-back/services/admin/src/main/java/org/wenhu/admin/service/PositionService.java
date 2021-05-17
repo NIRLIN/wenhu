@@ -24,4 +24,6 @@ public interface PositionService {
      * @return 操作结果
      */
     HashMap<String, Object> updatePosition(PositionDO positionDO);
+
+    Object savePosition(PositionDO positionDO);
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wenhu.admin.service.impl.UserServiceImpl;
-import org.wenhu.common.pojo.DO.UserDO;
+import org.wenhu.common.pojo.DO.AdminDO;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -25,11 +25,12 @@ public class UserController {
     @PostMapping("userLogin")
     public String userLogin(@RequestParam String phoneNumber, @RequestParam String password, HttpSession httpSession, RedirectAttributes redirectAttributes) {
         //获取账号密码
-        UserDO userDO = userService.userLogin(phoneNumber, password);
+        AdminDO userDO = userService.userLogin(phoneNumber, password);
         if (userDO != null) {
             //登录成功将用户信息存入session
             httpSession.setAttribute("userId", userDO.getId());
             httpSession.setAttribute("username", userDO.getUsername());
+            httpSession.setAttribute("positionId", userDO.getPositionId());
             httpSession.removeAttribute("loginInfo");
             return "redirect:/index.html";
         } else {
@@ -86,7 +87,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("updateUser")
-    public Boolean updateUser(@RequestBody UserDO userDO) {
-        return userService.updateUser(userDO);
+    public Boolean updateUser(@RequestBody AdminDO adminDO) {
+        return userService.updateUser(adminDO);
     }
 }

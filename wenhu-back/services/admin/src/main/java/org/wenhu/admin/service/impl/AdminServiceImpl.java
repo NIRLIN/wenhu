@@ -2,13 +2,15 @@ package org.wenhu.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wenhu.admin.service.AdminService;
 import org.wenhu.common.pojo.DO.AdminDO;
+import org.wenhu.common.util.Result;
+import org.wenhu.common.util.SnowflakeUtils;
 import org.wenhu.database.dao.AdminDao;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -25,11 +27,13 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminDao adminDao;
 
-    @GlobalTransactional
+
     @Override
-    public HashMap<String, Object> listAdmin(Map<String, Object> objectMap) {
+    public HashMap<String, Object> listAdmin(Map<String, Object> objectMap, HttpSession session) {
         Integer page = (Integer) objectMap.get("page");
         Integer adminBaned = (Integer) objectMap.get("adminBaned");
+        String positionId = String.valueOf(session.getAttribute("positionId"));
+
         QueryWrapper<AdminDO> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .orderByDesc("update_time");
@@ -49,7 +53,7 @@ public class AdminServiceImpl implements AdminService {
         return hashMap;
     }
 
-    @GlobalTransactional
+
     @Override
     public HashMap<String, Object> listAdminSearch(Map<String, Object> objectMap) {
         Integer adminBaned = (Integer) objectMap.get("adminBaned");
@@ -82,7 +86,7 @@ public class AdminServiceImpl implements AdminService {
         return hashMap;
     }
 
-    @GlobalTransactional
+
     @Override
     public HashMap<String, Object> updateAdmin(AdminDO adminDO) {
         adminDO.setUpdateTime(LocalDateTime.now());
@@ -109,7 +113,21 @@ public class AdminServiceImpl implements AdminService {
         return adminDao.selectCount(queryWrapper);
     }
 
-    @GlobalTransactional
+    @Override
+    public Object saveAdmin(AdminDO adminDO) {
+        adminDO
+                .setId(String.valueOf(SnowflakeUtils.genId()))
+                .setEmail("1")
+                .setResume("没有哦~")
+                .setHeadImage("111")
+                .setDeadlineDate(LocalDateTime.now())
+                .setCreateTime(LocalDateTime.now())
+                .setUpdateTime(LocalDateTime.now())
+                .setIsDeleted(0);
+        adminDao.insert(adminDO);
+        return Result.succeed();
+    }
+
     @Override
     public AdminDO peopleInfo(String userId) {
         QueryWrapper<AdminDO> userQueryWrapper = new QueryWrapper<>();
